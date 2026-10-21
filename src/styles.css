@@ -1,0 +1,579 @@
+@import "tailwindcss" source(none);
+@source "../src";
+
+/*
+ * Design tokens — editorial gallery palette (see README for the reference hex values).
+ * Surfaces: ivory (#F5F1E9) / ink (#121212) / charcoal (#20201E) / stone (#D9D2C6).
+ * Accent: terracotta (#B96345). `accent-deep` is the same hue darkened so ivory text
+ * keeps AA contrast on it; `accent-soft` is lightened for small text on ink.
+ */
+@theme inline {
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-background: var(--ivory);
+  --color-foreground: var(--charcoal);
+  --color-primary: var(--charcoal);
+  --color-primary-foreground: var(--ivory);
+  --color-muted-foreground: var(--muted-fg);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-foreground: var(--ivory);
+  --color-border: var(--line);
+  --color-input: var(--line-strong);
+  --color-ring: var(--accent);
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-ivory: var(--ivory);
+  --color-stone: var(--stone);
+}
+
+:root {
+  --ivory: oklch(0.959 0.012 85);
+  --charcoal: oklch(0.24 0.004 100);
+  --ink: oklch(0.18 0 0);
+  --stone: oklch(0.86 0.018 80);
+  --muted-fg: oklch(0.44 0.01 80);
+  --accent: oklch(0.58 0.12 40);
+  --accent-deep: oklch(0.47 0.12 38);
+  --accent-soft: oklch(0.74 0.11 48);
+  --line: oklch(0.24 0.004 100 / 16%);
+  --line-strong: oklch(0.24 0.004 100 / 40%);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --header-h: 5rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--header-h);
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--ivory);
+    color: var(--charcoal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* Fine paper grain over everything; purely decorative and non-interactive. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 45;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--accent-soft);
+  }
+  .on-accent :focus-visible {
+    outline-color: var(--ivory);
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--ivory);
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+}
+
+/* Animated underline for text links */
+@utility link-line {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.5s var(--ease);
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* Small mono annotation: "— FIG. 01" */
+@utility annot {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------- buttons */
+.btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition:
+    color 0.5s var(--ease),
+    border-color 0.5s var(--ease),
+    opacity 0.3s;
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease);
+}
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: none;
+}
+.btn-accent {
+  background: var(--accent-deep);
+  color: var(--ivory);
+}
+.btn-accent::before {
+  background: var(--ivory);
+}
+.btn-accent:hover,
+.btn-accent:focus-visible {
+  color: var(--ink);
+}
+.btn-ink {
+  background: var(--ink);
+  color: var(--ivory);
+}
+.btn-ink::before {
+  background: var(--accent-deep);
+}
+.btn-outline {
+  border: 1px solid currentColor;
+}
+.btn-outline::before {
+  background: currentColor;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  color: var(--ink);
+}
+.btn[aria-disabled="true"],
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.btn[aria-disabled="true"]::before,
+.btn:disabled::before {
+  display: none;
+}
+.btn .arrow {
+  transition: transform 0.5s var(--ease);
+}
+.btn:hover .arrow {
+  transform: translateX(0.25rem);
+}
+
+/* -------------------------------------------------- graphic details */
+/* Registration / crop marks on the four corners of a frame */
+.crop {
+  position: relative;
+}
+.crop::before,
+.crop::after {
+  content: "";
+  position: absolute;
+  width: 1.1rem;
+  height: 1.1rem;
+  pointer-events: none;
+  z-index: 2;
+  border: 0 solid var(--accent-soft);
+}
+.crop::before {
+  top: -0.6rem;
+  left: -0.6rem;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.crop::after {
+  bottom: -0.6rem;
+  right: -0.6rem;
+  border-bottom-width: 1px;
+  border-right-width: 1px;
+}
+
+/* Ruler ticks, like a tape measure along an edge */
+.ruler-y {
+  width: 0.75rem;
+  background:
+    repeating-linear-gradient(to bottom, currentColor 0 1px, transparent 1px 0.5rem) 0 0 / 0.4rem
+      100% no-repeat,
+    repeating-linear-gradient(to bottom, currentColor 0 1px, transparent 1px 2.5rem) 0 0 / 0.75rem
+      100% no-repeat;
+  opacity: 0.5;
+}
+.ruler-x {
+  height: 0.75rem;
+  background:
+    repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 0.5rem) 0 0 / 100%
+      0.4rem no-repeat,
+    repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 2.5rem) 0 0 / 100%
+      0.75rem no-repeat;
+  opacity: 0.5;
+}
+
+/* Outlined oversized lettering (fill is cleared separately so currentColor still drives the stroke) */
+.stencil {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px currentColor;
+}
+@supports not (-webkit-text-stroke: 1px black) {
+  .stencil {
+    -webkit-text-fill-color: currentColor;
+    opacity: 0.35;
+  }
+}
+
+/* Paint drips hanging off a section edge */
+.drip {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.drips-in .drip,
+[data-in] .drip,
+html:not(.motion) .drip {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.6s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+/* ---------------------------------------------------------- scroll reveal */
+[data-reveal] {
+  transition-delay: var(--d, 0ms);
+}
+[data-reveal="up"] {
+  transition:
+    opacity 1s var(--ease),
+    transform 1s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.motion [data-reveal="up"]:not([data-in]) {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+.mask {
+  transition: clip-path 1.3s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.mask img {
+  transition: transform 1.8s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.motion [data-reveal="mask"]:not([data-in]) .mask {
+  clip-path: inset(100% 0 0 0);
+}
+.motion [data-reveal="mask"]:not([data-in]) .mask img {
+  transform: scale(1.2);
+}
+
+.draw-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.8s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.motion [data-reveal="draw"]:not([data-in]) .draw-stroke {
+  stroke-dashoffset: 1;
+}
+
+.parallax {
+  translate: 0 var(--py, 0px);
+  will-change: translate;
+}
+
+/* Horizontal rule that draws in from the left when its <Reveal> parent enters */
+.draw-x {
+  transform-origin: left;
+  transition: transform 1.6s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.motion [data-reveal]:not([data-in]) .draw-x {
+  transform: scaleX(0);
+}
+
+/* ----------------------------------------------------------- hero entrance */
+@keyframes line-up {
+  from {
+    transform: translateY(112%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes unmask-up {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes zoom-out {
+  from {
+    transform: scale(1.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes draw-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.line > span {
+  display: block;
+  animation: line-up 1.15s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+.fade-up {
+  animation: fade-up 0.95s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+.hero-frame {
+  animation: unmask-up 1.5s var(--ease) both;
+  animation-delay: var(--d, 150ms);
+}
+.hero-frame img {
+  animation: zoom-out 2.4s var(--ease) both;
+  animation-delay: var(--d, 150ms);
+}
+.hero-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-line 1.8s var(--ease) forwards;
+  animation-delay: var(--d, 900ms);
+}
+.grow-x {
+  transform-origin: left;
+  animation: grow-x 1.4s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+.scroll-dot {
+  animation: scroll-dot 2.2s var(--ease) infinite;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* -------------------------------------------------------------- sample map */
+@keyframes pin-drop {
+  from {
+    transform: translateY(-60px);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes map-pulse {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.map-pin {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+.map-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-pulse 2.4s var(--ease) infinite;
+}
+[data-in] .map-pin,
+html:not(.motion) .map-pin {
+  animation: pin-drop 1s var(--ease) both;
+  animation-delay: 500ms;
+}
+.motion [data-reveal]:not([data-in]) .map-pin {
+  opacity: 0;
+}
+
+/* ----------------------------------------------------------------- gallery */
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.tile-in {
+  animation: tile-in 0.8s var(--ease) both;
+  animation-delay: var(--d, 0ms);
+}
+
+/* ---------------------------------------------------------------- lightbox */
+dialog.lightbox {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100dvh;
+  background: var(--ink);
+  color: var(--ivory);
+}
+dialog.lightbox::backdrop {
+  background: var(--ink);
+}
+@keyframes lb-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lb-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes lb-img {
+  from {
+    clip-path: inset(6% 6% 6% 6%);
+    transform: scale(0.97);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0);
+    transform: none;
+    opacity: 1;
+  }
+}
+dialog.lightbox[open] {
+  animation: lb-in 0.4s var(--ease) both;
+}
+dialog.lightbox[data-closing] {
+  animation: lb-out 0.25s var(--ease) both;
+}
+.lb-img {
+  animation: lb-img 0.8s var(--ease) both;
+}
+.lb-meta {
+  animation: fade-up 0.7s var(--ease) both;
+  animation-delay: 120ms;
+}
+
+/* ------------------------------------------------------------ mobile menu */
+.menu-sheet {
+  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
+  transition:
+    clip-path 0.7s var(--ease),
+    visibility 0s 0.7s;
+}
+.menu-sheet[data-open="true"] {
+  clip-path: inset(0 0 0 0);
+  visibility: visible;
+  transition:
+    clip-path 0.7s var(--ease),
+    visibility 0s;
+}
+
+/* -------------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+  .marquee-track,
+  .map-pulse {
+    animation: none;
+  }
+  .parallax {
+    translate: none;
+  }
+  .drip,
+  .draw-stroke {
+    stroke-dashoffset: 0;
+  }
+}

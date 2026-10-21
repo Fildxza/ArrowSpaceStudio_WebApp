@@ -1,0 +1,6 @@
+# Preview build: the site still contains sample content, so crawling is blocked.
+# At launch (after setting seo.indexable = true in src/config/business.ts) replace with:
+#   User-agent: *
+#   Allow: /
+User-agent: *
+Disallow: /
