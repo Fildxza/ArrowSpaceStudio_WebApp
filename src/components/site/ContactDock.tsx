@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { FileText, Mail, MessageCircle, Phone, X } from "lucide-react";
 import { business } from "@/config/business";
 import { useQuickContactVisible } from "@/hooks/use-quick-contact";
+import { useChatOpen } from "@/lib/chat";
 import { buildMailto, buildTelUrl } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 import { WhatsAppLink } from "./WhatsAppLink";
@@ -53,7 +54,8 @@ export function ContactDock() {
   const menuId = useId();
   const tel = buildTelUrl();
   const mail = buildMailto(business.email, "Mural enquiry");
-  const show = visible || open;
+  const chatOpen = useChatOpen();
+  const show = (visible || open) && !chatOpen;
 
   useEffect(() => {
     if (!visible) setOpen(false);
@@ -99,7 +101,7 @@ export function ContactDock() {
           icon={<MessageCircle aria-hidden="true" className="size-5" />}
         >
           {(cls, inner) => (
-            <WhatsAppLink fallbackHref="#contact" onFallback={close} className={cls}>
+            <WhatsAppLink onOpen={close} className={cls}>
               {inner}
             </WhatsAppLink>
           )}

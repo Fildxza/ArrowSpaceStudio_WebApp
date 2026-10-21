@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Live preview — inside VS Code",
+      "type": "vscode-edge-devtools.debug",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Dev server (live preview)"
+    },
+    {
+      "name": "Live preview — Edge window",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Dev server (live preview)"
+    },
+    {
+      "name": "Live preview — Chrome window",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src",
+      "preLaunchTask": "Dev server (live preview)"
+    }
+  ]
+}

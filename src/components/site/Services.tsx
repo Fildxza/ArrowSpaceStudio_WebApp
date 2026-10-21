@@ -125,8 +125,8 @@ export function Services() {
 
                     <WhatsAppLink
                       message={serviceEnquiryMessage(s.title)}
-                      fallbackHref="#contact"
-                      onFallback={() => announceEnquiry(s.title)}
+                      topic={s.title}
+                      onOpen={() => announceEnquiry(s.title)}
                       className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold tracking-wide"
                     >
                       <span className="link-line">Enquire about {s.title.toLowerCase()}</span>

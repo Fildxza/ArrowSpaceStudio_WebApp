@@ -1,7 +1,7 @@
 import { MessageCircle, Phone } from "lucide-react";
 import { useQuickContactVisible } from "@/hooks/use-quick-contact";
 import { buildTelUrl } from "@/lib/contact";
-import { isWhatsAppConfigured } from "@/lib/whatsapp";
+import { useChatOpen } from "@/lib/chat";
 import { cn } from "@/lib/utils";
 import { WhatsAppLink } from "./WhatsAppLink";
 
@@ -11,8 +11,8 @@ import { WhatsAppLink } from "./WhatsAppLink";
  * it never covers the form. Without a WhatsApp number it links to #contact.
  */
 export function MobileCTA() {
-  const show = useQuickContactVisible();
-  const live = isWhatsAppConfigured();
+  const chatOpen = useChatOpen();
+  const show = useQuickContactVisible() && !chatOpen;
   const tel = buildTelUrl();
 
   return (
@@ -28,9 +28,7 @@ export function MobileCTA() {
       <div className="flex items-center gap-3 bg-ink/95 p-2 pl-4 text-ivory shadow-[0_-1px_0_oklch(1_0_0/0.08),0_12px_32px_oklch(0_0_0/0.35)] backdrop-blur-md">
         <p className="min-w-0 flex-1 text-sm leading-tight">
           <span className="block truncate font-display text-lg">Have a wall in mind?</span>
-          <span className="annot block truncate text-[0.6rem] text-stone">
-            {live ? "Chat on WhatsApp" : "Start your brief"}
-          </span>
+          <span className="annot block truncate text-[0.6rem] text-stone">Chat on WhatsApp</span>
         </p>
         {tel && (
           <a
@@ -41,12 +39,9 @@ export function MobileCTA() {
             <Phone aria-hidden="true" className="size-4" />
           </a>
         )}
-        <WhatsAppLink
-          fallbackHref="#contact"
-          className="btn btn-accent min-h-12 shrink-0 gap-2 px-4 py-3"
-        >
+        <WhatsAppLink className="btn btn-accent min-h-12 shrink-0 gap-2 px-4 py-3">
           <MessageCircle aria-hidden="true" className="size-4" />
-          {live ? "WhatsApp" : "Enquire"}
+          Chat
         </WhatsAppLink>
       </div>
     </aside>

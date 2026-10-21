@@ -66,10 +66,13 @@ describe("<Testimonials />", () => {
 });
 
 describe("<MobileCTA />", () => {
-  it("falls back to the enquiry section while no WhatsApp number is set", () => {
+  it("opens the chat panel (no wa.me link) while no WhatsApp number is set", () => {
     const { container } = render(<MobileCTA />);
     expect(container.querySelector('a[href*="wa.me"]')).toBeNull();
-    expect(container.querySelector('a[href="#contact"]')).not.toBeNull();
+    expect(screen.getByRole("button", { name: /Chat/, hidden: true })).toHaveAttribute(
+      "aria-haspopup",
+      "dialog",
+    );
   });
 
   it("starts hidden from assistive tech until the hero is scrolled past", () => {

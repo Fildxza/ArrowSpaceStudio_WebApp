@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { ArrowDown, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { business, demoDetails, detail } from "@/config/business";
 import { buildMailto, buildTelUrl, displayPhone } from "@/lib/contact";
-import { isWhatsAppConfigured } from "@/lib/whatsapp";
 import { enquiryChecklist } from "@/config/content";
 import { Annot } from "./Graphics";
 import { EnquiryForm } from "./EnquiryForm";
@@ -64,7 +63,6 @@ export function Contact() {
   const address = detail(business.address, demoDetails.address);
   const tel = buildTelUrl();
   const mail = buildMailto(business.email, "Mural enquiry");
-  const waLive = isWhatsAppConfigured();
 
   return (
     <section
@@ -117,11 +115,7 @@ export function Contact() {
                 label="WhatsApp"
                 value={phone.value}
                 sample={phone.sample}
-                action={
-                  <WhatsAppLink fallbackHref="#brief" className={actionCls}>
-                    {waLive ? "Chat" : "Brief"}
-                  </WhatsAppLink>
-                }
+                action={<WhatsAppLink className={actionCls}>Chat</WhatsAppLink>}
               />
             )}
             {phone && (

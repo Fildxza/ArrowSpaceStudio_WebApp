@@ -11,9 +11,10 @@ describe("contact safety without a configured number", () => {
   it("never renders a wa.me link", () => {
     const { container } = render(<Contact />);
     expect(container.querySelector('a[href*="wa.me"]')).toBeNull();
-    expect(screen.getByRole("link", { name: /Chat on WhatsApp/ })).toHaveAttribute(
-      "aria-disabled",
-      "true",
+    // The WhatsApp button still opens the chat panel, which explains the pending number.
+    expect(screen.getByRole("button", { name: /Chat on WhatsApp/ })).toHaveAttribute(
+      "aria-haspopup",
+      "dialog",
     );
   });
 
@@ -23,13 +24,10 @@ describe("contact safety without a configured number", () => {
     expect(screen.getAllByText("Sample").length).toBeGreaterThan(0);
   });
 
-  it("falls back to an on-page anchor when asked", () => {
-    render(
-      <WhatsAppLink fallbackHref="#contact" message="Hi">
-        Enquire
-      </WhatsAppLink>,
-    );
-    expect(screen.getByRole("link", { name: "Enquire" })).toHaveAttribute("href", "#contact");
+  it("renders a plain button, not a link, without a number", () => {
+    render(<WhatsAppLink message="Hi">Enquire</WhatsAppLink>);
+    expect(screen.queryByRole("link", { name: "Enquire" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Enquire" })).toBeInTheDocument();
   });
 });
 

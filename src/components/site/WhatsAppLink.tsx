@@ -1,67 +1,68 @@
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { MessageCircle } from "lucide-react";
-import { isDemo } from "@/config/business";
+import { openChat } from "@/lib/chat";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
-import { cn } from "@/lib/utils";
 
 interface WhatsAppLinkProps {
+  /** Prefilled message for this entry point (e.g. a service enquiry). */
   message?: string;
+  /** Short topic label shown in the chat panel for a custom message. */
+  topic?: string;
   className?: string;
   children: ReactNode;
   /** Show the WhatsApp glyph before the label. */
   icon?: boolean;
-  /**
-   * Where to send the visitor instead when no WhatsApp number is configured
-   * (e.g. "#contact"). Without it the control renders disabled.
-   */
-  fallbackHref?: `#${string}`;
-  onFallback?: () => void;
+  /** Runs when the chat panel is opened from this control (e.g. to close a menu). */
+  onOpen?: () => void;
 }
 
 /**
- * Opens WhatsApp with a prefilled message. Until the owner supplies a number it
- * either falls back to an on-page anchor or renders a disabled control, so a
- * visitor is never sent to a made-up destination.
+ * Opens the WhatsApp quick-chat panel with a prefilled message. When a number
+ * is configured it is also a real wa.me link, so it still works without
+ * JavaScript and with ctrl/cmd-click. Without a number there is no link at
+ * all — the panel explains that sending is not available yet.
  */
 export function WhatsAppLink({
   message,
+  topic,
   className,
   children,
   icon,
-  fallbackHref,
-  onFallback,
+  onOpen,
 }: WhatsAppLinkProps) {
   const url = buildWhatsAppUrl(message);
   const glyph = icon ? <MessageCircle aria-hidden="true" className="size-5 shrink-0" /> : null;
 
-  if (url) {
-    return (
-      <a href={url} target="_blank" rel="noopener noreferrer" className={className}>
-        {glyph}
-        {children}
-        <span className="sr-only"> (opens WhatsApp in a new tab)</span>
-      </a>
-    );
-  }
+  const open = () => {
+    openChat({ ...(message ? { message } : {}), ...(topic ? { topic } : {}) });
+    onOpen?.();
+  };
 
-  if (fallbackHref) {
+  if (url) {
+    const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
+      open();
+    };
     return (
-      <a href={fallbackHref} onClick={onFallback} className={className}>
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-haspopup="dialog"
+        onClick={onClick}
+        className={className}
+      >
+        {glyph}
         {children}
       </a>
     );
   }
 
   return (
-    <span
-      role="link"
-      aria-disabled="true"
-      title="WhatsApp number not configured yet"
-      className={cn(className, "cursor-not-allowed")}
-    >
+    <button type="button" aria-haspopup="dialog" onClick={open} className={className}>
       {glyph}
       {children}
-      {isDemo && <span className="annot opacity-80">· number pending</span>}
-    </span>
+    </button>
   );
 }

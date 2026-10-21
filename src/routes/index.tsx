@@ -11,6 +11,7 @@ import { Nav } from "@/components/site/Nav";
 import { Process } from "@/components/site/Process";
 import { Services } from "@/components/site/Services";
 import { Testimonials } from "@/components/site/Testimonials";
+import { WhatsAppChat } from "@/components/site/WhatsAppChat";
 import { Work } from "@/components/site/Work";
 
 export const Route = createFileRoute("/")({
@@ -42,6 +43,7 @@ function Index() {
       <Footer />
       <MobileCTA />
       <ContactDock />
+      <WhatsAppChat />
     </>
   );
 }

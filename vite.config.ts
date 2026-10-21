@@ -7,7 +7,7 @@ import viteReact from "@vitejs/plugin-react";
 // pre-rendered to static HTML at build time (output: dist/client).
 // That folder can be served by any static host — see netlify.toml.
 export default defineConfig({
-  server: { port: 8080 },
+  server: { port: 5173, strictPort: true },
   css: { transformer: "lightningcss" },
   resolve: {
     tsconfigPaths: true,

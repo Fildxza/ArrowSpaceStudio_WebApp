@@ -29,7 +29,7 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
         <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-6 border-b border-ivory/10 px-5 py-1 text-xs text-stone md:px-10">
           <ul className="flex items-center gap-6">
             <li>
-              <WhatsAppLink fallbackHref="#contact" className={item}>
+              <WhatsAppLink className={item}>
                 <MessageCircle aria-hidden="true" className="size-3.5 text-accent-soft" />
                 WhatsApp
               </WhatsAppLink>
@@ -248,8 +248,7 @@ export function Nav() {
         >
           <div className="flex gap-2">
             <WhatsAppLink
-              fallbackHref="#contact"
-              onFallback={() => setOpen(false)}
+              onOpen={() => setOpen(false)}
               className="btn btn-accent min-h-12 gap-2 px-4 py-3"
             >
               <MessageCircle aria-hidden="true" className="size-4" /> WhatsApp

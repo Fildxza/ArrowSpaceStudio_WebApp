@@ -55,11 +55,28 @@ identity requested) without competing with the artwork.
 
 The page is **pre-rendered to static HTML** at build time — no server is needed.
 
+## Live preview in VS Code
+
+1. Open the project folder in VS Code (`File → Open Folder…`) and accept the
+   prompt to **allow automatic tasks** — the dev server then starts by itself.
+   (Or run `npm run dev` in a terminal.) The site is served at
+   **http://localhost:5173** and hot-reloads on every save.
+2. **See it inside VS Code:** `Ctrl+Shift+P` → **Simple Browser: Show** →
+   paste `http://localhost:5173`. Or press **F5** and choose
+   **Live preview — inside VS Code** (needs the recommended *Microsoft Edge
+   Tools* extension; VS Code offers to install it).
+3. **See it in a browser window:** press **F5** → **Live preview — Edge window**
+   (or Chrome). Breakpoints in `src/` work in this mode.
+
+If the preview shows a different site, another project is already using that
+port — stop it, or change `server.port` in `vite.config.ts`.
+Settings live in `.vscode/` (`tasks.json`, `launch.json`, `settings.json`).
+
 ## Commands
 
 ```sh
 npm install          # Node 20+ (22 recommended)
-npm run dev          # http://localhost:8080
+npm run dev          # http://localhost:5173 (hot reload)
 npm run build        # static site -> dist/client
 npm run preview      # serve the production build
 npm run typecheck    # tsc --noEmit
@@ -123,6 +140,26 @@ Set `whatsappNumber` to the international number, digits only, e.g. `"6012345678
   Service links include the service name; the brief builder includes project
   type, location, wall size, timeline and notes.
 
+### WhatsApp quick-chat
+
+Every WhatsApp button (top bar, mobile menu, mobile bar, dock, services,
+contact section) opens a small chat panel instead of jumping straight to
+WhatsApp:
+
+- The studio greets the visitor ("Hi, how can I help you today?") and a
+  message is **already prepared** — the visitor can press **Send on WhatsApp**
+  immediately, or tap a different quick reply first (quotation, one per
+  service, "I have a question") and optionally add details such as location
+  and wall size.
+- WhatsApp then opens with the message prefilled; the visitor only presses send.
+- Opened from a service link, the panel preselects that service.
+- Without a configured number the panel still opens, but **Send is disabled**
+  and explains why ("Copy message" still works). Nothing opens a wrong number.
+- With a number set, the buttons are also normal `wa.me` links, so they keep
+  working with ctrl/cmd-click and without JavaScript.
+
+Edit the greeting and quick replies in `src/config/content.ts` → `chat`.
+
 ### Call button
 
 Set `phoneNumber` (digits, international format) for voice calls. Leave it
@@ -151,7 +188,7 @@ mode (with the list empty) they are shown as non-clickable samples.
 | Mobile menu | WhatsApp + Call buttons and social icons under the links |
 | Mobile bar (phones) | Sticky "Have a wall in mind?" bar after the hero (+ Call icon once a number is set) |
 | Contact dock (desktop) | Round button bottom-right that fans out into WhatsApp / Call / Email / Build a brief |
-| Services | "Enquire about …" link per service (prefilled WhatsApp message) |
+| Services | "Enquire about …" link per service (opens the quick-chat with that service selected) |
 | Contact section | Channel list (WhatsApp / Call / Email / Studio) + brief builder |
 | Location section | Address, hours, phone, service areas, directions, map |
 
@@ -273,6 +310,9 @@ and a real-browser check with Microsoft Edge via Playwright at 320–1920px)
 - Testimonial/logo section: placeholder mode in demo, hidden in live until real content.
 - Contact dock (desktop) opens/closes (button, Escape, click outside); unconfigured channels disabled.
 - Before/after slider responds to mouse drag and arrow keys.
+- WhatsApp quick-chat: opens from every button, focus moves in and returns on close, Escape closes,
+  service links preselect their topic, Send disabled without a number, and with a harmless test
+  number produces the correct `wa.me` URL with the encoded message (window.open intercepted — WhatsApp itself was not opened).
 - Location section: dummy address + illustrated map; no Google request until a real embed is set.
 - Mobile menu: opens, focuses first link, closes on Escape / link / resize.
 - Portfolio filters (counts, `aria-pressed`, live announcement).

@@ -7,6 +7,8 @@
 import { business, demoDetails, detail, detailList, type Detail } from "./business";
 import { getImage, type SiteImage } from "./images";
 import type { ProjectCategory } from "./portfolio";
+import type { QuickReply } from "@/lib/chat";
+import { DEFAULT_ENQUIRY_MESSAGE, serviceEnquiryMessage } from "@/lib/whatsapp";
 
 export interface NavEntry {
   label: string;
@@ -184,4 +186,27 @@ export const comparison = {
     "hero",
     "The same wall finished as a terracotta and olive botanical mural (demonstration image)",
   ),
+};
+
+/**
+ * WhatsApp quick-chat panel: greeting + one-tap replies. Picking a reply
+ * prepares the message so the visitor only has to press send in WhatsApp.
+ * Reword the greeting and replies to match the studio's voice.
+ */
+export const chat = {
+  greeting: "Hi, how can I help you today?",
+  hint: "Pick a topic — your message is ready, just press send.",
+  replies: [
+    { id: "quote", label: "I'd like a quotation", message: DEFAULT_ENQUIRY_MESSAGE },
+    ...services.map((s) => ({
+      id: s.id,
+      label: s.title,
+      message: serviceEnquiryMessage(s.title),
+    })),
+    {
+      id: "question",
+      label: "I have a question",
+      message: "Hi, I have a question about your mural services.",
+    },
+  ] satisfies QuickReply[],
 };
