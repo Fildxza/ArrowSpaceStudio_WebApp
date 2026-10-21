@@ -103,16 +103,16 @@ export function Annot({ children, className }: { children: ReactNode; className?
   );
 }
 
-/** Placeholder brand mark (monogram). Replace with the company logo when supplied. */
+/** Placeholder brand mark ("F" monogram for Fathil_Art). Replace with the company logo when supplied. */
 export function LogoMark({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" className={className}>
       <rect width="32" height="32" fill="currentColor" />
       <path
-        d="M7 24 11.5 8 16 19 20.5 8 25 24"
+        d="M10.5 25V7.5H23M10.5 16H20"
         fill="none"
         stroke="var(--accent-soft)"
-        strokeWidth="2.6"
+        strokeWidth="2.8"
         strokeLinejoin="miter"
         strokeLinecap="square"
       />

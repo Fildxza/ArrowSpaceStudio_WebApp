@@ -79,7 +79,11 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
             <span className="annot hidden text-[0.6rem] text-stone/70 lg:inline">
               Follow the studio
             </span>
-            <SocialLinks itemClassName="size-9 hover:text-ivory" iconClassName="size-4" />
+            <SocialLinks
+              showHandle
+              itemClassName="size-9 hover:text-ivory"
+              iconClassName="size-4"
+            />
           </div>
         </div>
       </div>

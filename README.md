@@ -1,4 +1,4 @@
-# Mural Studio — Website
+# Fathil_Art — Website
 
 Single-page marketing site for a mural painting studio: hero, services, portfolio
 ("The Exhibition") with filters and a lightbox, process, company profile and a
@@ -58,14 +58,14 @@ The page is **pre-rendered to static HTML** at build time — no server is neede
 ## Live preview in VS Code (code on the left, site on the right)
 
 This is a React/Vite app, so it must be previewed through its **dev server**.
-Do **not** use the *Live Server* / *Live Preview* ("Go Live") extensions — they
+Do **not** use the _Live Server_ / _Live Preview_ ("Go Live") extensions — they
 only serve plain HTML files and will show a blank page or 404 here.
 
 **Two shortcuts (already added to your VS Code user keybindings):**
 
-| Keys | What it does |
-|---|---|
-| `Ctrl+Alt+S` | Starts the dev server (`npm run dev`, hot reload) |
+| Keys         | What it does                                            |
+| ------------ | ------------------------------------------------------- |
+| `Ctrl+Alt+S` | Starts the dev server (`npm run dev`, hot reload)       |
 | `Ctrl+Alt+P` | Opens the site in a Simple Browser **beside** your code |
 
 1. Open the folder in VS Code and press **Ctrl+Alt+S**. Wait for the terminal to
@@ -75,19 +75,25 @@ only serve plain HTML files and will show a blank page or 404 here.
 
 No shortcut? `Ctrl+Shift+P` → **Simple Browser: Show** → `http://localhost:5173`,
 then drag the tab to the right side. To recreate the shortcuts on another
-machine, add this to *Preferences: Open Keyboard Shortcuts (JSON)*:
+machine, add this to _Preferences: Open Keyboard Shortcuts (JSON)_:
 
 ```json
 [
-  { "key": "ctrl+alt+p", "command": "simpleBrowser.api.open",
-    "args": ["http://localhost:5173", { "viewColumn": -2, "preserveFocus": true }] },
-  { "key": "ctrl+alt+s", "command": "workbench.action.tasks.runTask",
-    "args": "Dev server (live preview)" }
+  {
+    "key": "ctrl+alt+p",
+    "command": "simpleBrowser.api.open",
+    "args": ["http://localhost:5173", { "viewColumn": -2, "preserveFocus": true }]
+  },
+  {
+    "key": "ctrl+alt+s",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Dev server (live preview)"
+  }
 ]
 ```
 
-Other options: **F5** → *Live preview — inside VS Code* (Microsoft Edge Tools
-extension) or *Live preview — Edge window* (supports breakpoints).
+Other options: **F5** → _Live preview — inside VS Code_ (Microsoft Edge Tools
+extension) or _Live preview — Edge window_ (supports breakpoints).
 If the preview shows a different site, another project is already using port
 5173 — stop it (the dev server is pinned to 5173 and will refuse to start).
 Settings live in `.vscode/` (`tasks.json`, `launch.json`, `settings.json`).
@@ -202,15 +208,15 @@ mode (with the list empty) they are shown as non-clickable samples.
 
 ### Where visitors can contact you
 
-| Place | What it does |
-|---|---|
-| Header top bar (desktop) | WhatsApp, phone, email, opening hours, social icons — collapses on scroll |
-| Mobile menu | WhatsApp + Call buttons and social icons under the links |
-| Mobile bar (phones) | Sticky "Have a wall in mind?" bar after the hero (+ Call icon once a number is set) |
-| Contact dock (desktop) | Round button bottom-right that fans out into WhatsApp / Call / Email / Build a brief |
-| Services | "Enquire about …" link per service (opens the quick-chat with that service selected) |
-| Contact section | Channel list (WhatsApp / Call / Email / Studio) + brief builder |
-| Location section | Address, hours, phone, service areas, directions, map |
+| Place                    | What it does                                                                         |
+| ------------------------ | ------------------------------------------------------------------------------------ |
+| Header top bar (desktop) | WhatsApp, phone, email, opening hours, social icons — collapses on scroll            |
+| Mobile menu              | WhatsApp + Call buttons and social icons under the links                             |
+| Mobile bar (phones)      | Sticky "Have a wall in mind?" bar after the hero (+ Call icon once a number is set)  |
+| Contact dock (desktop)   | Round button bottom-right that fans out into WhatsApp / Call / Email / Build a brief |
+| Services                 | "Enquire about …" link per service (opens the quick-chat with that service selected) |
+| Contact section          | Channel list (WhatsApp / Call / Email / Studio) + brief builder                      |
+| Location section         | Address, hours, phone, service areas, directions, map                                |
 
 The floating bar and dock hide over the hero, the contact section, the
 location section and the footer so they never cover the forms.
@@ -287,7 +293,7 @@ Once confirmed:
 ### Before / after slider ("From sketch to wall")
 
 At the end of the Process section. Configure `comparison` in
-`src/config/content.ts`: add a real *before* photo and the *finished* photo of
+`src/config/content.ts`: add a real _before_ photo and the _finished_ photo of
 the same wall to `src/assets/`, run `npm run images`, point `before` / `after`
 at them with `getImage()`, adjust the labels and set `verified: true`.
 The current sketch was generated from the demo image.
@@ -349,8 +355,11 @@ and a real-browser check with Microsoft Edge via Playwright at 320–1920px)
 
 **C. Waiting for real company information**
 
-- Company name, logo, tagline/description, WhatsApp number, email, address or
-  service areas, social links, year established, lead artist, real About copy.
+- Logo (a placeholder "F" monogram is used), tagline/description, WhatsApp number, email,
+  address or service areas, Instagram/Facebook links (if any), year established,
+  lead artist, real About copy.
+- **Confirmed so far:** display name `Fathil_Art` and TikTok profile
+  `https://www.tiktok.com/@fathil_art`.
 - Confirmation of the service list and process steps.
 - Approved client testimonials and permission to show client logos.
 - Phone number, opening hours, social profile URLs, Google Maps link/embed.

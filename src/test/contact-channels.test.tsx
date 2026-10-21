@@ -41,12 +41,33 @@ describe("contact helpers", () => {
   });
 });
 
-describe("<SocialLinks /> in demo mode", () => {
-  it("shows all three platforms without linking anywhere", () => {
-    const { container } = render(<SocialLinks />);
-    expect(container.querySelectorAll("a")).toHaveLength(0);
-    for (const name of ["Instagram", "Facebook", "TikTok"]) {
-      expect(screen.getByText(`${name} (sample, link pending)`)).toBeInTheDocument();
+describe("<SocialLinks />", () => {
+  it("links the confirmed TikTok profile safely and shows no other platforms", () => {
+    const { container } = render(<SocialLinks showHandle />);
+    const link = screen.getByRole("link", { name: /TikTok @fathil_art/ });
+    expect(link).toHaveAttribute("href", "https://www.tiktok.com/@fathil_art");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(container.querySelectorAll("a")).toHaveLength(1);
+    expect(screen.queryByText(/Instagram|Facebook/)).toBeNull();
+    expect(screen.getByText("@fathil_art")).toBeInTheDocument();
+  });
+
+  it("keeps the tracking parameters out of the stored profile URL", () => {
+    for (const s of business.socials) expect(new URL(s.href).search).toBe("");
+  });
+
+  it("falls back to non-clickable samples in demo mode when no profile is configured", () => {
+    const saved = business.socials;
+    business.socials = [];
+    try {
+      const { container } = render(<SocialLinks />);
+      expect(container.querySelectorAll("a")).toHaveLength(0);
+      for (const name of ["Instagram", "Facebook", "TikTok"]) {
+        expect(screen.getByText(`${name} (sample, link pending)`)).toBeInTheDocument();
+      }
+    } finally {
+      business.socials = saved;
     }
   });
 });

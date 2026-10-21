@@ -80,7 +80,7 @@ export interface SeoConfig {
 
 export const business: BusinessConfig = {
   contentStatus: "demo",
-  name: "MURAL STUDIO", // [OWNER] placeholder company name
+  name: "Fathil_Art", // confirmed display name (matches the TikTok handle)
   tagline: "Bespoke mural art for spaces that deserve to stand out.",
   description:
     "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors.",
@@ -92,7 +92,10 @@ export const business: BusinessConfig = {
   openingHours: "", // [OWNER]
   mapUrl: "", // [OWNER]
   mapEmbedUrl: "", // [OWNER]
-  socials: [], // [OWNER] real URLs only
+  // Real profiles only. Tracking parameters (?_r=1&_t=…) were removed from the TikTok URL.
+  socials: [
+    { platform: "tiktok", href: "https://www.tiktok.com/@fathil_art", handle: "@fathil_art" },
+  ],
   established: "", // [OWNER]
   leadArtist: "", // [OWNER]
 };
@@ -115,7 +118,7 @@ export const demoDetails = {
 };
 
 export const seo: SeoConfig = {
-  title: "Mural Studio — Bespoke Mural Art & Commissioned Painting",
+  title: "Fathil_Art — Bespoke Mural Art & Commissioned Painting",
   description:
     "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors. Explore selected work and start a project.",
   siteUrl: "", // [OWNER] set once the domain is known
