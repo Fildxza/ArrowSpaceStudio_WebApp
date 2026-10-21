@@ -5,8 +5,9 @@ import { ContactDock } from "@/components/site/ContactDock";
 import { Location } from "@/components/site/Location";
 import { SocialLinks } from "@/components/site/SocialIcons";
 import { business } from "@/config/business";
+import { withoutContactNumbers } from "./unconfigured";
 import { comparison } from "@/config/content";
-import { buildMailto, buildTelUrl, callNumber, directionsUrl } from "@/lib/contact";
+import { buildMailto, buildTelUrl, callNumber, directionsUrl, displayPhone } from "@/lib/contact";
 
 describe("contact helpers", () => {
   it("builds tel: links only for valid numbers", () => {
@@ -35,21 +36,39 @@ describe("contact helpers", () => {
     );
   });
 
-  it("ships without a fabricated phone number", () => {
+  it("reuses the approved WhatsApp number for calls and groups Malaysian numbers", () => {
     expect(business.phoneNumber).toBe("");
-    expect(buildTelUrl()).toBeNull();
+    expect(buildTelUrl()).toBe("tel:+60132512588");
+    expect(displayPhone()).toBe("+60 13-251 2588");
+    expect(displayPhone("601112345678")).toBe("+60 11-1234 5678");
+    expect(displayPhone("442071838750")).toBe("+442071838750");
+    expect(displayPhone("")).toBe("");
+  });
+
+  describe("without any number", () => {
+    withoutContactNumbers();
+    it("never produces a tel: link", () => {
+      expect(buildTelUrl()).toBeNull();
+      expect(displayPhone()).toBe("");
+    });
   });
 });
 
 describe("<SocialLinks />", () => {
-  it("links the confirmed TikTok profile safely and shows no other platforms", () => {
+  it("links the three confirmed profiles safely", () => {
     const { container } = render(<SocialLinks showHandle />);
-    const link = screen.getByRole("link", { name: /TikTok @fathil_art/ });
-    expect(link).toHaveAttribute("href", "https://www.tiktok.com/@fathil_art");
-    expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "noopener noreferrer");
-    expect(container.querySelectorAll("a")).toHaveLength(1);
-    expect(screen.queryByText(/Instagram|Facebook/)).toBeNull();
+    const expected: Record<string, string> = {
+      TikTok: "https://www.tiktok.com/@fathil_art",
+      Instagram: "https://www.instagram.com/fathil.ahmad88/",
+      Facebook: "https://www.facebook.com/fathil.ahmad/",
+    };
+    for (const [name, href] of Object.entries(expected)) {
+      const link = screen.getByRole("link", { name: new RegExp(`^${name}`) });
+      expect(link).toHaveAttribute("href", href);
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    }
+    expect(container.querySelectorAll("a")).toHaveLength(3);
     expect(screen.getByText("@fathil_art")).toBeInTheDocument();
   });
 
@@ -84,6 +103,7 @@ describe("<Location />", () => {
 });
 
 describe("<ContactDock />", () => {
+  withoutContactNumbers();
   it("toggles the speed-dial and keeps unconfigured channels disabled", () => {
     render(<ContactDock />);
     const toggle = screen.getByRole("button", { name: "Contact the studio", hidden: true });

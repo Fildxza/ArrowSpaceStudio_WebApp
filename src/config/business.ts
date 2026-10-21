@@ -84,7 +84,7 @@ export const business: BusinessConfig = {
   tagline: "Bespoke mural art for spaces that deserve to stand out.",
   description:
     "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors.",
-  whatsappNumber: "", // [OWNER] e.g. "601XXXXXXXX"
+  whatsappNumber: "60132512588", // owner-approved: the number in the TikTok bio "WA … utk tempahan"
   phoneNumber: "", // [OWNER] leave empty to reuse the WhatsApp number
   email: "", // [OWNER]
   address: "", // [OWNER] only if there is a public studio
@@ -92,9 +92,16 @@ export const business: BusinessConfig = {
   openingHours: "", // [OWNER]
   mapUrl: "", // [OWNER]
   mapEmbedUrl: "", // [OWNER]
-  // Real profiles only. Tracking parameters (?_r=1&_t=…) were removed from the TikTok URL.
+  // Real profiles only. Tracking parameters were removed and the legacy web.facebook.com
+  // host was normalised to www.facebook.com.
   socials: [
     { platform: "tiktok", href: "https://www.tiktok.com/@fathil_art", handle: "@fathil_art" },
+    {
+      platform: "instagram",
+      href: "https://www.instagram.com/fathil.ahmad88/",
+      handle: "@fathil.ahmad88",
+    },
+    { platform: "facebook", href: "https://www.facebook.com/fathil.ahmad/" },
   ],
   established: "", // [OWNER]
   leadArtist: "", // [OWNER]

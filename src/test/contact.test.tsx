@@ -1,13 +1,16 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
+import { business } from "@/config/business";
 import { WhatsAppLink } from "@/components/site/WhatsAppLink";
 import { announceEnquiry } from "@/lib/enquiry";
+import { withoutContactNumbers } from "./unconfigured";
 import { Contact } from "@/components/site/Contact";
 
 afterEach(() => vi.restoreAllMocks());
 
 describe("contact safety without a configured number", () => {
+  withoutContactNumbers();
   it("never renders a wa.me link", () => {
     const { container } = render(<Contact />);
     expect(container.querySelector('a[href*="wa.me"]')).toBeNull();
@@ -31,6 +34,16 @@ describe("contact safety without a configured number", () => {
   });
 });
 
+describe("contact with the owner-approved number", () => {
+  it("links WhatsApp to the approved number and marks it as a real detail", () => {
+    const { container } = render(<Contact />);
+    const link = container.querySelector('a[href^="https://wa.me/60132512588"]');
+    expect(link).not.toBeNull();
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    expect(screen.getAllByText("+60 13-251 2588").length).toBeGreaterThan(0);
+  });
+});
+
 describe("<EnquiryForm />", () => {
   it("requires a project type and shows an accessible error", () => {
     render(<EnquiryForm />);
@@ -39,8 +52,11 @@ describe("<EnquiryForm />", () => {
   });
 
   it("disables WhatsApp sending until a number is configured", () => {
+    const saved = business.whatsappNumber;
+    business.whatsappNumber = "";
     render(<EnquiryForm />);
     expect(screen.getByRole("button", { name: /Send brief on WhatsApp/ })).toBeDisabled();
+    business.whatsappNumber = saved;
   });
 
   it("pre-selects the service announced by a service link", () => {

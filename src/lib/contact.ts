@@ -11,9 +11,21 @@ export function buildTelUrl(number: string = callNumber()): string | null {
   return isValidWhatsAppNumber(number) ? `tel:+${normalizePhone(number)}` : null;
 }
 
-/** Human-readable phone number, e.g. "+60 12-345 6789" stays as entered digits with a "+". */
+/**
+ * Human-readable phone number. Malaysian mobiles are grouped ("+60 13-251 2588");
+ * any other number is shown as "+<digits>".
+ */
 export function displayPhone(number: string = callNumber()): string {
-  return number ? `+${normalizePhone(number)}` : "";
+  const digits = normalizePhone(number);
+  if (!digits) return "";
+  if (digits.startsWith("60") && (digits.length === 11 || digits.length === 12)) {
+    const national = digits.slice(2);
+    const prefix = national.slice(0, 2);
+    const rest = national.slice(2);
+    const cut = rest.length === 7 ? 3 : 4;
+    return `+60 ${prefix}-${rest.slice(0, cut)} ${rest.slice(cut)}`;
+  }
+  return `+${digits}`;
 }
 
 /** Google Maps directions link for an address (no API key needed). */

@@ -44,11 +44,10 @@ describe("WhatsApp helper", () => {
     expect(buildWhatsAppUrl("Hi", { number: "60000" })).toBeNull();
   });
 
-  it("does not ship a fabricated number in the configuration", () => {
-    // The owner has not supplied a number yet; the site must not link anywhere.
-    expect(business.whatsappNumber).toBe("");
-    expect(isWhatsAppConfigured()).toBe(false);
-    expect(buildWhatsAppUrl()).toBeNull();
+  it("uses the owner-approved number from the TikTok bio, in valid international form", () => {
+    expect(business.whatsappNumber).toBe("60132512588");
+    expect(isWhatsAppConfigured()).toBe(true);
+    expect(buildWhatsAppUrl("Hi")).toBe("https://wa.me/60132512588?text=Hi");
   });
 
   it("includes the selected service in service enquiries", () => {

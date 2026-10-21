@@ -188,8 +188,9 @@ Edit the greeting and quick replies in `src/config/content.ts` → `chat`.
 
 ### Call button
 
-Set `phoneNumber` (digits, international format) for voice calls. Leave it
-empty to reuse `whatsappNumber`. Until one of them is valid, every "Call"
+Set `phoneNumber` (digits, international format) for voice calls. Left empty, it
+**reuses `whatsappNumber`** — so right now the Call buttons dial the WhatsApp number
+(`tel:+60132512588`). If the owner does not want calls, tell the developer to hide them. Until one of them is valid, every "Call"
 button (top bar, mobile menu, mobile bar, contact dock, contact list, location)
 is disabled.
 
@@ -355,11 +356,11 @@ and a real-browser check with Microsoft Edge via Playwright at 320–1920px)
 
 **C. Waiting for real company information**
 
-- Logo (a placeholder "F" monogram is used), tagline/description, WhatsApp number, email,
-  address or service areas, Instagram/Facebook links (if any), year established,
-  lead artist, real About copy.
-- **Confirmed so far:** display name `Fathil_Art` and TikTok profile
-  `https://www.tiktok.com/@fathil_art`.
+- Logo (a placeholder "F" monogram is used), tagline/description, email, address or
+  service areas, opening hours, year established, lead artist, real About copy.
+- **Confirmed so far:** display name `Fathil_Art`; WhatsApp `60132512588` (from the
+  TikTok bio, approved by the project owner); TikTok `@fathil_art`, Instagram
+  `@fathil.ahmad88` and Facebook `fathil.ahmad`.
 - Confirmation of the service list and process steps.
 - Approved client testimonials and permission to show client logos.
 - Phone number, opening hours, social profile URLs, Google Maps link/embed.

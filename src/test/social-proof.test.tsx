@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { MobileCTA } from "@/components/site/MobileCTA";
 import { Testimonials } from "@/components/site/Testimonials";
+import { withoutContactNumbers } from "./unconfigured";
 import {
   DEMO_LOGO_SLOTS,
   clientLogos,
@@ -66,6 +67,7 @@ describe("<Testimonials />", () => {
 });
 
 describe("<MobileCTA />", () => {
+  withoutContactNumbers();
   it("opens the chat panel (no wa.me link) while no WhatsApp number is set", () => {
     const { container } = render(<MobileCTA />);
     expect(container.querySelector('a[href*="wa.me"]')).toBeNull();
