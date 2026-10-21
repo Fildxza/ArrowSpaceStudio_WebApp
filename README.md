@@ -55,21 +55,41 @@ identity requested) without competing with the artwork.
 
 The page is **pre-rendered to static HTML** at build time — no server is needed.
 
-## Live preview in VS Code
+## Live preview in VS Code (code on the left, site on the right)
 
-1. Open the project folder in VS Code (`File → Open Folder…`) and accept the
-   prompt to **allow automatic tasks** — the dev server then starts by itself.
-   (Or run `npm run dev` in a terminal.) The site is served at
-   **http://localhost:5173** and hot-reloads on every save.
-2. **See it inside VS Code:** `Ctrl+Shift+P` → **Simple Browser: Show** →
-   paste `http://localhost:5173`. Or press **F5** and choose
-   **Live preview — inside VS Code** (needs the recommended *Microsoft Edge
-   Tools* extension; VS Code offers to install it).
-3. **See it in a browser window:** press **F5** → **Live preview — Edge window**
-   (or Chrome). Breakpoints in `src/` work in this mode.
+This is a React/Vite app, so it must be previewed through its **dev server**.
+Do **not** use the *Live Server* / *Live Preview* ("Go Live") extensions — they
+only serve plain HTML files and will show a blank page or 404 here.
 
-If the preview shows a different site, another project is already using that
-port — stop it, or change `server.port` in `vite.config.ts`.
+**Two shortcuts (already added to your VS Code user keybindings):**
+
+| Keys | What it does |
+|---|---|
+| `Ctrl+Alt+S` | Starts the dev server (`npm run dev`, hot reload) |
+| `Ctrl+Alt+P` | Opens the site in a Simple Browser **beside** your code |
+
+1. Open the folder in VS Code and press **Ctrl+Alt+S**. Wait for the terminal to
+   show `Local: http://localhost:5173/`.
+2. Press **Ctrl+Alt+P** — the site appears in a panel on the right. Every time
+   you save a file the preview updates by itself.
+
+No shortcut? `Ctrl+Shift+P` → **Simple Browser: Show** → `http://localhost:5173`,
+then drag the tab to the right side. To recreate the shortcuts on another
+machine, add this to *Preferences: Open Keyboard Shortcuts (JSON)*:
+
+```json
+[
+  { "key": "ctrl+alt+p", "command": "simpleBrowser.api.open",
+    "args": ["http://localhost:5173", { "viewColumn": -2, "preserveFocus": true }] },
+  { "key": "ctrl+alt+s", "command": "workbench.action.tasks.runTask",
+    "args": "Dev server (live preview)" }
+]
+```
+
+Other options: **F5** → *Live preview — inside VS Code* (Microsoft Edge Tools
+extension) or *Live preview — Edge window* (supports breakpoints).
+If the preview shows a different site, another project is already using port
+5173 — stop it (the dev server is pinned to 5173 and will refuse to start).
 Settings live in `.vscode/` (`tasks.json`, `launch.json`, `settings.json`).
 
 ## Commands
