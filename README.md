@@ -137,11 +137,28 @@ netlify.toml        <- Netlify build settings
 
 ---
 
+## Language: Bahasa Melayu / English
+
+The whole site is bilingual (BM | EN toggle in the header top bar and the mobile menu).
+
+- **Which language shows first:** the visitor's saved choice, otherwise their browser
+  language (`ms*` → Bahasa Melayu, anything else → English). To force one for first-time
+  visitors set `DEFAULT_LANGUAGE` in `src/i18n/index.ts` (`"ms"`, `"en"` or `"auto"`).
+- **Fixed UI text** (buttons, labels, form, chat panel, error pages, WhatsApp messages):
+  `src/i18n/copy.ts`. Both languages live side by side and Bahasa Melayu is typed against
+  English, so a missing key is a compile error (and a test fails).
+- **Owner-editable content** (services, portfolio titles, process, About, testimonials,
+  image descriptions) is stored as `{ en: "…", ms: "…" }` pairs in `src/config/*.ts`.
+  A plain string is used for both languages.
+- WhatsApp messages are sent in the language the visitor is browsing in.
+- `<html lang>` and the tab title follow the language. The prerendered HTML is English,
+  so search engines index the English version.
+
 ## Updating content (owner guide)
 
 ### Company details — `src/config/business.ts`
 
-Fill in the fields marked `[OWNER]`: `name`, `tagline`, `description`,
+Fill in the fields marked `[OWNER]` (already confirmed: `name`, `whatsappNumber`, `leadArtist`, `socials`): `name`, `tagline`, `description`,
 `whatsappNumber`, `phoneNumber`, `email`, `address` (only if there is a public
 studio), `serviceAreas`, `openingHours`, `mapUrl`, `mapEmbedUrl`, `socials`,
 `established`, `leadArtist`.
@@ -154,6 +171,11 @@ studio), `serviceAreas`, `openingHours`, `mapUrl`, `mapEmbedUrl`, `socials`,
   "Sample / Proposed / Placeholder" markers.
 - **Mobile service without a studio?** Leave `address` empty and list
   `serviceAreas` — the site will show coverage instead of implying a premises.
+
+### Follow section (TikTok / Instagram / Facebook)
+
+A "Follow" section after About lists every profile in `business.socials` with the handle.
+It is hidden automatically when `socials` is empty.
 
 ### WhatsApp
 
@@ -341,7 +363,9 @@ and a real-browser check with Microsoft Edge via Playwright at 320–1920px)
   service links preselect their topic, Send disabled without a number, and with a harmless test
   number produces the correct `wa.me` URL with the encoded message (window.open intercepted — WhatsApp itself was not opened).
 - Location section: dummy address + illustrated map; no Google request until a real embed is set.
-- Mobile menu: opens, focuses first link, closes on Escape / link / resize.
+- Mobile menu (shown below 1024px): opens, focuses first link, closes on Escape / link / resize.
+- Bahasa Melayu / English: browser-language detection, toggle, persistence after reload, `html lang`, tab title,
+  no leftover English in BM mode, no horizontal overflow in either language at 320–1920px.
 - Portfolio filters (counts, `aria-pressed`, live announcement).
 - Lightbox: keyboard ←/→, Escape, visible close button, focus trap, focus
   returns to the tile, page scroll locked while open, swipe on touch.
@@ -358,9 +382,9 @@ and a real-browser check with Microsoft Edge via Playwright at 320–1920px)
 
 - Logo (a placeholder "F" monogram is used), tagline/description, email, address or
   service areas, opening hours, year established, lead artist, real About copy.
-- **Confirmed so far:** display name `Fathil_Art`; WhatsApp `60132512588` (from the
-  TikTok bio, approved by the project owner); TikTok `@fathil_art`, Instagram
-  `@fathil.ahmad88` and Facebook `fathil.ahmad`.
+- **Confirmed so far:** display name `Fathil_Art`; lead artist `Fathil Ahmad`; WhatsApp
+  `60132512588` (from the TikTok bio, approved by the project owner); TikTok
+  `@fathil_art`, Instagram `@fathil.ahmad88` and Facebook `fathil.ahmad`.
 - Confirmation of the service list and process steps.
 - Approved client testimonials and permission to show client logos.
 - Phone number, opening hours, social profile URLs, Google Maps link/embed.

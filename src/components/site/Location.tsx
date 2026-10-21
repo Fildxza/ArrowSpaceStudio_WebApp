@@ -1,14 +1,17 @@
 import { useState, type ReactNode } from "react";
 import { Clock, MapPin, Navigation, Phone } from "lucide-react";
 import { business, demoDetails, detail, detailList, isDemo } from "@/config/business";
+import { useCopy, useL } from "@/i18n";
 import { buildTelUrl, directionsUrl, displayPhone } from "@/lib/contact";
+import { fmt } from "@/i18n";
 import { Annot } from "./Graphics";
 import { Reveal } from "./Motion";
 
 function SampleTag() {
+  const t = useCopy();
   return (
     <span className="annot ml-2 border border-current px-1.5 py-0.5 align-middle text-[0.6rem] text-accent-deep">
-      Sample
+      {t.common.sample}
     </span>
   );
 }
@@ -29,13 +32,9 @@ function Row({ icon, label, children }: { icon: ReactNode; label: string; childr
 
 /** Stylised site-plan map used until a real map is configured. Purely decorative. */
 function SampleMap() {
+  const t = useCopy();
   return (
-    <svg
-      viewBox="0 0 800 560"
-      role="img"
-      aria-label="Illustrated sample map with a pin marking a placeholder studio location"
-      className="h-full w-full"
-    >
+    <svg viewBox="0 0 800 560" role="img" aria-label={t.location.mapAria} className="h-full w-full">
       <rect width="800" height="560" fill="var(--stone)" />
       {/* park + water */}
       <path
@@ -98,7 +97,7 @@ function SampleMap() {
           fontSize="10"
           letterSpacing="1.5"
         >
-          SAMPLE LOCATION
+          {t.location.sampleLocation}
         </text>
       </g>
       {/* compass */}
@@ -128,11 +127,12 @@ function SampleMap() {
 
 /** Real Google Map behind a click-to-load facade (no third-party request until asked). */
 function EmbeddedMap({ src }: { src: string }) {
+  const t = useCopy();
   const [loaded, setLoaded] = useState(false);
   if (loaded) {
     return (
       <iframe
-        title={`Map showing ${business.name}`}
+        title={fmt(t.location.mapTitle, { name: business.name })}
         src={src}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
@@ -148,15 +148,17 @@ function EmbeddedMap({ src }: { src: string }) {
     >
       <SampleMap />
       <span className="btn btn-ink absolute">
-        <MapPin aria-hidden="true" className="size-4" /> Load interactive map
+        <MapPin aria-hidden="true" className="size-4" /> {t.location.loadMap}
       </span>
     </button>
   );
 }
 
 export function Location() {
+  const t = useCopy();
+  const l = useL();
   const address = detail(business.address, demoDetails.address);
-  const hours = detail(business.openingHours, demoDetails.openingHours);
+  const hours = detail(business.openingHours, l(demoDetails.openingHours));
   const phone = detail(displayPhone(), demoDetails.phone);
   const areas = detailList(business.serviceAreas, demoDetails.serviceAreas);
   const tel = buildTelUrl();
@@ -174,7 +176,10 @@ export function Location() {
       <div className="mx-auto grid max-w-[1500px] grid-cols-12 gap-x-6 gap-y-14 px-5 md:px-10">
         <div className="col-span-12 lg:col-span-5">
           <Reveal>
-            <Annot>Studio &amp; Coverage{isDemo && address?.sample ? " — Sample" : ""}</Annot>
+            <Annot>
+              {t.location.label}
+              {isDemo && address?.sample ? " — " + t.common.sample : ""}
+            </Annot>
           </Reveal>
           <Reveal
             as="h2"
@@ -182,30 +187,30 @@ export function Location() {
             className="mt-6 font-display text-[clamp(2.6rem,5vw,4.8rem)] font-light leading-[0.95] tracking-[-0.02em]"
           >
             <span id="location-title">
-              Find the
+              {t.location.headingA}
               <br />
-              <em className="italic text-accent-deep">studio.</em>
+              <em className="italic text-accent-deep">{t.location.headingB}</em>
             </span>
           </Reveal>
           <Reveal as="p" delay={140} className="mt-6 max-w-sm text-muted-foreground">
-            Where to find the studio and the areas it covers. Get in touch first to arrange a visit.
+            {t.location.intro}
           </Reveal>
 
           <Reveal as="dl" delay={200} className="mt-10 border-t border-charcoal/80">
             {address && (
-              <Row icon={<MapPin className="size-4" />} label="Address">
+              <Row icon={<MapPin className="size-4" />} label={t.location.address}>
                 {address.value}
                 {address.sample && <SampleTag />}
               </Row>
             )}
             {hours && (
-              <Row icon={<Clock className="size-4" />} label="Opening hours">
+              <Row icon={<Clock className="size-4" />} label={t.location.hours}>
                 {hours.value}
                 {hours.sample && <SampleTag />}
               </Row>
             )}
             {phone && (
-              <Row icon={<Phone className="size-4" />} label="Phone">
+              <Row icon={<Phone className="size-4" />} label={t.location.phone}>
                 {tel ? (
                   <a href={tel} className="link-line">
                     {phone.value}
@@ -217,7 +222,7 @@ export function Location() {
               </Row>
             )}
             {areas && (
-              <Row icon={<Navigation className="size-4" />} label="Service areas">
+              <Row icon={<Navigation className="size-4" />} label={t.location.areas}>
                 {areas.values.join(" · ")}
                 {areas.sample && <SampleTag />}
               </Row>
@@ -227,17 +232,17 @@ export function Location() {
           <Reveal delay={260} className="mt-8 flex flex-wrap gap-3">
             {mapLink ? (
               <a href={mapLink} target="_blank" rel="noopener noreferrer" className="btn btn-ink">
-                <Navigation aria-hidden="true" className="size-4" /> Get directions
-                <span className="sr-only"> (opens Google Maps in a new tab)</span>
+                <Navigation aria-hidden="true" className="size-4" /> {t.location.directions}
+                <span className="sr-only"> {t.location.directionsSr}</span>
               </a>
             ) : (
-              <span aria-disabled="true" title="Address not confirmed yet" className="btn btn-ink">
-                <Navigation aria-hidden="true" className="size-4" /> Get directions
+              <span aria-disabled="true" title={t.location.addressPending} className="btn btn-ink">
+                <Navigation aria-hidden="true" className="size-4" /> {t.location.directions}
               </span>
             )}
             {tel && (
-              <a href={tel} className="btn btn-outline text-charcoal">
-                <Phone aria-hidden="true" className="size-4" /> Call
+              <a href={tel} className="btn btn-outline btn-outline-dark text-charcoal">
+                <Phone aria-hidden="true" className="size-4" /> {t.location.call}
               </a>
             )}
           </Reveal>
@@ -250,9 +255,7 @@ export function Location() {
             </div>
           </div>
           <p className="annot mt-4 text-muted-foreground">
-            {business.mapEmbedUrl
-              ? "Map data © Google"
-              : "Illustrated sample map — the live Google Map appears once the address is confirmed."}
+            {business.mapEmbedUrl ? t.location.mapCredit : t.location.mapSample}
           </p>
         </Reveal>
       </div>

@@ -1,19 +1,20 @@
 import { isDemo } from "@/config/business";
+import { useCopy, useL } from "@/i18n";
 import { about } from "@/config/content";
 import { getImage } from "@/config/images";
 import { Annot, BrushStroke } from "./Graphics";
 import { Parallax, Reveal } from "./Motion";
 
-const artist = getImage(
-  "artist",
-  "Muralist on a scaffold painting a large navy and terracotta wall (demonstration image)",
-);
-const detailImg = getImage(
-  "detail",
-  "Close-up of thick hand-painted brushwork in terracotta, ochre and green (demonstration image)",
-);
+const artist = getImage("artist", {
+  en: "Muralist on a scaffold painting a large navy and terracotta wall (demonstration image)",
+  ms: "Pelukis mural di atas perancah melukis dinding besar biru laut dan terakota (imej demonstrasi)",
+});
+const detailImg = getImage("detail", {
+  en: "Close-up of thick hand-painted brushwork in terracotta, ochre and green (demonstration image)",
+  ms: "Gambar dekat sapuan berus tebal berwarna terakota, oker dan hijau (imej demonstrasi)",
+});
 
-function SampleTag({ children = "Sample" }: { children?: string }) {
+function SampleTag({ children }: { children: string }) {
   return (
     <span className="annot ml-2 border border-current px-1.5 py-0.5 align-middle text-[0.6rem] text-accent-deep">
       {children}
@@ -22,6 +23,8 @@ function SampleTag({ children = "Sample" }: { children?: string }) {
 }
 
 export function About() {
+  const t = useCopy();
+  const l = useL();
   const showPlaceholder = isDemo && about.placeholder;
   const rows = about.profile.filter((r) => r.detail);
 
@@ -44,7 +47,7 @@ export function About() {
                     sizes="(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 100vw"
                     width={artist.width}
                     height={artist.height}
-                    alt={artist.alt}
+                    alt={l(artist.alt)}
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover"
@@ -73,14 +76,15 @@ export function About() {
             </div>
           </Reveal>
           <p className="annot mt-4 text-muted-foreground">
-            Fig. 02 — On the wall{isDemo ? " · Sample image" : ""}
+            {t.about.fig}
+            {isDemo ? " · " + t.common.sampleImage : ""}
           </p>
         </div>
 
         {/* Story + profile */}
         <div className="col-span-12 md:col-span-6 lg:col-span-6 lg:col-start-7">
           <Reveal>
-            <Annot>About the Studio</Annot>
+            <Annot>{t.about.label}</Annot>
           </Reveal>
           <Reveal
             as="h2"
@@ -89,9 +93,9 @@ export function About() {
             className="relative mt-6 w-fit font-display text-[clamp(2.6rem,5.4vw,5.2rem)] font-light leading-[0.98] tracking-[-0.02em]"
           >
             <span id="about-title">
-              Painted by hand,
+              {t.about.headingA}
               <br />
-              <em className="italic text-accent-deep">made for place.</em>
+              <em className="italic text-accent-deep">{t.about.headingB}</em>
             </span>
             <BrushStroke
               delay={500}
@@ -111,22 +115,22 @@ export function About() {
                     : "max-w-xl leading-relaxed text-muted-foreground"
                 }
               >
-                {p}
+                {l(p)}
               </Reveal>
             ))}
             {showPlaceholder && (
               <p className="annot max-w-xl border-l-2 border-accent pl-3 text-muted-foreground">
-                Placeholder copy — replace with the studio's real story before launch.
+                {t.about.placeholderNote}
               </p>
             )}
           </div>
 
           <Reveal as="ul" delay={120} className="mt-12 grid gap-px bg-charcoal/15 sm:grid-cols-3">
             {about.principles.map((p, i) => (
-              <li key={p.title} className="bg-ivory py-5 pr-5 sm:px-5 sm:first:pl-0">
+              <li key={i} className="bg-ivory py-5 pr-5 sm:px-5 sm:first:pl-0">
                 <span className="annot text-accent-deep">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-2 font-display text-xl">{p.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.text}</p>
+                <h3 className="mt-2 font-display text-xl">{l(p.title)}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{l(p.text)}</p>
               </li>
             ))}
           </Reveal>
@@ -135,13 +139,13 @@ export function About() {
             <Reveal as="dl" delay={160} className="mt-12 border-t border-charcoal/80">
               {rows.map((r) => (
                 <div
-                  key={r.label}
+                  key={l(r.label)}
                   className="grid grid-cols-[9rem_1fr] gap-4 border-b border-charcoal/15 py-4 text-sm sm:grid-cols-[12rem_1fr]"
                 >
-                  <dt className="annot pt-0.5 text-muted-foreground">{r.label}</dt>
+                  <dt className="annot pt-0.5 text-muted-foreground">{l(r.label)}</dt>
                   <dd className={r.detail?.sample ? "text-muted-foreground" : ""}>
                     {r.detail?.value}
-                    {r.detail?.sample && <SampleTag />}
+                    {r.detail?.sample && <SampleTag>{t.common.sample}</SampleTag>}
                   </dd>
                 </div>
               ))}

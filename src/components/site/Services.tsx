@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { isDemo } from "@/config/business";
+import { fmt, useCopy, useL } from "@/i18n";
 import { services, servicesConfirmed } from "@/config/content";
-import { serviceEnquiryMessage } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 import { Annot } from "./Graphics";
 import { Reveal } from "./Motion";
@@ -9,6 +9,8 @@ import { announceEnquiry } from "@/lib/enquiry";
 import { WhatsAppLink } from "./WhatsAppLink";
 
 export function Services() {
+  const t = useCopy();
+  const l = useL();
   const [activeId, setActiveId] = useState(services[0]?.id ?? "");
   const active = services.find((s) => s.id === activeId) ?? services[0];
 
@@ -23,7 +25,10 @@ export function Services() {
         <div className="col-span-12 lg:col-span-5">
           <div className="lg:sticky lg:top-28">
             <Reveal>
-              <Annot>Services{isDemo && !servicesConfirmed ? " — Proposed" : ""}</Annot>
+              <Annot>
+                {t.services.label}
+                {isDemo && !servicesConfirmed ? " — " + t.common.proposed : ""}
+              </Annot>
             </Reveal>
             <Reveal
               as="h2"
@@ -31,14 +36,13 @@ export function Services() {
               className="mt-6 font-display text-[clamp(3rem,7vw,6.25rem)] font-light leading-[0.9] tracking-[-0.03em]"
             >
               <span id="services-title">
-                What we
+                {t.services.headingA}
                 <br />
-                <em className="italic text-accent-deep">paint.</em>
+                <em className="italic text-accent-deep">{t.services.headingB}</em>
               </span>
             </Reveal>
             <Reveal as="p" delay={160} className="mt-6 max-w-sm text-muted-foreground">
-              Every commission begins with your space and your story. Choose a starting point — we
-              shape the rest together.
+              {t.services.intro}
             </Reveal>
 
             <Reveal variant="mask" delay={200} className="mt-10 hidden lg:block">
@@ -52,7 +56,7 @@ export function Services() {
                       sizes="(min-width: 1500px) 560px, 38vw"
                       width={s.image.width}
                       height={s.image.height}
-                      alt={s.id === active?.id ? s.image.alt : ""}
+                      alt={s.id === active?.id ? l(s.image.alt) : ""}
                       aria-hidden={s.id !== active?.id}
                       loading="lazy"
                       decoding="async"
@@ -67,8 +71,8 @@ export function Services() {
                 </div>
               </div>
               <p className="annot mt-4 text-muted-foreground">
-                Fig. — {active?.title}
-                {isDemo ? " · Sample image" : ""}
+                {fmt(t.services.fig, { title: active ? l(active.title) : "" })}
+                {isDemo ? " · " + t.common.sampleImage : ""}
               </p>
             </Reveal>
           </div>
@@ -102,10 +106,10 @@ export function Services() {
 
                   <div className="col-span-9 md:col-span-10">
                     <h3 className="font-display text-[clamp(1.9rem,3.4vw,3rem)] font-light leading-[1.02] transition-transform duration-700 ease-[var(--ease)] lg:group-hover:translate-x-2">
-                      {s.title}
+                      {l(s.title)}
                     </h3>
                     <p className="mt-3 max-w-md leading-relaxed text-muted-foreground">
-                      {s.summary}
+                      {l(s.summary)}
                     </p>
 
                     {/* Mobile/tablet image — the desktop preview lives in the sticky column */}
@@ -116,7 +120,7 @@ export function Services() {
                         sizes="(min-width: 768px) 80vw, 75vw"
                         width={s.image.width}
                         height={s.image.height}
-                        alt={s.image.alt}
+                        alt={l(s.image.alt)}
                         loading="lazy"
                         decoding="async"
                         className="h-full w-full object-cover"
@@ -124,12 +128,13 @@ export function Services() {
                     </div>
 
                     <WhatsAppLink
-                      message={serviceEnquiryMessage(s.title)}
-                      topic={s.title}
-                      onOpen={() => announceEnquiry(s.title)}
+                      replyId={s.id}
+                      onOpen={() => announceEnquiry(s.id)}
                       className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-semibold tracking-wide"
                     >
-                      <span className="link-line">Enquire about {s.title.toLowerCase()}</span>
+                      <span className="link-line">
+                        {fmt(t.services.enquire, { title: l(s.title).toLowerCase() })}
+                      </span>
                       <span
                         aria-hidden="true"
                         className="text-accent-deep transition-transform duration-500 group-hover:translate-x-1"

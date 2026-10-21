@@ -3,18 +3,22 @@ import { Clock, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { business, demoDetails, detail } from "@/config/business";
 import { buildMailto, buildTelUrl, displayPhone } from "@/lib/contact";
 import { nav } from "@/config/content";
+import { fmt, useCopy, useL } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { LogoMark } from "./Graphics";
+import { LanguageSwitch } from "./LanguageSwitch";
 import { SocialLinks } from "./SocialIcons";
 import { WhatsAppLink } from "./WhatsAppLink";
 
 /** Thin utility strip above the main navigation (desktop): quick contacts + socials. */
 function TopBar({ collapsed }: { collapsed: boolean }) {
+  const t = useCopy();
+  const l = useL();
   const phone = detail(displayPhone(), demoDetails.phone);
   const email = detail(business.email, demoDetails.email);
-  const hours = detail(business.openingHours, demoDetails.openingHours);
+  const hours = detail(business.openingHours, l(demoDetails.openingHours));
   const tel = buildTelUrl();
-  const mail = buildMailto(business.email, "Mural enquiry");
+  const mail = buildMailto(business.email, t.nav.mailSubject);
   const item = "inline-flex min-h-9 items-center gap-2 transition-colors hover:text-ivory";
 
   return (
@@ -31,7 +35,7 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
             <li>
               <WhatsAppLink className={item}>
                 <MessageCircle aria-hidden="true" className="size-3.5 text-accent-soft" />
-                WhatsApp
+                {t.nav.whatsapp}
               </WhatsAppLink>
             </li>
             {phone && (
@@ -46,7 +50,7 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
                     <Phone aria-hidden="true" className="size-3.5 text-accent-soft" />
                     {phone.value}
                     {phone.sample && (
-                      <span className="annot text-[0.6rem] opacity-70">· sample</span>
+                      <span className="annot text-[0.6rem] opacity-70">· {t.nav.sampleTag}</span>
                     )}
                   </span>
                 )}
@@ -71,19 +75,22 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
               <li className="hidden items-center gap-2 xl:inline-flex">
                 <Clock aria-hidden="true" className="size-3.5 text-accent-soft" />
                 {hours.value}
-                {hours.sample && <span className="annot text-[0.6rem] opacity-70">· sample</span>}
+                {hours.sample && (
+                  <span className="annot text-[0.6rem] opacity-70">· {t.nav.sampleTag}</span>
+                )}
               </li>
             )}
           </ul>
           <div className="flex items-center gap-3">
             <span className="annot hidden text-[0.6rem] text-stone/70 lg:inline">
-              Follow the studio
+              {t.nav.followStudio}
             </span>
             <SocialLinks
               showHandle
               itemClassName="size-9 hover:text-ivory"
               iconClassName="size-4"
             />
+            <LanguageSwitch className="ml-2" />
           </div>
         </div>
       </div>
@@ -125,6 +132,8 @@ function useScrollSpy(ids: string[]) {
 const sectionIds = nav.map((n) => n.href.slice(1));
 
 export function Nav() {
+  const t = useCopy();
+  const l = useL();
   const scrolled = useScrolled();
   const active = useScrollSpy(sectionIds);
   const [open, setOpen] = useState(false);
@@ -143,7 +152,7 @@ export function Nav() {
         toggleRef.current?.focus();
       }
     };
-    const mq = window.matchMedia("(min-width: 768px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     const onMq = () => mq.matches && setOpen(false);
     window.addEventListener("keydown", onKey);
     mq.addEventListener("change", onMq);
@@ -175,7 +184,7 @@ export function Nav() {
       >
         <a
           href="#top"
-          aria-label={`${business.name} — back to top`}
+          aria-label={fmt(t.nav.backToTop, { name: business.name })}
           className="group flex items-center gap-3"
         >
           <LogoMark className="size-7 text-accent-deep transition-transform duration-500 group-hover:rotate-[-6deg]" />
@@ -184,7 +193,7 @@ export function Nav() {
           </span>
         </a>
 
-        <nav aria-label="Primary" className="hidden items-center gap-9 md:flex">
+        <nav aria-label={t.nav.primary} className="hidden items-center gap-9 lg:flex">
           {nav.map((n) => {
             const current = active === n.href.slice(1);
             return (
@@ -197,20 +206,20 @@ export function Nav() {
                   current ? "text-accent-soft" : "text-ivory/85 hover:text-ivory",
                 )}
               >
-                {n.label}
+                {l(n.label)}
               </a>
             );
           })}
           <a href="#contact" className="btn btn-outline min-h-11 px-5 py-2.5">
-            Start a Project
+            {t.nav.startProject}
           </a>
         </nav>
 
         <button
           ref={toggleRef}
           type="button"
-          className="-mr-3 inline-flex size-12 items-center justify-center md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
+          className="-mr-3 inline-flex size-12 items-center justify-center lg:hidden"
+          aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpen((o) => !o)}
@@ -223,10 +232,13 @@ export function Nav() {
         id="mobile-menu"
         data-open={open}
         inert={!open}
-        className="menu-sheet fixed inset-0 -z-10 flex flex-col justify-end bg-ink px-6 pb-14 pt-28 md:hidden"
+        className="menu-sheet fixed inset-0 -z-10 flex flex-col justify-end bg-ink px-6 pb-14 pt-28 lg:hidden"
       >
-        <nav aria-label="Mobile" className="flex flex-col gap-3">
-          {[...nav, { label: "Start a Project", href: "#contact" as const }].map((n, i) => (
+        <nav aria-label={t.nav.mobile} className="flex flex-col gap-3">
+          {[
+            ...nav.map((n) => ({ label: l(n.label), href: n.href })),
+            { label: t.nav.startProject, href: "#contact" as `#${string}` },
+          ].map((n, i) => (
             <a
               key={n.label}
               ref={i === 0 ? firstLinkRef : undefined}
@@ -250,16 +262,17 @@ export function Nav() {
             open ? "opacity-100 delay-500" : "opacity-0",
           )}
         >
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <WhatsAppLink
               onOpen={() => setOpen(false)}
               className="btn btn-accent min-h-12 gap-2 px-4 py-3"
             >
-              <MessageCircle aria-hidden="true" className="size-4" /> WhatsApp
+              <MessageCircle aria-hidden="true" className="size-4" /> {t.nav.whatsapp}
             </WhatsAppLink>
             <MobileCall />
           </div>
-          <SocialLinks itemClassName="size-11" iconClassName="size-5" />
+          <LanguageSwitch large />
+          <SocialLinks className="basis-full" itemClassName="size-11" iconClassName="size-5" />
         </div>
       </div>
     </header>
@@ -267,21 +280,22 @@ export function Nav() {
 }
 
 function MobileCall() {
+  const t = useCopy();
   const tel = buildTelUrl();
   if (tel) {
     return (
       <a href={tel} className="btn btn-outline min-h-12 gap-2 px-4 py-3">
-        <Phone aria-hidden="true" className="size-4" /> Call
+        <Phone aria-hidden="true" className="size-4" /> {t.nav.call}
       </a>
     );
   }
   return (
     <span
       aria-disabled="true"
-      title="Phone number not configured yet"
+      title={t.nav.phonePending}
       className="btn btn-outline min-h-12 gap-2 px-4 py-3"
     >
-      <Phone aria-hidden="true" className="size-4" /> Call
+      <Phone aria-hidden="true" className="size-4" /> {t.nav.call}
     </span>
   );
 }

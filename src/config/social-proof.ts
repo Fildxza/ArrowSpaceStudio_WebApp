@@ -8,14 +8,15 @@
  *   - demo mode shows a clearly labelled placeholder layout (no invented quotes);
  *   - live mode hides the whole section.
  */
+import type { Localized } from "@/i18n";
 import { isDemo } from "./business";
 
 export interface Testimonial {
   /** The client's own words, exactly as approved. */
-  quote: string;
+  quote: Localized;
   name: string;
   /** e.g. "Owner, Kopi Lane Cafe". Leave empty if the client prefers. */
-  role?: string;
+  role?: Localized;
   /** Optional portfolio project id (see portfolio.ts) this quote relates to. */
   projectId?: string;
 }
@@ -38,19 +39,28 @@ export const clientLogos: ClientLogo[] = [
 /** Placeholder content shown ONLY in demo mode — obviously not real quotes. */
 export const demoTestimonials: Testimonial[] = [
   {
-    quote: "[Client testimonial goes here — added only after a real client approves the wording.]",
+    quote: {
+      en: "[Client testimonial goes here — added only after a real client approves the wording.]",
+      ms: "[Testimoni pelanggan di sini — hanya ditambah selepas pelanggan sebenar meluluskan ayatnya.]",
+    },
     name: "Client Name",
-    role: "Role, Company",
+    role: { en: "Role, Company", ms: "Jawatan, Syarikat" },
   },
   {
-    quote: "[A second approved testimonial — ideally from a commercial or hospitality project.]",
+    quote: {
+      en: "[A second approved testimonial — ideally from a commercial or hospitality project.]",
+      ms: "[Testimoni kedua yang diluluskan — sebaiknya daripada projek komersial atau hospitaliti.]",
+    },
     name: "Client Name",
-    role: "Role, Company",
+    role: { en: "Role, Company", ms: "Jawatan, Syarikat" },
   },
   {
-    quote: "[A third approved testimonial — for example from a residential commission.]",
+    quote: {
+      en: "[A third approved testimonial — for example from a residential commission.]",
+      ms: "[Testimoni ketiga yang diluluskan — contohnya daripada tempahan kediaman.]",
+    },
     name: "Client Name",
-    role: "Homeowner",
+    role: { en: "Homeowner", ms: "Pemilik rumah" },
   },
 ];
 

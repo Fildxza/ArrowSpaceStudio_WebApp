@@ -1,10 +1,13 @@
 import { comparison, process } from "@/config/content";
 import { isDemo } from "@/config/business";
+import { useCopy, useL } from "@/i18n";
 import { BeforeAfter } from "./BeforeAfter";
 import { Annot } from "./Graphics";
 import { Parallax, Reveal } from "./Motion";
 
 export function Process() {
+  const t = useCopy();
+  const l = useL();
   return (
     <section
       id="process"
@@ -19,7 +22,7 @@ export function Process() {
           aria-hidden="true"
           className="stencil block whitespace-nowrap font-display text-[30vw] font-light leading-none text-charcoal/20 md:text-[17vw]"
         >
-          Process
+          {t.process.word}
         </span>
       </Parallax>
 
@@ -27,7 +30,10 @@ export function Process() {
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 md:col-span-7">
             <Reveal>
-              <Annot>From Idea to Finished Wall{isDemo ? " — Proposed" : ""}</Annot>
+              <Annot>
+                {t.process.label}
+                {isDemo ? " — " + t.common.proposed : ""}
+              </Annot>
             </Reveal>
             <Reveal
               as="h2"
@@ -35,7 +41,8 @@ export function Process() {
               className="mt-6 font-display text-[clamp(2.6rem,5.6vw,5.2rem)] font-light leading-[0.98] tracking-[-0.02em]"
             >
               <span id="process-title">
-                A considered process, <em className="italic text-accent-deep">start to reveal.</em>
+                {t.process.headingA}{" "}
+                <em className="italic text-accent-deep">{t.process.headingB}</em>
               </span>
             </Reveal>
           </div>
@@ -44,7 +51,7 @@ export function Process() {
             delay={160}
             className="col-span-12 max-w-sm self-end leading-relaxed text-muted-foreground md:col-span-4 md:col-start-9"
           >
-            Five clear stages, so you always know what happens next and what we need from you.
+            {t.process.intro}
           </Reveal>
         </div>
 
@@ -75,8 +82,8 @@ export function Process() {
                 {s.n}
               </span>
               <div>
-                <h3 className="font-display text-3xl font-light md:mt-8">{s.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
+                <h3 className="font-display text-3xl font-light md:mt-8">{l(s.title)}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{l(s.text)}</p>
               </div>
             </Reveal>
           ))}
@@ -85,26 +92,28 @@ export function Process() {
         <div className="mt-28 grid grid-cols-12 gap-x-6 gap-y-10 border-t border-charcoal/80 pt-12 md:mt-40">
           <div className="col-span-12 lg:col-span-4">
             <Reveal>
-              <Annot>Concept → Reveal{comparison.verified ? "" : " — Sample"}</Annot>
+              <Annot>
+                {t.process.compareLabel}
+                {comparison.verified ? "" : " — " + t.common.sample}
+              </Annot>
             </Reveal>
             <Reveal
               as="h3"
               delay={80}
               className="mt-6 font-display text-[clamp(2.2rem,4vw,3.6rem)] font-light leading-[1] tracking-[-0.02em]"
             >
-              From sketch <em className="italic text-accent-deep">to wall.</em>
+              {t.process.compareA} <em className="italic text-accent-deep">{t.process.compareB}</em>
             </Reveal>
             <Reveal
               as="p"
               delay={140}
               className="mt-6 max-w-sm leading-relaxed text-muted-foreground"
             >
-              Drag across the image to compare the concept stage with the finished mural.
+              {t.process.compareIntro}
             </Reveal>
             {!comparison.verified && (
               <p className="annot mt-6 max-w-sm border-l-2 border-accent pl-3 text-muted-foreground">
-                Demonstration — the sketch is generated from sample artwork. Real before/after
-                photos replace it later.
+                {t.process.compareNote}
               </p>
             )}
           </div>
@@ -114,9 +123,9 @@ export function Process() {
                 <BeforeAfter
                   before={comparison.before}
                   after={comparison.after}
-                  beforeLabel={comparison.beforeLabel}
-                  afterLabel={comparison.afterLabel}
-                  label="Compare the concept sketch with the finished mural"
+                  beforeLabel={l(comparison.beforeLabel)}
+                  afterLabel={l(comparison.afterLabel)}
+                  label={t.process.compareAria}
                 />
               </div>
             </div>

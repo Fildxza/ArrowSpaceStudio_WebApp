@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { ArrowDown, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { business, demoDetails, detail } from "@/config/business";
+import { useCopy, useL } from "@/i18n";
 import { buildMailto, buildTelUrl, displayPhone } from "@/lib/contact";
 import { enquiryChecklist } from "@/config/content";
 import { Annot } from "./Graphics";
@@ -9,9 +10,10 @@ import { Reveal } from "./Motion";
 import { WhatsAppLink } from "./WhatsAppLink";
 
 function Sample() {
+  const t = useCopy();
   return (
     <span className="annot ml-2 border border-current px-1.5 py-0.5 align-middle text-[0.6rem] opacity-80">
-      Sample
+      {t.common.sample}
     </span>
   );
 }
@@ -58,11 +60,13 @@ function Disabled({ children, why }: { children: ReactNode; why: string }) {
 }
 
 export function Contact() {
+  const t = useCopy();
+  const l = useL();
   const phone = detail(displayPhone(), demoDetails.phone);
   const email = detail(business.email, demoDetails.email);
   const address = detail(business.address, demoDetails.address);
   const tel = buildTelUrl();
-  const mail = buildMailto(business.email, "Mural enquiry");
+  const mail = buildMailto(business.email, t.nav.mailSubject);
 
   return (
     <section
@@ -77,7 +81,7 @@ export function Contact() {
       <div className="mx-auto grid max-w-[1500px] grid-cols-12 gap-x-6 gap-y-16 px-5 py-28 md:px-10 md:py-40">
         <div className="col-span-12 lg:col-span-6">
           <Reveal>
-            <Annot className="text-ivory/80">Project Enquiry</Annot>
+            <Annot className="text-ivory/80">{t.contact.label}</Annot>
           </Reveal>
           <Reveal
             as="h2"
@@ -85,21 +89,21 @@ export function Contact() {
             className="mt-6 font-display text-[clamp(3.2rem,8.5vw,8rem)] font-light leading-[0.88] tracking-[-0.03em]"
           >
             <span id="contact-title">
-              Have a Wall
+              {t.contact.headingA}
               <br />
-              <em className="italic">in Mind?</em>
+              <em className="italic">{t.contact.headingB}</em>
             </span>
           </Reveal>
           <Reveal as="p" delay={140} className="mt-8 max-w-md text-lg leading-relaxed">
-            Tell us about your space, your ideas and what you would like to create.
+            {t.contact.intro}
           </Reveal>
 
           <Reveal delay={200} className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <WhatsAppLink icon className="btn btn-ink">
-              Chat on WhatsApp
+              {t.contact.chat}
             </WhatsAppLink>
             <a href="#location" className="btn btn-outline">
-              <MapPin aria-hidden="true" className="size-5" /> Find the studio
+              <MapPin aria-hidden="true" className="size-5" /> {t.contact.findStudio}
             </a>
           </Reveal>
 
@@ -107,30 +111,30 @@ export function Contact() {
             as="ul"
             delay={260}
             className="mt-14 max-w-xl border-t border-ivory/40"
-            aria-label="Contact channels"
+            aria-label={t.contact.channelsAria}
           >
             {phone && (
               <Channel
                 icon={<MessageCircle className="size-5" />}
-                label="WhatsApp"
+                label={t.contact.whatsapp}
                 value={phone.value}
                 sample={phone.sample}
-                action={<WhatsAppLink className={actionCls}>Chat</WhatsAppLink>}
+                action={<WhatsAppLink className={actionCls}>{t.contact.actionChat}</WhatsAppLink>}
               />
             )}
             {phone && (
               <Channel
                 icon={<Phone className="size-5" />}
-                label="Call"
+                label={t.contact.call}
                 value={phone.value}
                 sample={phone.sample}
                 action={
                   tel ? (
                     <a href={tel} className={actionCls}>
-                      Call now
+                      {t.contact.actionCall}
                     </a>
                   ) : (
-                    <Disabled why="Phone number not configured yet">Call now</Disabled>
+                    <Disabled why={t.contact.phonePending}>{t.contact.actionCall}</Disabled>
                   )
                 }
               />
@@ -138,16 +142,16 @@ export function Contact() {
             {email && (
               <Channel
                 icon={<Mail className="size-5" />}
-                label="Email"
+                label={t.contact.email}
                 value={email.value}
                 sample={email.sample}
                 action={
                   mail ? (
                     <a href={mail} className={actionCls}>
-                      Write
+                      {t.contact.actionWrite}
                     </a>
                   ) : (
-                    <Disabled why="Email not configured yet">Write</Disabled>
+                    <Disabled why={t.contact.emailPending}>{t.contact.actionWrite}</Disabled>
                   )
                 }
               />
@@ -155,12 +159,12 @@ export function Contact() {
             {address && (
               <Channel
                 icon={<MapPin className="size-5" />}
-                label="Studio"
+                label={t.contact.studio}
                 value={address.value}
                 sample={address.sample}
                 action={
                   <a href="#location" className={actionCls}>
-                    Map <ArrowDown aria-hidden="true" className="size-4" />
+                    {t.contact.actionMap} <ArrowDown aria-hidden="true" className="size-4" />
                   </a>
                 }
               />
@@ -168,12 +172,12 @@ export function Contact() {
           </Reveal>
 
           <Reveal delay={300} className="mt-14 max-w-lg">
-            <h3 className="font-display text-2xl">To help us quote, include:</h3>
+            <h3 className="font-display text-2xl">{t.contact.checklistTitle}</h3>
             <ul className="mt-5 grid gap-x-6 text-sm sm:grid-cols-2">
-              {enquiryChecklist.map((t, i) => (
-                <li key={t} className="flex gap-4 border-b border-ivory/20 py-3">
+              {enquiryChecklist.map((item, i) => (
+                <li key={i} className="flex gap-4 border-b border-ivory/20 py-3">
                   <span className="font-mono opacity-70">{String(i + 1).padStart(2, "0")}</span>
-                  {t}
+                  {l(item)}
                 </li>
               ))}
             </ul>

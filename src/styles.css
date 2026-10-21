@@ -163,12 +163,22 @@
 .btn-outline {
   border: 1px solid currentColor;
 }
+/* The fill is a fixed colour (not currentColor): on hover the text colour flips, and a
+   currentColor fill would flip with it and swallow the label. */
 .btn-outline::before {
-  background: currentColor;
+  background: var(--ivory);
 }
 .btn-outline:hover,
 .btn-outline:focus-visible {
   color: var(--ink);
+}
+/* Variant for light backgrounds: charcoal fill, ivory label on hover. */
+.btn-outline-dark::before {
+  background: var(--charcoal);
+}
+.btn-outline-dark:hover,
+.btn-outline-dark:focus-visible {
+  color: var(--ivory);
 }
 .btn[aria-disabled="true"],
 .btn:disabled {

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { projects } from "@/config/portfolio";
 import { socialProof, type SocialProof } from "@/config/social-proof";
+import { fmt, useCopy, useL } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { Annot } from "./Graphics";
 import { Reveal } from "./Motion";
@@ -9,6 +10,8 @@ import { Reveal } from "./Motion";
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
+  const t = useCopy();
+  const l = useL();
   const [index, setIndex] = useState(0);
   if (data.mode === "hidden") return null;
 
@@ -30,7 +33,8 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
           <div className="col-span-12 flex flex-col lg:col-span-3">
             <Reveal>
               <Annot className="text-stone">
-                Client Voices{placeholder ? " — Placeholder" : ""}
+                {t.testimonials.label}
+                {placeholder ? " — " + t.common.placeholder : ""}
               </Annot>
             </Reveal>
             <Reveal
@@ -39,9 +43,9 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
               className="mt-6 font-display text-[clamp(2.4rem,4vw,3.6rem)] font-light leading-[0.98] tracking-[-0.02em]"
             >
               <span id="testimonials-title">
-                Told by the
+                {t.testimonials.headingA}
                 <br />
-                <em className="italic text-accent-soft">people we paint for.</em>
+                <em className="italic text-accent-soft">{t.testimonials.headingB}</em>
               </span>
             </Reveal>
 
@@ -54,7 +58,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                   <button
                     type="button"
                     onClick={() => step(-1)}
-                    aria-label="Previous testimonial"
+                    aria-label={t.testimonials.prev}
                     className="inline-flex size-12 items-center justify-center border border-ivory/25 transition-colors duration-300 hover:bg-ivory hover:text-ink"
                   >
                     <ArrowLeft aria-hidden="true" className="size-4" />
@@ -62,7 +66,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                   <button
                     type="button"
                     onClick={() => step(1)}
-                    aria-label="Next testimonial"
+                    aria-label={t.testimonials.next}
                     className="inline-flex size-12 items-center justify-center border border-ivory/25 transition-colors duration-300 hover:bg-ivory hover:text-ink"
                   >
                     <ArrowRight aria-hidden="true" className="size-4" />
@@ -87,7 +91,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
               <div aria-live="polite">
                 <figure
                   key={index}
-                  aria-label={`Testimonial ${index + 1} of ${items.length}`}
+                  aria-label={fmt(t.testimonials.nOfTotal, { n: index + 1, total: items.length })}
                   className="fade-up relative"
                 >
                   <blockquote
@@ -96,19 +100,19 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                       placeholder && "text-stone/70 italic",
                     )}
                   >
-                    {current.quote}
+                    {l(current.quote)}
                   </blockquote>
                   <figcaption className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-ivory/15 pt-6">
                     <span aria-hidden="true" className="h-px w-10 bg-accent-soft" />
                     <span>
                       <span className="block font-semibold">{current.name}</span>
                       {current.role && (
-                        <span className="annot mt-1 block text-stone">{current.role}</span>
+                        <span className="annot mt-1 block text-stone">{l(current.role)}</span>
                       )}
                     </span>
                     {placeholder && (
                       <span className="annot border border-current px-1.5 py-0.5 text-[0.6rem] text-accent-soft">
-                        Sample slot
+                        {t.testimonials.sampleSlot}
                       </span>
                     )}
                     {project && (
@@ -116,7 +120,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                         href="#work"
                         className="link-line annot ml-auto text-stone hover:text-ivory"
                       >
-                        Project: {project.title}
+                        {fmt(t.testimonials.project, { title: l(project.title) })}
                       </a>
                     )}
                   </figcaption>
@@ -129,9 +133,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
         {/* Client logos */}
         <Reveal delay={160} className="mt-24 md:mt-32">
           <p className="annot text-stone/70">
-            {placeholder
-              ? "Selected clients — logos appear here with permission"
-              : "Selected clients"}
+            {placeholder ? t.testimonials.clientsPlaceholder : t.testimonials.clients}
           </p>
           <ul className="mt-6 grid grid-cols-2 border-l border-t border-ivory/15 sm:grid-cols-3 lg:grid-cols-6">
             {data.mode === "real"
@@ -158,7 +160,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                           className="flex h-full w-full items-center justify-center"
                         >
                           {img}
-                          <span className="sr-only"> (opens in a new tab)</span>
+                          <span className="sr-only"> {t.common.opensNewTab}</span>
                         </a>
                       ) : (
                         img
@@ -171,8 +173,10 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                     key={i}
                     className="flex aspect-[3/2] flex-col items-center justify-center gap-2 border-b border-r border-ivory/15 text-stone/40"
                   >
-                    <span className="font-display text-xl italic">Client Logo</span>
-                    <span className="annot text-[0.6rem]">Slot {pad(i + 1)}</span>
+                    <span className="font-display text-xl italic">{t.testimonials.clientLogo}</span>
+                    <span className="annot text-[0.6rem]">
+                      {fmt(t.testimonials.slot, { n: pad(i + 1) })}
+                    </span>
                   </li>
                 ))}
           </ul>

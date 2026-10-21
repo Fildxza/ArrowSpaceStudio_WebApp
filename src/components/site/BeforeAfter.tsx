@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { MoveHorizontal } from "lucide-react";
 import type { SiteImage } from "@/config/images";
+import { fmt, useCopy, useL } from "@/i18n";
 import { prefersReducedMotion } from "@/lib/motion";
 
 interface BeforeAfterProps {
@@ -17,13 +18,11 @@ interface BeforeAfterProps {
  * works with mouse, touch and keyboard (←/→, Home/End) without extra code.
  * On first view it sweeps once to hint that it can be dragged.
  */
-export function BeforeAfter({
-  before,
-  after,
-  beforeLabel = "Before",
-  afterLabel = "After",
-  label,
-}: BeforeAfterProps) {
+export function BeforeAfter({ before, after, beforeLabel, afterLabel, label }: BeforeAfterProps) {
+  const t = useCopy();
+  const l = useL();
+  const beforeText = beforeLabel ?? t.process.before;
+  const afterText = afterLabel ?? t.process.after;
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState(50);
@@ -69,7 +68,7 @@ export function BeforeAfter({
           sizes="(min-width: 1024px) 60vw, 100vw"
           width={before.width}
           height={before.height}
-          alt={before.alt}
+          alt={l(before.alt)}
           loading="lazy"
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
@@ -80,17 +79,17 @@ export function BeforeAfter({
           sizes="(min-width: 1024px) 60vw, 100vw"
           width={after.width}
           height={after.height}
-          alt={after.alt}
+          alt={l(after.alt)}
           loading="lazy"
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover [clip-path:inset(0_0_0_var(--pos))]"
         />
 
         <span className="annot pointer-events-none absolute left-4 top-4 bg-ivory/90 px-2.5 py-1.5 text-charcoal">
-          {beforeLabel}
+          {beforeText}
         </span>
         <span className="annot pointer-events-none absolute right-4 top-4 bg-ink/85 px-2.5 py-1.5 text-ivory">
-          {afterLabel}
+          {afterText}
         </span>
 
         {/* divider + handle */}
@@ -113,7 +112,10 @@ export function BeforeAfter({
           max={100}
           step={1}
           value={Math.round(pos)}
-          aria-valuetext={`${Math.round(pos)}% ${afterLabel.toLowerCase()} shown`}
+          aria-valuetext={fmt(t.process.shown, {
+            n: Math.round(pos),
+            label: afterText.toLowerCase(),
+          })}
           onPointerDown={() => (touched.current = true)}
           onKeyDown={() => (touched.current = true)}
           onChange={(e) => {

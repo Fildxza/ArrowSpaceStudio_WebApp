@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { FileText, Mail, MessageCircle, Phone, X } from "lucide-react";
 import { business } from "@/config/business";
 import { useQuickContactVisible } from "@/hooks/use-quick-contact";
+import { useCopy } from "@/i18n";
 import { useChatOpen } from "@/lib/chat";
 import { buildMailto, buildTelUrl } from "@/lib/contact";
 import { cn } from "@/lib/utils";
@@ -48,12 +49,13 @@ function Item({ label, icon, order, open, children }: ItemProps) {
  * shown disabled rather than linking anywhere.
  */
 export function ContactDock() {
+  const t = useCopy();
   const visible = useQuickContactVisible();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const menuId = useId();
   const tel = buildTelUrl();
-  const mail = buildMailto(business.email, "Mural enquiry");
+  const mail = buildMailto(business.email, t.nav.mailSubject);
   const chatOpen = useChatOpen();
   const show = (visible || open) && !chatOpen;
 
@@ -89,7 +91,7 @@ export function ContactDock() {
     >
       <ul
         id={menuId}
-        aria-label="Contact options"
+        aria-label={t.dock.list}
         className={cn("flex flex-col items-end gap-2", !open && "pointer-events-none")}
         inert={!open}
       >
@@ -97,7 +99,7 @@ export function ContactDock() {
           key="wa"
           order={3}
           open={open}
-          label="WhatsApp"
+          label={t.dock.whatsapp}
           icon={<MessageCircle aria-hidden="true" className="size-5" />}
         >
           {(cls, inner) => (
@@ -110,7 +112,7 @@ export function ContactDock() {
           key="call"
           order={2}
           open={open}
-          label="Call"
+          label={t.dock.call}
           icon={<Phone aria-hidden="true" className="size-5" />}
         >
           {(cls, inner) =>
@@ -119,7 +121,7 @@ export function ContactDock() {
                 {inner}
               </a>
             ) : (
-              <span aria-disabled="true" title="Phone number not configured yet" className={cls}>
+              <span aria-disabled="true" title={t.dock.phonePending} className={cls}>
                 {inner}
               </span>
             )
@@ -129,7 +131,7 @@ export function ContactDock() {
           key="mail"
           order={1}
           open={open}
-          label="Email"
+          label={t.dock.email}
           icon={<Mail aria-hidden="true" className="size-5" />}
         >
           {(cls, inner) =>
@@ -138,7 +140,7 @@ export function ContactDock() {
                 {inner}
               </a>
             ) : (
-              <span aria-disabled="true" title="Email not configured yet" className={cls}>
+              <span aria-disabled="true" title={t.dock.emailPending} className={cls}>
                 {inner}
               </span>
             )
@@ -148,7 +150,7 @@ export function ContactDock() {
           key="brief"
           order={0}
           open={open}
-          label="Build a brief"
+          label={t.dock.brief}
           icon={<FileText aria-hidden="true" className="size-5" />}
         >
           {(cls, inner) => (
@@ -163,7 +165,7 @@ export function ContactDock() {
         type="button"
         aria-expanded={open}
         aria-controls={menuId}
-        aria-label={open ? "Close contact options" : "Contact the studio"}
+        aria-label={open ? t.dock.close : t.dock.open}
         onClick={() => setOpen((o) => !o)}
         className="group relative inline-flex size-16 items-center justify-center rounded-full bg-accent-deep text-ivory shadow-[0_12px_32px_oklch(0_0_0/0.35)] transition-transform duration-500 ease-[var(--ease)] hover:scale-105"
       >

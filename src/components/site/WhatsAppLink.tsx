@@ -1,13 +1,12 @@
 import type { MouseEvent, ReactNode } from "react";
 import { MessageCircle } from "lucide-react";
-import { openChat } from "@/lib/chat";
-import { buildWhatsAppUrl } from "@/lib/whatsapp";
+import { useLang } from "@/i18n";
+import { chatReplies, openChat } from "@/lib/chat";
+import { buildWhatsAppUrl, defaultEnquiryMessage } from "@/lib/whatsapp";
 
 interface WhatsAppLinkProps {
-  /** Prefilled message for this entry point (e.g. a service enquiry). */
-  message?: string;
-  /** Short topic label shown in the chat panel for a custom message. */
-  topic?: string;
+  /** Quick-reply id to preselect in the chat panel (e.g. a service id). */
+  replyId?: string;
   className?: string;
   children: ReactNode;
   /** Show the WhatsApp glyph before the label. */
@@ -22,19 +21,16 @@ interface WhatsAppLinkProps {
  * JavaScript and with ctrl/cmd-click. Without a number there is no link at
  * all — the panel explains that sending is not available yet.
  */
-export function WhatsAppLink({
-  message,
-  topic,
-  className,
-  children,
-  icon,
-  onOpen,
-}: WhatsAppLinkProps) {
+export function WhatsAppLink({ replyId, className, children, icon, onOpen }: WhatsAppLinkProps) {
+  const lang = useLang();
+  const message =
+    (replyId ? chatReplies(lang).find((r) => r.id === replyId)?.message : undefined) ??
+    defaultEnquiryMessage(lang);
   const url = buildWhatsAppUrl(message);
   const glyph = icon ? <MessageCircle aria-hidden="true" className="size-5 shrink-0" /> : null;
 
   const open = () => {
-    openChat({ ...(message ? { message } : {}), ...(topic ? { topic } : {}) });
+    openChat(replyId ? { replyId } : {});
     onOpen?.();
   };
 

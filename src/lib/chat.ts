@@ -1,20 +1,22 @@
 import { useSyncExternalStore } from "react";
+import { services } from "@/config/content";
+import { pick, fmt, type Lang } from "@/i18n";
+import { copy } from "@/i18n/copy";
 
 /**
  * Tiny external store for the WhatsApp quick-chat panel, so any button on the
- * page can open it (with an optional preselected topic) without prop drilling.
+ * page can open it (optionally with a preselected reply) without prop drilling.
+ * The store keeps a language-independent reply id; messages are built per language.
  */
 export interface ChatState {
   open: boolean;
-  /** Preselected message (e.g. from a service link). Empty = default quotation request. */
-  message: string;
-  /** Short label for the preselected topic. */
-  topic: string;
+  /** Preselected quick-reply id (e.g. a service id). Empty = "I'd like a quotation". */
+  replyId: string;
   /** Bumps on every open() so the panel can reset even if state looks identical. */
   nonce: number;
 }
 
-let state: ChatState = { open: false, message: "", topic: "", nonce: 0 };
+let state: ChatState = { open: false, replyId: "", nonce: 0 };
 const listeners = new Set<() => void>();
 
 function set(next: ChatState) {
@@ -22,13 +24,8 @@ function set(next: ChatState) {
   listeners.forEach((l) => l());
 }
 
-export function openChat(options: { message?: string; topic?: string } = {}) {
-  set({
-    open: true,
-    message: options.message ?? "",
-    topic: options.topic ?? "",
-    nonce: state.nonce + 1,
-  });
+export function openChat(options: { replyId?: string } = {}) {
+  set({ open: true, replyId: options.replyId ?? "", nonce: state.nonce + 1 });
 }
 
 export function closeChat() {
@@ -61,4 +58,21 @@ export interface QuickReply {
   id: string;
   label: string;
   message: string;
+}
+
+/** The quick replies offered in the chat panel, in the given language. */
+export function chatReplies(lang: Lang): QuickReply[] {
+  const t = copy[lang];
+  return [
+    { id: "quote", label: t.chat.replyQuote, message: t.messages.default },
+    ...services.map((s) => {
+      const title = pick(s.title, lang);
+      return {
+        id: s.id,
+        label: title,
+        message: fmt(t.messages.service, { title: title.toLowerCase() }),
+      };
+    }),
+    { id: "question", label: t.chat.replyQuestion, message: t.messages.question },
+  ];
 }

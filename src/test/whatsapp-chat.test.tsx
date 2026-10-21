@@ -3,9 +3,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { WhatsAppChat } from "@/components/site/WhatsAppChat";
 import { WhatsAppLink } from "@/components/site/WhatsAppLink";
 import { business } from "@/config/business";
-import { chat as chatConfig } from "@/config/content";
+import { copy } from "@/i18n/copy";
 import { closeChat, composeChatMessage } from "@/lib/chat";
-import { serviceEnquiryMessage } from "@/lib/whatsapp";
 
 // Harmless test number (not a real destination).
 const TEST_NUMBER = "60120000000";
@@ -25,11 +24,7 @@ function setup(options: { number?: string } = {}) {
   return render(
     <>
       <WhatsAppLink className="open-btn">Chat on WhatsApp</WhatsAppLink>
-      <WhatsAppLink
-        message={serviceEnquiryMessage("Exterior & Building")}
-        topic="Exterior & Building"
-        className="svc-btn"
-      >
+      <WhatsAppLink replyId="exterior" className="svc-btn">
         Enquire exterior
       </WhatsAppLink>
       <WhatsAppChat />
@@ -66,7 +61,7 @@ describe("<WhatsAppChat />", () => {
     fireEvent.click(screen.getByRole("button", { name: "Chat on WhatsApp" }));
     const p = within(panel());
     expect(panel()).toHaveAttribute("aria-hidden", "false");
-    expect(p.getByText(chatConfig.greeting)).toBeInTheDocument();
+    expect(p.getByText(copy.en.chat.greeting)).toBeInTheDocument();
     expect(p.getByRole("button", { name: "I'd like a quotation" })).toHaveAttribute(
       "aria-pressed",
       "true",

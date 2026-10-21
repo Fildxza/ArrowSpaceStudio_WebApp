@@ -11,6 +11,7 @@ import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { business, seo } from "@/config/business";
+import { pick, useCopy } from "@/i18n";
 
 const FONTS =
   "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap";
@@ -22,14 +23,14 @@ function buildHead() {
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { title: seo.title },
-      { name: "description", content: seo.description },
+      { title: pick(seo.title, "en") },
+      { name: "description", content: pick(seo.description, "en") },
       { name: "theme-color", content: "#121212" },
       ...(seo.indexable ? [] : [{ name: "robots", content: "noindex, nofollow" }]),
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: business.name },
-      { property: "og:title", content: seo.title },
-      { property: "og:description", content: seo.description },
+      { property: "og:title", content: pick(seo.title, "en") },
+      { property: "og:description", content: pick(seo.description, "en") },
       ...(canonical ? [{ property: "og:url", content: canonical }] : []),
       ...(ogImage
         ? [
@@ -38,8 +39,8 @@ function buildHead() {
           ]
         : []),
       { name: "twitter:card", content: ogImage ? "summary_large_image" : "summary" },
-      { name: "twitter:title", content: seo.title },
-      { name: "twitter:description", content: seo.description },
+      { name: "twitter:title", content: pick(seo.title, "en") },
+      { name: "twitter:description", content: pick(seo.description, "en") },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -92,10 +93,11 @@ function Shell({ title, body, children }: { title: string; body: string; childre
 }
 
 function NotFound() {
+  const t = useCopy();
   return (
-    <Shell title="Blank wall." body="The page you're looking for doesn't exist or has been moved.">
+    <Shell title={t.error.notFoundTitle} body={t.error.notFoundBody}>
       <Link to="/" className="btn btn-accent">
-        Back to the studio
+        {t.error.notFoundCta}
       </Link>
     </Shell>
   );
@@ -103,12 +105,10 @@ function NotFound() {
 
 function RouteError({ error, reset }: ErrorComponentProps) {
   const router = useRouter();
+  const t = useCopy();
   console.error(error);
   return (
-    <Shell
-      title="Something smudged."
-      body="This page didn't load properly. Try again, or head back to the home page."
-    >
+    <Shell title={t.error.errorTitle} body={t.error.errorBody}>
       <button
         type="button"
         className="btn btn-accent"
@@ -117,10 +117,10 @@ function RouteError({ error, reset }: ErrorComponentProps) {
           reset();
         }}
       >
-        Try again
+        {t.error.retry}
       </button>
       <a href="/" className="btn btn-outline">
-        Go home
+        {t.error.home}
       </a>
     </Shell>
   );

@@ -9,6 +9,7 @@
  * turned into working links). In "live" mode the demo values are never used —
  * anything still empty is simply hidden.
  */
+import type { Localized } from "@/i18n";
 
 export type ContentStatus = "demo" | "live";
 
@@ -27,8 +28,8 @@ export interface BusinessConfig {
   contentStatus: ContentStatus;
   /** [OWNER] Company display name. Placeholder until supplied. */
   name: string;
-  /** [OWNER] Short tagline used in the footer and metadata. */
-  tagline: string;
+  /** [OWNER] Short tagline used in the footer (English and Bahasa Melayu). */
+  tagline: Localized;
   /** [OWNER] One-paragraph company description used in metadata. */
   description: string;
   /**
@@ -63,8 +64,9 @@ export interface BusinessConfig {
 }
 
 export interface SeoConfig {
-  title: string;
-  description: string;
+  /** Tab title. The prerendered HTML uses English; the tab title follows the chosen language. */
+  title: Localized;
+  description: Localized;
   /** [OWNER] Final public origin, e.g. "https://www.example.com" (no trailing slash). */
   siteUrl: string;
   /** Path (under siteUrl) of the social-sharing image in /public. */
@@ -81,7 +83,10 @@ export interface SeoConfig {
 export const business: BusinessConfig = {
   contentStatus: "demo",
   name: "Fathil_Art", // confirmed display name (matches the TikTok handle)
-  tagline: "Bespoke mural art for spaces that deserve to stand out.",
+  tagline: {
+    en: "Bespoke mural art for spaces that deserve to stand out.",
+    ms: "Seni mural tempahan untuk ruang yang layak menonjol.",
+  },
   description:
     "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors.",
   whatsappNumber: "60132512588", // owner-approved: the number in the TikTok bio "WA … utk tempahan"
@@ -104,7 +109,7 @@ export const business: BusinessConfig = {
     { platform: "facebook", href: "https://www.facebook.com/fathil.ahmad/" },
   ],
   established: "", // [OWNER]
-  leadArtist: "", // [OWNER]
+  leadArtist: "Fathil Ahmad", // confirmed by the project owner
 };
 
 /**
@@ -119,15 +124,23 @@ export const demoDetails = {
   serviceAreas: ["Kawasan Contoh A", "Kawasan Contoh B", "Lain-lain atas permintaan"],
   socials: ["instagram", "facebook", "tiktok"] as SocialPlatform[],
   socialHandle: "@muralstudio.sample",
-  openingHours: "Isnin – Sabtu, 9.00 pagi – 6.00 petang",
+  openingHours: {
+    en: "Mon – Sat, 9.00am – 6.00pm",
+    ms: "Isnin – Sabtu, 9.00 pagi – 6.00 petang",
+  } as Localized,
   established: "20XX",
   leadArtist: "Nama Pelukis (contoh)",
 };
 
 export const seo: SeoConfig = {
-  title: "Fathil_Art — Bespoke Mural Art & Commissioned Painting",
-  description:
-    "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors. Explore selected work and start a project.",
+  title: {
+    en: "Fathil_Art — Bespoke Mural Art & Commissioned Painting",
+    ms: "Fathil_Art — Seni Mural Tempahan & Lukisan Dinding",
+  },
+  description: {
+    en: "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors. Explore selected work and start a project.",
+    ms: "Mural lukisan tangan tempahan untuk rumah, kafe, hotel, pejabat dan luar bangunan. Lihat karya pilihan dan mulakan projek anda.",
+  },
   siteUrl: "", // [OWNER] set once the domain is known
   ogImagePath: "/og-image.jpg",
   ogImageAlt: "Large hand-painted botanical mural on a gallery wall (demonstration image)",

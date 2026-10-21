@@ -1,4 +1,6 @@
 import { business } from "@/config/business";
+import { fmt, type Lang } from "@/i18n";
+import { copy } from "@/i18n/copy";
 
 /** Strip everything except digits. "+60 12-345 6789" -> "60123456789". */
 export function normalizePhone(raw: string): string {
@@ -14,8 +16,16 @@ export function isValidWhatsAppNumber(raw: string): boolean {
   return digits.length >= 8 && digits.length <= 15 && !/^0+$/.test(digits);
 }
 
-export const DEFAULT_ENQUIRY_MESSAGE =
-  "Hi, I'm interested in commissioning a mural. I'd like to discuss my project and request a quotation.";
+/** Default (English) enquiry text; use `defaultEnquiryMessage(lang)` for the visitor's language. */
+export const DEFAULT_ENQUIRY_MESSAGE = copy.en.messages.default;
+
+export function defaultEnquiryMessage(lang: Lang = "en"): string {
+  return copy[lang].messages.default;
+}
+
+export function questionMessage(lang: Lang = "en"): string {
+  return copy[lang].messages.question;
+}
 
 export interface WhatsAppOptions {
   /** Override the configured number (used by tests). */
@@ -41,8 +51,8 @@ export function buildWhatsAppUrl(
 }
 
 /** Message for a specific service category, e.g. from a service enquiry link. */
-export function serviceEnquiryMessage(serviceTitle: string): string {
-  return `Hi, I'm interested in ${serviceTitle.toLowerCase()}. I'd like to discuss my project and request a quotation.`;
+export function serviceEnquiryMessage(serviceTitle: string, lang: Lang = "en"): string {
+  return fmt(copy[lang].messages.service, { title: serviceTitle.toLowerCase() });
 }
 
 export interface EnquiryBrief {
@@ -54,19 +64,15 @@ export interface EnquiryBrief {
 }
 
 /** Compose a structured enquiry message from the optional brief fields. */
-export function composeEnquiryMessage(brief: EnquiryBrief): string {
-  const lines: string[] = [];
+export function composeEnquiryMessage(brief: EnquiryBrief, lang: Lang = "en"): string {
+  const text = copy[lang].messages;
   const type = brief.projectType?.trim();
-  lines.push(
-    type
-      ? `Hi, I'm interested in ${type.toLowerCase()}. I'd like to discuss my project and request a quotation.`
-      : DEFAULT_ENQUIRY_MESSAGE,
-  );
+  const lines: string[] = [type ? serviceEnquiryMessage(type, lang) : text.default];
   const details: [string, string | undefined][] = [
-    ["Location", brief.location],
-    ["Approx. wall size", brief.wallSize],
-    ["Preferred timeline", brief.timeline],
-    ["Notes", brief.notes],
+    [text.location, brief.location],
+    [text.wallSize, brief.wallSize],
+    [text.timeline, brief.timeline],
+    [text.notes, brief.notes],
   ];
   const filled = details.filter(([, v]) => v && v.trim());
   if (filled.length) {

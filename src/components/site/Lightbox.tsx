@@ -8,6 +8,7 @@ import {
 } from "react";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import type { PortfolioProject } from "@/config/portfolio";
+import { useCopy, useL } from "@/i18n";
 import { prefersReducedMotion } from "@/lib/motion";
 
 interface LightboxProps {
@@ -24,6 +25,8 @@ const pad = (n: number) => String(n).padStart(2, "0");
  * a focus trap, an inert background and Escape handling for free.
  */
 export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps) {
+  const t = useCopy();
+  const l = useL();
   const dialogRef = useRef<HTMLDialogElement>(null);
   const touchX = useRef<number | null>(null);
   const [closing, setClosing] = useState(false);
@@ -117,7 +120,7 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
               type="button"
               autoFocus
               onClick={requestClose}
-              aria-label="Close project viewer"
+              aria-label={t.lightbox.close}
               className="inline-flex size-12 items-center justify-center border border-ivory/25 transition-[transform,background-color,color] duration-500 hover:rotate-90 hover:bg-ivory hover:text-ink"
             >
               <X aria-hidden="true" />
@@ -133,7 +136,7 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
                 sizes="(min-width: 768px) 66vw, 100vw"
                 width={project.image.width}
                 height={project.image.height}
-                alt={project.image.alt}
+                alt={l(project.image.alt)}
                 className="lb-img max-h-[62vh] w-auto max-w-full object-contain md:max-h-full"
               />
             </div>
@@ -142,26 +145,26 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
               key={`${project.id}-meta`}
               className="lb-meta flex flex-col justify-end md:col-span-4"
             >
-              <span className="annot text-accent-soft">{project.category}</span>
+              <span className="annot text-accent-soft">{t.work.categories[project.category]}</span>
               <h2
                 id="lightbox-title"
                 className="mt-3 font-display text-4xl font-light leading-[1.02] md:text-5xl"
               >
-                {project.title}
+                {l(project.title)}
               </h2>
-              <p className="mt-4 max-w-md leading-relaxed text-stone">{project.description}</p>
+              <p className="mt-4 max-w-md leading-relaxed text-stone">{l(project.description)}</p>
 
               {(project.location || project.year) && (
                 <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-ivory/15 pt-4 text-sm">
                   {project.location && (
                     <div>
-                      <dt className="annot text-stone/70">Location</dt>
+                      <dt className="annot text-stone/70">{t.lightbox.location}</dt>
                       <dd className="mt-1">{project.location}</dd>
                     </div>
                   )}
                   {project.year && (
                     <div>
-                      <dt className="annot text-stone/70">Year</dt>
+                      <dt className="annot text-stone/70">{t.lightbox.year}</dt>
                       <dd className="mt-1">{project.year}</dd>
                     </div>
                   )}
@@ -170,7 +173,7 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
 
               {!project.verified && (
                 <p className="annot mt-6 border-l-2 border-accent pl-3 text-stone/80">
-                  Sample artwork for demonstration — not a completed client project.
+                  {t.lightbox.sampleNote}
                 </p>
               )}
 
@@ -179,7 +182,7 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
                   <button
                     type="button"
                     onClick={() => step(-1)}
-                    aria-label="Previous project"
+                    aria-label={t.lightbox.prev}
                     className="inline-flex size-12 items-center justify-center border border-ivory/25 transition-colors duration-300 hover:bg-ivory hover:text-ink"
                   >
                     <ArrowLeft aria-hidden="true" className="size-4" />
@@ -187,7 +190,7 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
                   <button
                     type="button"
                     onClick={() => step(1)}
-                    aria-label="Next project"
+                    aria-label={t.lightbox.next}
                     className="inline-flex size-12 items-center justify-center border border-ivory/25 transition-colors duration-300 hover:bg-ivory hover:text-ink"
                   >
                     <ArrowRight aria-hidden="true" className="size-4" />

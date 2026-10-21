@@ -1,10 +1,13 @@
 import { marquee, philosophy } from "@/config/content";
+import { useCopy, useL } from "@/i18n";
 import { Annot, Drips, RegMark } from "./Graphics";
 import { Reveal } from "./Motion";
 
 /** Terracotta ticker that hands the dark hero over to the ivory page, with paint drips running off it. */
 export function Marquee() {
-  const row = [...marquee, ...marquee];
+  const t = useCopy();
+  const l = useL();
+  const row = [...marquee, ...marquee].map((m) => l(m));
   return (
     <div className="marquee relative z-10 bg-accent-deep text-ivory" role="presentation">
       <div className="overflow-hidden py-4" aria-hidden="true">
@@ -21,9 +24,7 @@ export function Marquee() {
           ))}
         </div>
       </div>
-      <p className="sr-only">
-        Residential, commercial, hospitality, exterior and custom mural commissions.
-      </p>
+      <p className="sr-only">{t.intro.marqueeSr}</p>
       <Reveal variant="draw" className="absolute inset-x-0 top-full -mt-px h-16 md:h-24">
         <Drips className="h-full" />
       </Reveal>
@@ -32,6 +33,8 @@ export function Marquee() {
 }
 
 export function Intro() {
+  const t = useCopy();
+  const l = useL();
   return (
     <section
       id="intro"
@@ -45,16 +48,16 @@ export function Intro() {
       <div className="grid grid-cols-12 gap-6">
         <div className="col-span-12 md:col-span-3">
           <Reveal>
-            <Annot>Philosophy</Annot>
+            <Annot>{t.intro.philosophy}</Annot>
           </Reveal>
         </div>
         <Reveal
           as="p"
           className="col-span-12 font-display text-[clamp(1.9rem,4.4vw,4.2rem)] font-light leading-[1.1] tracking-tight md:col-span-9"
         >
-          {philosophy.lead}{" "}
-          <em className="font-normal italic text-accent-deep">{philosophy.emphasis}</em>{" "}
-          <span className="text-muted-foreground">{philosophy.support}</span>
+          {l(philosophy.lead)}{" "}
+          <em className="font-normal italic text-accent-deep">{l(philosophy.emphasis)}</em>{" "}
+          <span className="text-muted-foreground">{l(philosophy.support)}</span>
         </Reveal>
       </div>
     </section>

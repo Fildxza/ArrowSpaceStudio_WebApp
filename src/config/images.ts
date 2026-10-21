@@ -8,6 +8,7 @@
  * To add a real photo: drop `my-wall.jpg` into `src/assets/`, run
  * `npm run images`, then reference it with `getImage("my-wall", "alt text")`.
  */
+import type { Localized } from "@/i18n";
 import manifest from "@/assets/web/manifest.json";
 
 export interface SiteImage {
@@ -15,7 +16,8 @@ export interface SiteImage {
   srcSet: string;
   width: number;
   height: number;
-  alt: string;
+  /** Alt text in both languages (a plain string is used for both). */
+  alt: Localized;
 }
 
 type ManifestEntry = { width: number; height: number; variants: number[] };
@@ -34,7 +36,7 @@ function urlFor(name: string, width: number): string {
   return url;
 }
 
-export function getImage(name: string, alt: string): SiteImage {
+export function getImage(name: string, alt: Localized): SiteImage {
   const entry = entries[name];
   if (!entry || entry.variants.length === 0) {
     throw new Error(`Unknown image "${name}" (run "npm run images")`);

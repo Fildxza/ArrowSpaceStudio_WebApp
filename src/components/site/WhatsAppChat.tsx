@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Copy, MessageCircle, Send, X } from "lucide-react";
 import { business, isDemo } from "@/config/business";
-import { chat as chatConfig } from "@/config/content";
-import { closeChat, composeChatMessage, useChat } from "@/lib/chat";
+import { fmt, useCopy, useLang } from "@/i18n";
+import { chatReplies, closeChat, composeChatMessage, useChat } from "@/lib/chat";
 import { prefersReducedMotion } from "@/lib/motion";
 import { buildWhatsAppUrl, isWhatsAppConfigured } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
@@ -15,38 +15,33 @@ type Step = "typing" | "greeting" | "ready";
  * visitor, a one-tap reply is already selected, and a single Send button opens
  * WhatsApp with the message prefilled — the visitor only presses send there.
  * Sending is disabled (copy still works) until a WhatsApp number is configured.
+ * Replies are tracked by id, so switching language keeps the choice.
  */
 export function WhatsAppChat() {
   const chat = useChat();
+  const t = useCopy();
+  const lang = useLang();
   const live = isWhatsAppConfigured();
   const panelRef = useRef<HTMLDivElement>(null);
   const opener = useRef<Element | null>(null);
   const sentRef = useRef<HTMLDivElement>(null);
   const [step, setStep] = useState<Step>("ready");
   const [selectedId, setSelectedId] = useState("quote");
-  const [custom, setCustom] = useState<{ topic: string; message: string } | null>(null);
   const [details, setDetails] = useState("");
   const [copied, setCopied] = useState<"idle" | "ok" | "fail">("idle");
 
-  const reply = chatConfig.replies.find((r) => r.id === selectedId);
-  const baseMessage = custom?.message ?? reply?.message ?? "";
-  const finalMessage = composeChatMessage(baseMessage, details);
+  const replies = chatReplies(lang);
+  const reply = replies.find((r) => r.id === selectedId) ?? replies[0];
+  const finalMessage = composeChatMessage(reply?.message ?? "", details);
   const url = buildWhatsAppUrl(finalMessage);
 
   // Reset conversation each time the panel opens.
   useEffect(() => {
-    if (!chat.open) return;
+    if (!chat.open) return undefined;
     opener.current = document.activeElement;
     setDetails("");
     setCopied("idle");
-    const match = chatConfig.replies.find((r) => r.message === chat.message);
-    if (chat.message && !match) {
-      setCustom({ topic: chat.topic || "Your enquiry", message: chat.message });
-      setSelectedId("");
-    } else {
-      setCustom(null);
-      setSelectedId(match?.id ?? "quote");
-    }
+    setSelectedId(chat.replyId || "quote");
 
     if (prefersReducedMotion()) {
       setStep("ready");
@@ -59,16 +54,16 @@ export function WhatsAppChat() {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
     };
-  }, [chat.open, chat.nonce, chat.message, chat.topic]);
+  }, [chat.open, chat.nonce, chat.replyId]);
 
   // Keep the visitor's prepared message in view as it changes.
   useEffect(() => {
     if (step === "ready") sentRef.current?.scrollIntoView({ block: "nearest" });
-  }, [step, selectedId, custom, details]);
+  }, [step, selectedId, details, lang]);
 
-  // Move focus into the panel; Escape / click outside close it; focus returns to the opener.
+  // Move focus into the panel; Escape closes it; focus returns to the opener.
   useEffect(() => {
-    if (!chat.open) return;
+    if (!chat.open) return undefined;
     panelRef.current?.focus();
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeChat();
     window.addEventListener("keydown", onKey);
@@ -110,7 +105,7 @@ export function WhatsAppChat() {
       <div
         ref={panelRef}
         role="dialog"
-        aria-label={`Chat with ${business.name} on WhatsApp`}
+        aria-label={fmt(t.chat.aria, { name: business.name })}
         tabIndex={-1}
         inert={!chat.open}
         aria-hidden={!chat.open}
@@ -134,13 +129,14 @@ export function WhatsAppChat() {
                 aria-hidden="true"
                 className="size-1.5 rounded-full bg-[oklch(0.75_0.17_150)]"
               />
-              WhatsApp chat{isDemo ? " · preview" : ""}
+              {t.chat.status}
+              {isDemo ? t.chat.preview : ""}
             </p>
           </div>
           <button
             type="button"
             onClick={closeChat}
-            aria-label="Close chat"
+            aria-label={t.chat.close}
             className="inline-flex size-11 items-center justify-center transition-colors hover:bg-ivory/10"
           >
             <X aria-hidden="true" className="size-5" />
@@ -153,7 +149,7 @@ export function WhatsAppChat() {
           aria-live="polite"
         >
           {step === "typing" ? (
-            <div className={cn(bubble, "w-fit bg-charcoal")} aria-label="Typing">
+            <div className={cn(bubble, "w-fit bg-charcoal")} aria-label={t.chat.typing}>
               <span className="flex gap-1.5 py-1" aria-hidden="true">
                 {[0, 1, 2].map((i) => (
                   <span
@@ -166,19 +162,19 @@ export function WhatsAppChat() {
             </div>
           ) : (
             <>
-              <p className={cn(bubble, "fade-up w-fit bg-charcoal")}>{chatConfig.greeting}</p>
+              <p className={cn(bubble, "fade-up w-fit bg-charcoal")}>{t.chat.greeting}</p>
               {step === "ready" && (
                 <>
                   <p className={cn(bubble, "fade-up w-fit bg-charcoal text-stone")}>
-                    {chatConfig.hint}
+                    {t.chat.hint}
                   </p>
 
                   <div
                     role="group"
-                    aria-label="Quick replies"
+                    aria-label={t.chat.quickReplies}
                     className="fade-up flex flex-wrap gap-2 pt-1"
                   >
-                    {chatConfig.replies.map((r) => {
+                    {replies.map((r) => {
                       const on = selectedId === r.id;
                       return (
                         <button
@@ -187,7 +183,6 @@ export function WhatsAppChat() {
                           aria-pressed={on}
                           onClick={() => {
                             setSelectedId(r.id);
-                            setCustom(null);
                             setCopied("idle");
                           }}
                           className={cn(
@@ -204,11 +199,7 @@ export function WhatsAppChat() {
                   </div>
 
                   {/* the visitor's message, shown as a sent bubble */}
-                  <div
-                    ref={sentRef}
-                    key={`${selectedId}-${custom?.message ?? ""}`}
-                    className="fade-up flex justify-end pt-3"
-                  >
+                  <div ref={sentRef} key={selectedId} className="fade-up flex justify-end pt-3">
                     <p className={cn(bubble, "whitespace-pre-wrap bg-accent-deep")}>
                       {finalMessage}
                     </p>
@@ -223,7 +214,7 @@ export function WhatsAppChat() {
         {step === "ready" && (
           <div className="fade-up border-t border-ivory/10 bg-ink px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
             <label className="block">
-              <span className="sr-only">Add details (optional)</span>
+              <span className="sr-only">{t.chat.detailsAria}</span>
               <input
                 value={details}
                 onChange={(e) => {
@@ -231,7 +222,7 @@ export function WhatsAppChat() {
                   setCopied("idle");
                 }}
                 maxLength={300}
-                placeholder="Add details — location, wall size… (optional)"
+                placeholder={t.chat.detailsPh}
                 className="block w-full border-0 border-b border-ivory/25 bg-transparent px-0 py-2.5 text-sm text-ivory placeholder:text-stone/60 focus:border-accent-soft focus:outline-none"
               />
             </label>
@@ -244,13 +235,13 @@ export function WhatsAppChat() {
                 className="btn btn-accent min-w-0 flex-1 gap-2"
               >
                 <Send aria-hidden="true" className="size-4" />
-                {live ? "Send on WhatsApp" : "Send (number pending)"}
+                {live ? t.chat.send : t.chat.sendPending}
               </button>
               <button
                 type="button"
                 onClick={copy}
-                aria-label="Copy message"
-                title="Copy message"
+                aria-label={t.chat.copy}
+                title={t.chat.copy}
                 className="btn btn-outline size-[3.25rem] shrink-0 p-0!"
               >
                 {copied === "ok" ? (
@@ -262,14 +253,9 @@ export function WhatsAppChat() {
             </div>
 
             <p className="mt-3 min-h-4 text-xs text-stone" aria-live="polite">
-              {copied === "ok" && "Message copied."}
-              {copied === "fail" && "Couldn't copy — select the message and copy it manually."}
-              {copied === "idle" &&
-                (live
-                  ? "WhatsApp opens with this message ready — just press send."
-                  : isDemo
-                    ? "Preview: the studio's WhatsApp number isn't set yet, so sending is disabled."
-                    : "")}
+              {copied === "ok" && t.chat.copied}
+              {copied === "fail" && t.chat.copyFailed}
+              {copied === "idle" && (live ? t.chat.ready : isDemo ? t.chat.demoPending : "")}
             </p>
 
             <a
@@ -277,8 +263,7 @@ export function WhatsAppChat() {
               onClick={closeChat}
               className="link-line annot mt-2 inline-flex min-h-9 items-center gap-2 text-stone hover:text-ivory"
             >
-              <MessageCircle aria-hidden="true" className="size-3.5" /> Prefer a detailed brief?
-              Build one
+              <MessageCircle aria-hidden="true" className="size-3.5" /> {t.chat.brief}
             </a>
           </div>
         )}

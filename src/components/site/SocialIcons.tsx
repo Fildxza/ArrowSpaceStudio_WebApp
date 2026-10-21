@@ -1,4 +1,5 @@
 import { business, demoDetails, isDemo, type SocialPlatform } from "@/config/business";
+import { fmt, useCopy } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 const LABELS: Record<SocialPlatform, string> = {
@@ -61,6 +62,7 @@ export function SocialLinks({
   iconClassName = "size-4",
   showHandle,
 }: SocialLinksProps) {
+  const t = useCopy();
   const base = "inline-flex size-10 items-center justify-center transition-colors duration-300";
 
   if (business.socials.length) {
@@ -72,7 +74,10 @@ export function SocialLinks({
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${LABELS[s.platform]}${s.handle ? ` ${s.handle}` : ""} (opens in a new tab)`}
+              aria-label={fmt(t.social.profileLabel, {
+                platform: LABELS[s.platform],
+                handle: s.handle ? " " + s.handle : "",
+              })}
               className={cn(base, "hover:text-accent-soft", itemClassName)}
             >
               <SocialGlyph platform={s.platform} className={iconClassName} />
@@ -89,22 +94,23 @@ export function SocialLinks({
   if (!isDemo) return null;
 
   return (
-    <ul
-      className={cn("flex items-center gap-1", className)}
-      aria-label="Social profiles (sample — links pending)"
-    >
+    <ul className={cn("flex items-center gap-1", className)} aria-label={t.social.samples}>
       {demoDetails.socials.map((p) => (
         <li key={p}>
           <span
-            title={`${LABELS[p]} — link pending (sample)`}
+            title={fmt(t.social.pendingTitle, { platform: LABELS[p] })}
             className={cn(base, "cursor-default opacity-75", itemClassName)}
           >
             <SocialGlyph platform={p} className={iconClassName} />
-            <span className="sr-only">{LABELS[p]} (sample, link pending)</span>
+            <span className="sr-only">{fmt(t.social.pendingSr, { platform: LABELS[p] })}</span>
           </span>
         </li>
       ))}
-      {showHandle && <li className="annot ml-2 opacity-60">{demoDetails.socialHandle} · sample</li>}
+      {showHandle && (
+        <li className="annot ml-2 opacity-60">
+          {demoDetails.socialHandle} · {t.nav.sampleTag}
+        </li>
+      )}
     </ul>
   );
 }

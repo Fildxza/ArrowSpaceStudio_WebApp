@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { MobileCTA } from "@/components/site/MobileCTA";
 import { Testimonials } from "@/components/site/Testimonials";
+import { pick } from "@/i18n";
 import { withoutContactNumbers } from "./unconfigured";
 import {
   DEMO_LOGO_SLOTS,
@@ -29,7 +30,10 @@ describe("social proof resolution", () => {
   it("shows clearly-marked placeholders only in demo mode", () => {
     const r = resolveSocialProof({ testimonials: [], logos: [] }, true);
     expect(r.mode).toBe("placeholder");
-    for (const t of demoTestimonials) expect(t.quote).toMatch(/^\[.*\]$/);
+    for (const t of demoTestimonials) {
+      expect(pick(t.quote, "en")).toMatch(/^\[.*\]$/);
+      expect(pick(t.quote, "ms")).toMatch(/^\[.*\]$/);
+    }
   });
 
   it("prefers real content whenever it exists", () => {
@@ -51,12 +55,18 @@ describe("<Testimonials />", () => {
     );
     expect(screen.getByText(/Client Voices — Placeholder/)).toBeInTheDocument();
     expect(screen.getAllByText("Client Logo")).toHaveLength(DEMO_LOGO_SLOTS);
-    expect(screen.getByRole("blockquote")).toHaveTextContent(demoTestimonials[0]!.quote);
+    expect(screen.getByRole("blockquote")).toHaveTextContent(
+      pick(demoTestimonials[0]!.quote, "en"),
+    );
     fireEvent.click(screen.getByRole("button", { name: "Next testimonial" }));
-    expect(screen.getByRole("blockquote")).toHaveTextContent(demoTestimonials[1]!.quote);
+    expect(screen.getByRole("blockquote")).toHaveTextContent(
+      pick(demoTestimonials[1]!.quote, "en"),
+    );
     fireEvent.click(screen.getByRole("button", { name: "Previous testimonial" }));
     fireEvent.click(screen.getByRole("button", { name: "Previous testimonial" }));
-    expect(screen.getByRole("blockquote")).toHaveTextContent(demoTestimonials.at(-1)!.quote);
+    expect(screen.getByRole("blockquote")).toHaveTextContent(
+      pick(demoTestimonials.at(-1)!.quote, "en"),
+    );
   });
 
   it("renders real logos with their names as alt text", () => {

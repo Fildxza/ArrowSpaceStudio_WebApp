@@ -28,7 +28,7 @@ describe("contact safety without a configured number", () => {
   });
 
   it("renders a plain button, not a link, without a number", () => {
-    render(<WhatsAppLink message="Hi">Enquire</WhatsAppLink>);
+    render(<WhatsAppLink>Enquire</WhatsAppLink>);
     expect(screen.queryByRole("link", { name: "Enquire" })).toBeNull();
     expect(screen.getByRole("button", { name: "Enquire" })).toBeInTheDocument();
   });
@@ -61,7 +61,7 @@ describe("<EnquiryForm />", () => {
 
   it("pre-selects the service announced by a service link", () => {
     render(<EnquiryForm />);
-    act(() => announceEnquiry("Exterior & Building"));
+    act(() => announceEnquiry("exterior"));
     expect(screen.getByRole("radio", { name: "Exterior & Building" })).toBeChecked();
   });
 

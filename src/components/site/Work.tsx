@@ -5,6 +5,7 @@ import {
   projects,
   type ProjectLayout,
 } from "@/config/portfolio";
+import { fmt, useCopy, useL } from "@/i18n";
 import { categoriesInUse, filterProjects, type ProjectFilter } from "@/lib/portfolio";
 import { cn } from "@/lib/utils";
 import { Annot } from "./Graphics";
@@ -22,6 +23,8 @@ const layoutCls: Record<ProjectLayout, { col: string; frame: string; sizes: stri
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export function Work() {
+  const t = useCopy();
+  const l = useL();
   const [filter, setFilter] = useState<ProjectFilter>("All");
   const [active, setActive] = useState<number | null>(null);
   const [filtered, setFiltered] = useState(false);
@@ -46,7 +49,7 @@ export function Work() {
           <div>
             <Reveal>
               <Annot className="text-stone">
-                Selected Work{hasUnverifiedProjects ? " — Sample Exhibition" : ""}
+                {hasUnverifiedProjects ? t.work.labelSample : t.work.label}
               </Annot>
             </Reveal>
             <Reveal
@@ -55,7 +58,7 @@ export function Work() {
               className="mt-6 font-display text-[clamp(3rem,8vw,7.5rem)] font-light leading-[0.9] tracking-[-0.03em]"
             >
               <span id="work-title">
-                The <em className="italic text-accent-soft">Exhibition</em>
+                {t.work.headingA} <em className="italic text-accent-soft">{t.work.headingB}</em>
               </span>
             </Reveal>
             {hasUnverifiedProjects && (
@@ -64,18 +67,13 @@ export function Work() {
                 delay={140}
                 className="mt-6 max-w-md text-sm leading-relaxed text-stone/80"
               >
-                The pieces below are demonstration artwork showing how finished projects will be
-                presented. They are not completed client commissions.
+                {t.work.sampleNote}
               </Reveal>
             )}
           </div>
 
           <Reveal delay={160}>
-            <div
-              role="group"
-              aria-label="Filter projects by category"
-              className="flex flex-wrap gap-2"
-            >
+            <div role="group" aria-label={t.work.filterAria} className="flex flex-wrap gap-2">
               {filters.map((f) => {
                 const on = filter === f;
                 return (
@@ -94,7 +92,7 @@ export function Work() {
                         : "border-ivory/20 text-stone hover:border-ivory/60 hover:text-ivory",
                     )}
                   >
-                    {f}
+                    {f === "All" ? t.work.all : t.work.categories[f]}
                     <span className={cn("annot", on ? "text-ink/70" : "text-stone/60")}>
                       {pad(count(f))}
                     </span>
@@ -107,18 +105,22 @@ export function Work() {
 
         <p className="sr-only" aria-live="polite">
           {filtered
-            ? `Showing ${list.length} ${list.length === 1 ? "project" : "projects"}${filter === "All" ? "" : ` in ${filter}`}.`
+            ? fmt(filter === "All" ? t.work.showingAll : t.work.showingIn, {
+                n: list.length,
+                noun: list.length === 1 ? t.work.projectOne : t.work.projectMany,
+                cat: filter === "All" ? "" : t.work.categories[filter],
+              })
             : ""}
         </p>
 
         <ul className="mt-16 grid grid-cols-1 gap-x-8 gap-y-16 md:mt-24 md:grid-cols-12 md:gap-y-24">
           {list.map((p, i) => {
-            const l = layoutCls[p.layout];
+            const lay = layoutCls[p.layout];
             const style = { "--d": `${(i % 2) * 120}ms` } as CSSProperties;
             return (
               <li
                 key={`${filter}-${p.id}`}
-                className={cn(l.col, i % 2 === 1 && "md:mt-32", filtered && "tile-in")}
+                className={cn(lay.col, i % 2 === 1 && "md:mt-32", filtered && "tile-in")}
                 style={filtered ? style : undefined}
               >
                 <Reveal variant="mask" delay={(i % 2) * 120}>
@@ -129,17 +131,19 @@ export function Work() {
                       setActive(i);
                     }}
                     className="group block w-full text-left"
-                    aria-label={`View ${p.title}${p.verified ? "" : " (sample)"}`}
+                    aria-label={fmt(p.verified ? t.work.viewAria : t.work.viewAriaSample, {
+                      title: l(p.title),
+                    })}
                   >
                     <div className="crop relative">
-                      <div className={cn("mask relative overflow-hidden bg-charcoal", l.frame)}>
+                      <div className={cn("mask relative overflow-hidden bg-charcoal", lay.frame)}>
                         <img
                           src={p.image.src}
                           srcSet={p.image.srcSet}
-                          sizes={l.sizes}
+                          sizes={lay.sizes}
                           width={p.image.width}
                           height={p.image.height}
-                          alt={p.image.alt}
+                          alt={l(p.image.alt)}
                           loading="lazy"
                           decoding="async"
                           style={p.focal ? { objectPosition: p.focal } : undefined}
@@ -147,20 +151,20 @@ export function Work() {
                         />
                         {!p.verified && (
                           <span className="annot absolute left-4 top-4 bg-ink/80 px-2.5 py-1.5 text-ivory backdrop-blur-sm">
-                            Sample
+                            {t.common.sample}
                           </span>
                         )}
                         <span className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-between bg-accent-deep px-5 py-4 text-sm font-semibold transition-transform duration-500 ease-[var(--ease)] group-hover:translate-y-0 group-focus-visible:translate-y-0">
-                          View project <span aria-hidden="true">↗</span>
+                          {t.work.viewProject} <span aria-hidden="true">↗</span>
                         </span>
                       </div>
                     </div>
                     <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-ivory/15 pt-4">
                       <span className="font-display text-2xl font-light md:text-3xl">
-                        {p.title}
+                        {l(p.title)}
                       </span>
                       <span className="annot text-stone/70">
-                        {pad(i + 1)} / {p.category}
+                        {pad(i + 1)} / {t.work.categories[p.category]}
                       </span>
                     </div>
                   </button>

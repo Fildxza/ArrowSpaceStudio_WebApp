@@ -2,12 +2,16 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Work } from "@/components/site/Work";
 import { projectCategories, projects } from "@/config/portfolio";
+import { pick } from "@/i18n";
 import { categoriesInUse, filterProjects, stepIndex } from "@/lib/portfolio";
 
 describe("portfolio data", () => {
   it("marks every unverified item as demonstration content", () => {
     for (const p of projects) {
-      if (!p.verified) expect(p.image.alt).toMatch(/demonstration/i);
+      if (!p.verified) {
+        expect(pick(p.image.alt, "en")).toMatch(/demonstration/i);
+        expect(pick(p.image.alt, "ms")).toMatch(/demonstrasi/i);
+      }
       expect(p.image.width).toBeGreaterThan(0);
       expect(p.image.srcSet).toContain("w,");
     }
@@ -59,15 +63,21 @@ describe("<Work /> gallery", () => {
     const dialog = document.querySelector("dialog")!;
     expect(dialog).toHaveAttribute("open");
     const view = within(dialog);
-    expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(projects[0]!.title);
+    expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(
+      pick(projects[0]!.title, "en"),
+    );
     expect(view.getByText(/not a completed client project/i)).toBeInTheDocument();
     expect(view.getByRole("button", { name: "Close project viewer" })).toBeInTheDocument();
 
     fireEvent.keyDown(dialog, { key: "ArrowRight" });
-    expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(projects[1]!.title);
+    expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(
+      pick(projects[1]!.title, "en"),
+    );
     fireEvent.keyDown(dialog, { key: "ArrowLeft" });
     fireEvent.keyDown(dialog, { key: "ArrowLeft" });
-    expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(projects.at(-1)!.title);
+    expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(
+      pick(projects.at(-1)!.title, "en"),
+    );
 
     // Native dialogs fire "cancel" on Escape.
     fireEvent(dialog, new Event("cancel", { cancelable: true }));
