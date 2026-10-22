@@ -82,7 +82,7 @@ export interface SeoConfig {
 
 export const business: BusinessConfig = {
   contentStatus: "demo",
-  name: "Fathil_Art", // confirmed display name (matches the TikTok handle)
+  name: "Arrow Space Studio", // confirmed company name
   tagline: {
     en: "Bespoke mural art for spaces that deserve to stand out.",
     ms: "Seni mural tempahan untuk ruang yang layak menonjol.",
@@ -97,17 +97,19 @@ export const business: BusinessConfig = {
   openingHours: "", // [OWNER]
   mapUrl: "", // [OWNER]
   mapEmbedUrl: "", // [OWNER]
-  // Real profiles only. Tracking parameters were removed and the legacy web.facebook.com
-  // host was normalised to www.facebook.com.
+  // Real profiles only. Instagram is the studio's own account (listed first, its handle is shown
+  // in the header); TikTok and Facebook belong to the lead artist. Tracking parameters were removed
+  // and the legacy web.facebook.com host was normalised to www.facebook.com.
   socials: [
-    { platform: "tiktok", href: "https://www.tiktok.com/@fathil_art", handle: "@fathil_art" },
     {
       platform: "instagram",
-      href: "https://www.instagram.com/fathil.ahmad88/",
-      handle: "@fathil.ahmad88",
+      href: "https://www.instagram.com/arrowspacestudio/",
+      handle: "@arrowspacestudio",
     },
+    { platform: "tiktok", href: "https://www.tiktok.com/@fathil_art", handle: "@fathil_art" },
     { platform: "facebook", href: "https://www.facebook.com/fathil.ahmad/" },
   ],
+
   established: "", // [OWNER]
   leadArtist: "Fathil Ahmad", // confirmed by the project owner
 };
@@ -134,8 +136,8 @@ export const demoDetails = {
 
 export const seo: SeoConfig = {
   title: {
-    en: "Fathil_Art — Bespoke Mural Art & Commissioned Painting",
-    ms: "Fathil_Art — Seni Mural Tempahan & Lukisan Dinding",
+    en: "Arrow Space Studio — Mural Art & Commissioned Painting",
+    ms: "Arrow Space Studio — Seni Mural & Lukisan Dinding",
   },
   description: {
     en: "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors. Explore selected work and start a project.",
@@ -143,7 +145,7 @@ export const seo: SeoConfig = {
   },
   siteUrl: "", // [OWNER] set once the domain is known
   ogImagePath: "/og-image.jpg",
-  ogImageAlt: "Large hand-painted botanical mural on a gallery wall (demonstration image)",
+  ogImageAlt: "Hand-painted mural (demonstration image — replace with a real project photo)",
   indexable: false,
 };
 

@@ -1,4 +1,4 @@
-# Fathil_Art — Website
+# Arrow Space Studio — Website
 
 Single-page marketing site for a mural painting studio: hero, services, portfolio
 ("The Exhibition") with filters and a lightbox, process, company profile and a
@@ -249,21 +249,33 @@ location section and the footer so they never cover the forms.
 Edit or remove items in `services`, `process`, `philosophy`, `about`.
 Set `servicesConfirmed = true` and `about.placeholder = false` once approved.
 
-### Replacing demo artwork with real photos
+### Portfolio photos and their status
 
-1. Put the approved photo in `src/assets/` (e.g. `src/assets/lobby-wall.jpg`, ideally ≥1600px wide).
+Every project in `src/config/portfolio.ts` has a `status`:
+
+| Status | Meaning | Label shown |
+|---|---|---|
+| `demo` | AI-generated sample (never real work) | "Sample" |
+| `social` | Real photo from the studio's public Instagram, shown as a preview until approved | "Instagram" + source link in the lightbox |
+| `verified` | Owner-approved original with confirmed details | none |
+
+The nine current projects are `social`: real work of @arrowspacestudio taken from the public
+Instagram grid at 360–640 px (provenance in `src/assets/SOURCES.md`). Categories describe what is
+visible (Galaxy, Neon & Gaming, Pastel, Behind the Scenes) — client type, location and year are not
+known, so none are shown.
+
+**To replace a preview with an approved original:**
+
+1. Put the high-resolution photo in `src/assets/` (e.g. `src/assets/galaxy-ceiling.jpg`, ≥1600px wide).
 2. Run `npm run images` (creates WebP sizes + updates the manifest).
-3. In `src/config/portfolio.ts`, point an item at it:
-   ```ts
-   image: getImage("lobby-wall", "Describe what the artwork shows"),
-   ```
-4. Fill in the verified `title`, `description`, optional `location` / `year`,
-   and set `verified: true` (removes the "Sample" badge for that item).
+3. In `src/config/portfolio.ts` point the item at it with `getImage("galaxy-ceiling", { en: "…", ms: "…" })`,
+   fill in the confirmed `title`, `description`, optional `location` / `year`.
+4. Set `status: "verified"` and delete the `credit` line (this removes the label).
 5. Optional: `layout` (`"wide" | "tall" | "square"`) and `focal` (e.g. `"50% 30%"`).
 
-Hero / About images are set at the top of `Hero.tsx` and `About.tsx` with the
-same `getImage()` call. Replace `public/og-image.jpg` (1200×630) with a real
-project photo for social sharing.
+The hero and About photos are set at the top of `Hero.tsx` and `About.tsx` with the same `getImage()`
+call. The services and the before/after slider still use AI demo images (labelled "Sample").
+Replace `public/og-image.jpg` (1200×630) with a real high-resolution project photo before launch.
 
 ### Testimonials & client logos — `src/config/social-proof.ts`
 
@@ -382,14 +394,17 @@ and a real-browser check with Microsoft Edge via Playwright at 320–1920px)
 
 - Logo (a placeholder "F" monogram is used), tagline/description, email, address or
   service areas, opening hours, year established, lead artist, real About copy.
-- **Confirmed so far:** display name `Fathil_Art`; lead artist `Fathil Ahmad`; WhatsApp
-  `60132512588` (from the TikTok bio, approved by the project owner); TikTok
-  `@fathil_art`, Instagram `@fathil.ahmad88` and Facebook `fathil.ahmad`.
+- **Confirmed so far:** company name `Arrow Space Studio`; lead artist `Fathil Ahmad`; WhatsApp
+  `60132512588` (from the TikTok bio, approved by the project owner); Instagram
+  `@arrowspacestudio` (the studio), TikTok `@fathil_art` and Facebook `fathil.ahmad` (the artist).
+- **Still to confirm:** whether the studio serves Malaysia *and* Singapore (its Instagram name shows
+  both flags), whether "four brothers" should appear on the site (it is quoted from the Instagram bio),
+  the studio logo file, and approval of each Instagram photo.
 - Confirmation of the service list and process steps.
 - Approved client testimonials and permission to show client logos.
 - Phone number, opening hours, social profile URLs, Google Maps link/embed.
 - Real before/after photos for the comparison slider.
-- Approved project photographs + verified project details.
+- Approved original project photographs (current ones are 360–640 px Instagram previews) + verified project details.
 - Final domain.
 
 **D. Requires an external service**

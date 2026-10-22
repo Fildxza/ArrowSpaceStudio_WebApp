@@ -1,18 +1,17 @@
 import type { CSSProperties } from "react";
-import { isDemo } from "@/config/business";
 import { useCopy, useL, useLang } from "@/i18n";
 import { getImage } from "@/config/images";
 import { cn } from "@/lib/utils";
 import { Annot, BrushStroke, RegMark } from "./Graphics";
 import { Parallax } from "./Motion";
 
-const hero = getImage("hero", {
-  en: "Large botanical mural in terracotta, ochre and olive tones on a gallery wall (demonstration image)",
-  ms: "Mural botani besar dalam warna terakota, oker dan zaitun pada dinding galeri (imej demonstrasi)",
+const hero = getImage("arrow-galaxy-ceiling", {
+  en: "Galaxy mural covering a ceiling, with a rainbow prism design, a ceiling fan and track lights",
+  ms: "Mural galaksi menutupi siling, dengan reka bentuk prisma pelangi, kipas siling dan lampu trek",
 });
-const artist = getImage("artist", {
-  en: "Muralist painting a navy and terracotta wall from a scaffold (demonstration image)",
-  ms: "Pelukis mural melukis dinding biru laut dan terakota dari perancah (imej demonstrasi)",
+const inset = getImage("arrow-moon", {
+  en: "Large painted full moon with craters on a deep blue wall",
+  ms: "Bulan purnama berkawah yang dilukis besar pada dinding biru tua",
 });
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
@@ -42,11 +41,13 @@ export function Hero() {
 
           <h1
             className={cn(
-              "relative mt-8 font-display font-light leading-[0.9] tracking-[-0.035em] lg:mt-10",
+              "relative mt-8 font-display font-light tracking-[-0.035em] lg:mt-10",
               // Bahasa Melayu lines are longer ("Bercerita."), so the type scales down to stay inside its column.
               lang === "ms"
                 ? "text-[clamp(3.2rem,14vw,7rem)] lg:text-[clamp(4rem,8.4vw,8.6rem)]"
                 : "text-[clamp(3.8rem,18vw,9rem)] lg:text-[clamp(5rem,11.4vw,11.5rem)]",
+              // Must come AFTER the font-size classes: tailwind-merge drops an earlier leading-* when a later text-* appears.
+              "leading-[0.9]",
             )}
           >
             <span className="line">
@@ -104,7 +105,7 @@ export function Hero() {
                   alt={l(hero.alt)}
                   fetchPriority="high"
                   decoding="async"
-                  className="h-full w-full object-cover [object-position:42%_50%]"
+                  className="h-full w-full object-cover [object-position:50%_45%]"
                 />
               </Parallax>
             </div>
@@ -114,12 +115,12 @@ export function Hero() {
               style={d(1250)}
             >
               <img
-                src={artist.src}
-                srcSet={artist.srcSet}
+                src={inset.src}
+                srcSet={inset.srcSet}
                 sizes="176px"
-                width={artist.width}
-                height={artist.height}
-                alt={l(artist.alt)}
+                width={inset.width}
+                height={inset.height}
+                alt={l(inset.alt)}
                 loading="eager"
                 decoding="async"
                 className="aspect-[4/5] w-full object-cover"
@@ -133,7 +134,7 @@ export function Hero() {
           >
             <span>
               {t.hero.caption}
-              {isDemo ? " · " + t.common.sample : ""}
+              {" · @arrowspacestudio"}
             </span>
             <a
               href="#intro"

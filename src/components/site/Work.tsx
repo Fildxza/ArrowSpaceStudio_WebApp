@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState, type CSSProperties } from "react";
 import {
+  hasDemoProjects,
   hasUnverifiedProjects,
   projectCategories,
   projects,
@@ -49,7 +50,11 @@ export function Work() {
           <div>
             <Reveal>
               <Annot className="text-stone">
-                {hasUnverifiedProjects ? t.work.labelSample : t.work.label}
+                {hasDemoProjects
+                  ? t.work.labelSample
+                  : hasUnverifiedProjects
+                    ? t.work.labelPreview
+                    : t.work.label}
               </Annot>
             </Reveal>
             <Reveal
@@ -67,7 +72,7 @@ export function Work() {
                 delay={140}
                 className="mt-6 max-w-md text-sm leading-relaxed text-stone/80"
               >
-                {t.work.sampleNote}
+                {hasDemoProjects ? t.work.sampleNote : t.work.socialNote}
               </Reveal>
             )}
           </div>
@@ -131,9 +136,14 @@ export function Work() {
                       setActive(i);
                     }}
                     className="group block w-full text-left"
-                    aria-label={fmt(p.verified ? t.work.viewAria : t.work.viewAriaSample, {
-                      title: l(p.title),
-                    })}
+                    aria-label={fmt(
+                      p.status === "verified"
+                        ? t.work.viewAria
+                        : p.status === "demo"
+                          ? t.work.viewAriaSample
+                          : t.work.viewAriaPreview,
+                      { title: l(p.title) },
+                    )}
                   >
                     <div className="crop relative">
                       <div className={cn("mask relative overflow-hidden bg-charcoal", lay.frame)}>
@@ -149,9 +159,9 @@ export function Work() {
                           style={p.focal ? { objectPosition: p.focal } : undefined}
                           className="h-full w-full object-cover transition-transform duration-[1.4s] ease-[var(--ease)] group-hover:scale-[1.05]"
                         />
-                        {!p.verified && (
+                        {p.status !== "verified" && (
                           <span className="annot absolute left-4 top-4 bg-ink/80 px-2.5 py-1.5 text-ivory backdrop-blur-sm">
-                            {t.common.sample}
+                            {p.status === "demo" ? t.common.sample : t.work.badgeSocial}
                           </span>
                         )}
                         <span className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-between bg-accent-deep px-5 py-4 text-sm font-semibold transition-transform duration-500 ease-[var(--ease)] group-hover:translate-y-0 group-focus-visible:translate-y-0">

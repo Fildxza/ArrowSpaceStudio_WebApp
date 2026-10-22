@@ -96,8 +96,8 @@ describe("localized content config", () => {
       expect(pick(text, "en").trim()).not.toBe("");
       expect(pick(text, "ms").trim()).not.toBe("");
     }
-    // Sample images stay labelled as demonstration in both languages.
-    for (const p of projects.filter((x) => !x.verified)) {
+    // Demo images stay labelled as demonstration in both languages.
+    for (const p of projects.filter((x) => x.status === "demo")) {
       expect(pick(p.image.alt, "ms")).toMatch(/demonstrasi/i);
     }
   });
@@ -142,7 +142,7 @@ describe("language switching", () => {
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Dinding");
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Bercerita.");
     expect(screen.getByRole("link", { name: /Lihat Karya Kami/ })).toBeInTheDocument();
-    expect(screen.getByAltText(/Mural botani besar/)).toBeInTheDocument();
+    expect(screen.getByAltText(/Mural galaksi menutupi siling/)).toBeInTheDocument();
   });
 
   it("keeps the visitor's form choices when the language changes", () => {

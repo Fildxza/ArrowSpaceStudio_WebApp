@@ -6,14 +6,26 @@ import { pick } from "@/i18n";
 import { categoriesInUse, filterProjects, stepIndex } from "@/lib/portfolio";
 
 describe("portfolio data", () => {
-  it("marks every unverified item as demonstration content", () => {
+  it("labels every non-verified item honestly", () => {
     for (const p of projects) {
-      if (!p.verified) {
+      if (p.status === "demo") {
         expect(pick(p.image.alt, "en")).toMatch(/demonstration/i);
         expect(pick(p.image.alt, "ms")).toMatch(/demonstrasi/i);
       }
+      if (p.status === "social") {
+        // Real photos from the studio's own Instagram must credit their source.
+        expect(p.credit?.href).toBe("https://www.instagram.com/arrowspacestudio/");
+        expect(pick(p.image.alt, "en")).not.toMatch(/demonstration/i);
+      }
       expect(p.image.width).toBeGreaterThan(0);
-      expect(p.image.srcSet).toContain("w,");
+      expect(p.image.srcSet).toMatch(/\d+w/);
+    }
+  });
+
+  it("does not invent client type, location or year for the Instagram photos", () => {
+    for (const p of projects.filter((x) => x.status === "social")) {
+      expect(p.location).toBeUndefined();
+      expect(p.year).toBeUndefined();
     }
   });
 
@@ -41,16 +53,14 @@ describe("<Work /> gallery", () => {
     render(<Work />);
     expect(tiles()).toHaveLength(projects.length);
 
-    const hospitality = screen.getByRole("button", { name: /^Hospitality/ });
-    fireEvent.click(hospitality);
+    const galaxy = screen.getByRole("button", { name: /^Galaxy/ });
+    fireEvent.click(galaxy);
 
-    expect(hospitality).toHaveAttribute("aria-pressed", "true");
+    expect(galaxy).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: /^All/ })).toHaveAttribute("aria-pressed", "false");
-    const expected = projects.filter((p) => p.category === "Hospitality");
+    const expected = projects.filter((p) => p.category === "Galaxy");
     expect(tiles()).toHaveLength(expected.length);
-    expect(
-      screen.getByText(`Showing ${expected.length} projects in Hospitality.`),
-    ).toBeInTheDocument();
+    expect(screen.getByText(`Showing ${expected.length} projects in Galaxy.`)).toBeInTheDocument();
   });
 
   it("opens the lightbox, navigates with the keyboard and closes with Escape, restoring focus", () => {
@@ -66,7 +76,10 @@ describe("<Work /> gallery", () => {
     expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(
       pick(projects[0]!.title, "en"),
     );
-    expect(view.getByText(/not a completed client project/i)).toBeInTheDocument();
+    expect(view.getByText(/public Instagram/i)).toBeInTheDocument();
+    const credit = view.getByRole("link", { name: /@arrowspacestudio/ });
+    expect(credit).toHaveAttribute("href", "https://www.instagram.com/arrowspacestudio/");
+    expect(credit).toHaveAttribute("rel", "noopener noreferrer");
     expect(view.getByRole("button", { name: "Close project viewer" })).toBeInTheDocument();
 
     fireEvent.keyDown(dialog, { key: "ArrowRight" });

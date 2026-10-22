@@ -59,7 +59,7 @@ describe("<SocialLinks />", () => {
     const { container } = render(<SocialLinks showHandle />);
     const expected: Record<string, string> = {
       TikTok: "https://www.tiktok.com/@fathil_art",
-      Instagram: "https://www.instagram.com/fathil.ahmad88/",
+      Instagram: "https://www.instagram.com/arrowspacestudio/",
       Facebook: "https://www.facebook.com/fathil.ahmad/",
     };
     for (const [name, href] of Object.entries(expected)) {
@@ -69,7 +69,7 @@ describe("<SocialLinks />", () => {
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
     }
     expect(container.querySelectorAll("a")).toHaveLength(3);
-    expect(screen.getByText("@fathil_art")).toBeInTheDocument();
+    expect(screen.getByText("@arrowspacestudio")).toBeInTheDocument();
   });
 
   it("keeps the tracking parameters out of the stored profile URL", () => {

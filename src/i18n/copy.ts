@@ -39,7 +39,7 @@ const en = {
     tagline: "Bespoke mural art for spaces that deserve to stand out.",
     explore: "Explore Our Work",
     start: "Start a Project",
-    caption: "Fig. 01 — Botanical Feature Wall",
+    caption: "Fig. 01 — Galaxy Ceiling",
     scrollAria: "Scroll to introduction",
     scroll: "Scroll",
   },
@@ -59,17 +59,21 @@ const en = {
   work: {
     label: "Selected Work",
     labelSample: "Selected Work — Sample Exhibition",
+    labelPreview: "Selected Work — Preview",
     headingA: "The",
     headingB: "Exhibition",
     sampleNote:
       "The pieces below are demonstration artwork showing how finished projects will be presented. They are not completed client commissions.",
     filterAria: "Filter projects by category",
     all: "All",
+    socialNote:
+      "These photos come from the studio's public Instagram (@arrowspacestudio) and are shown as a preview. Original high-resolution files and project details will replace them.",
+    badgeSocial: "Instagram",
     categories: {
-      Residential: "Residential",
-      Commercial: "Commercial",
-      Hospitality: "Hospitality",
-      Exterior: "Exterior",
+      Galaxy: "Galaxy",
+      Neon: "Neon & Gaming",
+      Pastel: "Pastel",
+      Process: "Behind the Scenes",
     },
     showingAll: "Showing {n} {noun}.",
     showingIn: "Showing {n} {noun} in {cat}.",
@@ -78,6 +82,7 @@ const en = {
     viewProject: "View project",
     viewAria: "View {title}",
     viewAriaSample: "View {title} (sample)",
+    viewAriaPreview: "View {title} (preview)",
   },
   lightbox: {
     close: "Close project viewer",
@@ -86,6 +91,9 @@ const en = {
     location: "Location",
     year: "Year",
     sampleNote: "Sample artwork for demonstration — not a completed client project.",
+    socialNote:
+      "Photo from the studio's public Instagram, shown as a preview until the original file and project details are added.",
+    source: "Source",
   },
   process: {
     word: "Process",
@@ -110,6 +118,8 @@ const en = {
     headingB: "made for place.",
     fig: "Fig. 02 — On the wall",
     placeholderNote: "Placeholder copy — replace with the studio's real story before launch.",
+    quoteLabel: "In the studio's own words",
+    quoteNote: "Quoted from Instagram — to be confirmed with the owner.",
   },
   follow: {
     label: "Follow",
@@ -318,7 +328,7 @@ const ms: Copy = {
     tagline: "Seni mural tempahan untuk ruang yang layak menonjol.",
     explore: "Lihat Karya Kami",
     start: "Mulakan Projek",
-    caption: "Rajah 01 — Dinding Hiasan Botani",
+    caption: "Rajah 01 — Siling Galaksi",
     scrollAria: "Tatal ke pengenalan",
     scroll: "Tatal",
   },
@@ -338,17 +348,21 @@ const ms: Copy = {
   work: {
     label: "Karya Pilihan",
     labelSample: "Karya Pilihan — Pameran Contoh",
+    labelPreview: "Karya Pilihan — Pratonton",
     headingA: "Pameran",
     headingB: "Karya",
     sampleNote:
       "Karya di bawah ialah contoh demonstrasi bagi menunjukkan cara projek siap dipersembahkan. Ia bukan tempahan pelanggan yang telah disiapkan.",
     filterAria: "Tapis projek mengikut kategori",
     all: "Semua",
+    socialNote:
+      "Foto-foto ini diambil daripada Instagram awam studio (@arrowspacestudio) dan dipaparkan sebagai pratonton. Fail asal beresolusi tinggi dan butiran projek akan menggantikannya.",
+    badgeSocial: "Instagram",
     categories: {
-      Residential: "Kediaman",
-      Commercial: "Komersial",
-      Hospitality: "Hospitaliti",
-      Exterior: "Luaran",
+      Galaxy: "Galaksi",
+      Neon: "Neon & Permainan",
+      Pastel: "Pastel",
+      Process: "Di Sebalik Tabir",
     },
     showingAll: "Memaparkan {n} {noun}.",
     showingIn: "Memaparkan {n} {noun} dalam {cat}.",
@@ -357,6 +371,7 @@ const ms: Copy = {
     viewProject: "Lihat projek",
     viewAria: "Lihat {title}",
     viewAriaSample: "Lihat {title} (contoh)",
+    viewAriaPreview: "Lihat {title} (pratonton)",
   },
   lightbox: {
     close: "Tutup paparan projek",
@@ -365,6 +380,9 @@ const ms: Copy = {
     location: "Lokasi",
     year: "Tahun",
     sampleNote: "Karya contoh untuk demonstrasi — bukan projek pelanggan yang telah disiapkan.",
+    socialNote:
+      "Foto daripada Instagram awam studio, dipaparkan sebagai pratonton sehingga fail asal dan butiran projek ditambah.",
+    source: "Sumber",
   },
   process: {
     word: "Proses",
@@ -391,6 +409,8 @@ const ms: Copy = {
     headingB: "dibuat untuk tempatnya.",
     fig: "Rajah 02 — Di atas dinding",
     placeholderNote: "Teks contoh — gantikan dengan kisah sebenar studio sebelum dilancarkan.",
+    quoteLabel: "Dalam kata-kata studio sendiri",
+    quoteNote: "Dipetik daripada Instagram — perlu disahkan oleh pemilik.",
   },
   follow: {
     label: "Ikuti",

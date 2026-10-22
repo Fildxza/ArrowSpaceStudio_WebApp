@@ -8,7 +8,6 @@
 import type { Localized } from "@/i18n";
 import { business, demoDetails, detail, detailList, type Detail } from "./business";
 import { getImage, type SiteImage } from "./images";
-import type { ProjectCategory } from "./portfolio";
 
 export interface NavEntry {
   label: Localized;
@@ -31,8 +30,6 @@ export interface ServiceItem {
   title: Localized;
   summary: Localized;
   image: SiteImage;
-  /** Portfolio category this service relates to, if any. */
-  category?: ProjectCategory;
 }
 
 // Proposed service categories — confirm with the company.
@@ -48,7 +45,6 @@ export const services: ServiceItem[] = [
       en: "Mountain landscape mural in a living room (demonstration image)",
       ms: "Mural lanskap gunung di ruang tamu (imej demonstrasi)",
     }),
-    category: "Residential",
   },
   {
     id: "commercial",
@@ -61,7 +57,6 @@ export const services: ServiceItem[] = [
       en: "Linework mural in an office reception (demonstration image)",
       ms: "Mural garisan di ruang penyambut tetamu pejabat (imej demonstrasi)",
     }),
-    category: "Commercial",
   },
   {
     id: "hospitality",
@@ -74,7 +69,6 @@ export const services: ServiceItem[] = [
       en: "Organic-shape mural in a cafe interior (demonstration image)",
       ms: "Mural bentuk organik di dalam kafe (imej demonstrasi)",
     }),
-    category: "Hospitality",
   },
   {
     id: "exterior",
@@ -87,7 +81,6 @@ export const services: ServiceItem[] = [
       en: "Large portrait mural on a building facade (demonstration image)",
       ms: "Mural potret besar pada fasad bangunan (imej demonstrasi)",
     }),
-    category: "Exterior",
   },
   {
     id: "custom",
@@ -194,6 +187,14 @@ export const about = {
       ms: "Tambah latar belakang, pengalaman dan falsafah sebenar studio di sini — siapa yang melukis, bagaimana anda bekerja, dan apa yang membezakan pendekatan anda.",
     },
   ] satisfies Localized[],
+  /**
+   * The studio's own words, quoted from its public Instagram bio (@arrowspacestudio).
+   * Shown as a quotation, not as our copy. Confirm with the owner before launch.
+   */
+  quote: {
+    text: "\u2018Aerospace lab\u2019 for creative services. Synergized by four brothers.",
+    source: "Instagram bio · @arrowspacestudio",
+  },
   /** Proposed working principles — confirm or rewrite with the company. */
   principles: [
     {

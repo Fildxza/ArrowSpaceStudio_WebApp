@@ -188,7 +188,7 @@ export function Nav() {
           className="group flex items-center gap-3"
         >
           <LogoMark className="size-7 text-accent-deep transition-transform duration-500 group-hover:rotate-[-6deg]" />
-          <span className="font-display text-lg font-semibold tracking-[0.2em]">
+          <span className="font-display text-[0.8rem] font-semibold tracking-[0.1em] min-[400px]:text-base sm:text-lg sm:tracking-[0.18em]">
             {business.name}
           </span>
         </a>

@@ -1,4 +1,49 @@
 {
+  "arrow-city-at-work": {
+    "width": 360,
+    "height": 640,
+    "variants": [360]
+  },
+  "arrow-galaxy-bedroom": {
+    "width": 640,
+    "height": 361,
+    "variants": [640]
+  },
+  "arrow-galaxy-ceiling": {
+    "width": 640,
+    "height": 640,
+    "variants": [640]
+  },
+  "arrow-helmet": {
+    "width": 640,
+    "height": 360,
+    "variants": [640]
+  },
+  "arrow-moon": {
+    "width": 360,
+    "height": 640,
+    "variants": [360]
+  },
+  "arrow-neon-city": {
+    "width": 360,
+    "height": 640,
+    "variants": [360]
+  },
+  "arrow-pastel-clouds": {
+    "width": 640,
+    "height": 640,
+    "variants": [640]
+  },
+  "arrow-pastel-leaves": {
+    "width": 640,
+    "height": 640,
+    "variants": [640]
+  },
+  "arrow-scaffold-planet": {
+    "width": 361,
+    "height": 640,
+    "variants": [361]
+  },
   "artist": {
     "width": 1200,
     "height": 1504,

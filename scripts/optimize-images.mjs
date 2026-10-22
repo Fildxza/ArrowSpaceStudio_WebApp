@@ -1,5 +1,5 @@
 /**
- * Generates responsive WebP variants for every master image in src/assets/*.{jpg,jpeg,png}
+ * Generates responsive WebP variants for every master image in src/assets/*.{jpg,jpeg,png,webp}
  * into src/assets/web/, plus src/assets/web/manifest.json (intrinsic size + variant widths).
  *
  * Usage: npm run images
@@ -18,7 +18,7 @@ const QUALITY = 78;
 
 await mkdir(outDir, { recursive: true });
 
-const files = (await readdir(srcDir)).filter((f) => /\.(jpe?g|png)$/i.test(f));
+const files = (await readdir(srcDir)).filter((f) => /\.(jpe?g|png|webp)$/i.test(f));
 const manifest = {};
 
 for (const file of files.sort()) {

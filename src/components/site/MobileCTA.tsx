@@ -29,8 +29,12 @@ export function MobileCTA() {
     >
       <div className="flex items-center gap-3 bg-ink/95 p-2 pl-4 text-ivory shadow-[0_-1px_0_oklch(1_0_0/0.08),0_12px_32px_oklch(0_0_0/0.35)] backdrop-blur-md">
         <p className="min-w-0 flex-1 text-sm leading-tight">
-          <span className="block truncate font-display text-lg">{t.mobileCta.title}</span>
-          <span className="annot block truncate text-[0.6rem] text-stone">{t.mobileCta.sub}</span>
+          <span className="block font-display text-base leading-[1.05] min-[400px]:text-lg">
+            {t.mobileCta.title}
+          </span>
+          <span className="annot mt-1 hidden truncate text-[0.6rem] text-stone min-[400px]:block">
+            {t.mobileCta.sub}
+          </span>
         </p>
         {tel && (
           <a

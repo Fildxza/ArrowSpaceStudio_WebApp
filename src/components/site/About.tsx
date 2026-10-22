@@ -5,13 +5,13 @@ import { getImage } from "@/config/images";
 import { Annot, BrushStroke } from "./Graphics";
 import { Parallax, Reveal } from "./Motion";
 
-const artist = getImage("artist", {
-  en: "Muralist on a scaffold painting a large navy and terracotta wall (demonstration image)",
-  ms: "Pelukis mural di atas perancah melukis dinding besar biru laut dan terakota (imej demonstrasi)",
+const artist = getImage("arrow-city-at-work", {
+  en: "Artist seen from behind painting a glowing city skyline on a wall",
+  ms: "Pelukis dilihat dari belakang melukis garis langit bandar bercahaya pada dinding",
 });
-const detailImg = getImage("detail", {
-  en: "Close-up of thick hand-painted brushwork in terracotta, ochre and green (demonstration image)",
-  ms: "Gambar dekat sapuan berus tebal berwarna terakota, oker dan hijau (imej demonstrasi)",
+const detailImg = getImage("arrow-scaffold-planet", {
+  en: "Scaffolding in a high-ceilinged hall in front of a large planet mural in progress",
+  ms: "Perancah di dalam dewan bersiling tinggi di hadapan mural planet besar yang sedang dilukis",
 });
 
 function SampleTag({ children }: { children: string }) {
@@ -76,8 +76,7 @@ export function About() {
             </div>
           </Reveal>
           <p className="annot mt-4 text-muted-foreground">
-            {t.about.fig}
-            {isDemo ? " · " + t.common.sampleImage : ""}
+            {t.about.fig} {" · @arrowspacestudio"}
           </p>
         </div>
 
@@ -124,6 +123,20 @@ export function About() {
               </p>
             )}
           </div>
+
+          <Reveal as="figure" delay={100} className="mt-10 max-w-xl border-l-2 border-accent pl-5">
+            <figcaption className="annot text-muted-foreground">{t.about.quoteLabel}</figcaption>
+            <blockquote
+              lang="en"
+              className="mt-3 font-display text-2xl font-light italic leading-snug md:text-3xl"
+            >
+              {about.quote.text}
+            </blockquote>
+            <p className="annot mt-3 text-muted-foreground">
+              {about.quote.source}
+              {isDemo ? " · " + t.about.quoteNote : ""}
+            </p>
+          </Reveal>
 
           <Reveal as="ul" delay={120} className="mt-12 grid gap-px bg-charcoal/15 sm:grid-cols-3">
             {about.principles.map((p, i) => (
