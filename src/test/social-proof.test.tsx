@@ -30,9 +30,11 @@ describe("social proof resolution", () => {
   it("shows clearly-marked placeholders only in demo mode", () => {
     const r = resolveSocialProof({ testimonials: [], logos: [] }, true);
     expect(r.mode).toBe("placeholder");
+    // The sample quotes are realistic on purpose, but can never pass as real clients.
     for (const t of demoTestimonials) {
-      expect(pick(t.quote, "en")).toMatch(/^\[.*\]$/);
-      expect(pick(t.quote, "ms")).toMatch(/^\[.*\]$/);
+      expect(t.name).toMatch(/^Sample Client /);
+      expect(pick(t.quote, "en").length).toBeGreaterThan(40);
+      expect(pick(t.quote, "ms").length).toBeGreaterThan(40);
     }
   });
 
@@ -53,8 +55,11 @@ describe("<Testimonials />", () => {
         data={{ mode: "placeholder", testimonials: demoTestimonials, logoSlots: DEMO_LOGO_SLOTS }}
       />,
     );
-    expect(screen.getByText(/Client Voices — Placeholder/)).toBeInTheDocument();
-    expect(screen.getAllByText("Client Logo")).toHaveLength(DEMO_LOGO_SLOTS);
+    expect(screen.getByText(/Client Voices — Sample/)).toBeInTheDocument();
+    expect(screen.getAllByRole("img", { name: /Sample client logo/ })).toHaveLength(
+      DEMO_LOGO_SLOTS,
+    );
+    expect(screen.getByText("Sample testimonial")).toBeInTheDocument();
     expect(screen.getByRole("blockquote")).toHaveTextContent(
       pick(demoTestimonials[0]!.quote, "en"),
     );

@@ -92,17 +92,16 @@ describe("<SocialLinks />", () => {
 });
 
 describe("<Location />", () => {
-  it("shows the address published on the studio's Facebook page, without loading Google until asked", () => {
+  it("shows the address published on the studio's Facebook page, with the Google map embedded automatically", () => {
     const { container } = render(<Location />);
     expect(screen.getByText(/Menara Keck Seng/)).toBeInTheDocument();
     expect(screen.queryByText("Sample")).toBeNull();
-    expect(container.querySelector("iframe")).toBeNull();
 
     const directions = screen.getByRole("link", { name: /Get directions/ });
     expect(directions.getAttribute("href")).toMatch(/^https:\/\/www\.google\.com\/maps\/search\//);
     expect(directions).toHaveAttribute("rel", "noopener noreferrer");
 
-    fireEvent.click(screen.getByRole("button", { name: /Load interactive map/ }));
+    // The map loads automatically (no click needed).
     const frame = container.querySelector("iframe")!;
     expect(frame.getAttribute("src")).toContain("output=embed");
     expect(frame).toHaveAttribute("title", "Map showing Arrow Space Studio");

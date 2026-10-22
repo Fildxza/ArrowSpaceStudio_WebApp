@@ -36,31 +36,35 @@ export const clientLogos: ClientLogo[] = [
   // { name: "Client Co.", logo: "/clients/client-co.svg", href: "https://…" },
 ];
 
-/** Placeholder content shown ONLY in demo mode — obviously not real quotes. */
+/**
+ * SAMPLE content shown ONLY in demo mode so the owner and the client can see the finished layout.
+ * These are NOT real clients or quotes (names are "Sample Client …" and every card is tagged "Sample").
+ * Replace by filling `testimonials` / `clientLogos` above; in live mode the section hides until then.
+ */
 export const demoTestimonials: Testimonial[] = [
   {
     quote: {
-      en: "[Client testimonial goes here — added only after a real client approves the wording.]",
-      ms: "[Testimoni pelanggan di sini — hanya ditambah selepas pelanggan sebenar meluluskan ayatnya.]",
+      en: "We wanted our son's room to feel like a spaceship. The result is beyond what we imagined — he asks to show it to every visitor.",
+      ms: "Kami mahu bilik anak kami terasa seperti kapal angkasa. Hasilnya melebihi apa yang kami bayangkan — dia sentiasa mahu menunjukkannya kepada setiap tetamu.",
     },
-    name: "Client Name",
-    role: { en: "Role, Company", ms: "Jawatan, Syarikat" },
-  },
-  {
-    quote: {
-      en: "[A second approved testimonial — ideally from a commercial or hospitality project.]",
-      ms: "[Testimoni kedua yang diluluskan — sebaiknya daripada projek komersial atau hospitaliti.]",
-    },
-    name: "Client Name",
-    role: { en: "Role, Company", ms: "Jawatan, Syarikat" },
-  },
-  {
-    quote: {
-      en: "[A third approved testimonial — for example from a residential commission.]",
-      ms: "[Testimoni ketiga yang diluluskan — contohnya daripada tempahan kediaman.]",
-    },
-    name: "Client Name",
+    name: "Sample Client A",
     role: { en: "Homeowner", ms: "Pemilik rumah" },
+  },
+  {
+    quote: {
+      en: "Everything was explained clearly, from the first sketch to the final coat. The wall is now the first thing our visitors photograph.",
+      ms: "Semuanya dijelaskan dengan jelas, dari lakaran pertama hingga lapisan akhir. Dinding itu kini perkara pertama yang difoto oleh pengunjung kami.",
+    },
+    name: "Sample Client B",
+    role: { en: "Cafe owner", ms: "Pemilik kafe" },
+  },
+  {
+    quote: {
+      en: "The glow details look even better when the lights go down. Our friends can't stop talking about the room.",
+      ms: "Butiran bercahaya kelihatan lebih cantik bila lampu dimalapkan. Kawan-kawan kami tak habis bercakap tentang bilik itu.",
+    },
+    name: "Sample Client C",
+    role: { en: "Gaming room owner", ms: "Pemilik bilik permainan" },
   },
 ];
 

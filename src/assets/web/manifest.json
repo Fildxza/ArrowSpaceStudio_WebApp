@@ -1,63 +1,63 @@
 {
   "arrow-aerospace-lab": {
-    "width": 960,
-    "height": 356,
-    "variants": [640, 960]
+    "width": 3840,
+    "height": 1424,
+    "variants": [640, 1024, 1600, 2560]
   },
   "arrow-city-at-work": {
-    "width": 360,
-    "height": 640,
-    "variants": [360]
+    "width": 1440,
+    "height": 2560,
+    "variants": [640, 1024, 1440]
   },
   "arrow-galaxy-bedroom": {
-    "width": 640,
-    "height": 361,
-    "variants": [640]
+    "width": 2560,
+    "height": 1444,
+    "variants": [640, 1024, 1600, 2560]
   },
   "arrow-galaxy-ceiling": {
-    "width": 640,
-    "height": 640,
-    "variants": [640]
+    "width": 2560,
+    "height": 2560,
+    "variants": [640, 1024, 1600, 2560]
   },
   "arrow-helmet": {
-    "width": 960,
-    "height": 540,
-    "variants": [640, 960]
+    "width": 3840,
+    "height": 2160,
+    "variants": [640, 1024, 1600, 2560]
   },
   "arrow-moon": {
-    "width": 360,
-    "height": 640,
-    "variants": [360]
+    "width": 1440,
+    "height": 2560,
+    "variants": [640, 1024, 1440]
   },
   "arrow-nebula-ladder": {
-    "width": 720,
-    "height": 406,
-    "variants": [640, 720]
+    "width": 2880,
+    "height": 1624,
+    "variants": [640, 1024, 1600, 2560]
   },
   "arrow-neon-city": {
-    "width": 360,
-    "height": 640,
-    "variants": [360]
+    "width": 1440,
+    "height": 2560,
+    "variants": [640, 1024, 1440]
   },
   "arrow-pastel-clouds": {
-    "width": 640,
-    "height": 640,
-    "variants": [640]
+    "width": 2560,
+    "height": 2560,
+    "variants": [640, 1024, 1600, 2560]
   },
   "arrow-pastel-leaves": {
-    "width": 640,
-    "height": 640,
-    "variants": [640]
+    "width": 2560,
+    "height": 2560,
+    "variants": [640, 1024, 1600, 2560]
   },
   "arrow-scaffold-planet": {
-    "width": 361,
-    "height": 640,
-    "variants": [361]
+    "width": 1444,
+    "height": 2560,
+    "variants": [640, 1024, 1444]
   },
   "arrow-solar-room": {
-    "width": 590,
-    "height": 590,
-    "variants": [590]
+    "width": 2360,
+    "height": 2360,
+    "variants": [640, 1024, 1600, 2360]
   },
   "artist": {
     "width": 1200,

@@ -266,12 +266,15 @@ and Facebook page at 360–960 px (provenance, crops and the one redaction in `s
 Categories describe what is visible (Galaxy, Neon & Gaming, Pastel, Behind the Scenes) — client type,
 location and year are not known, so none are shown.
 
-**Should the photos be "enhanced to 4K"?** No. Upscaling a 600 px preview (with AI or otherwise) cannot
-recover detail that was never captured; it only invents smooth, slightly fake texture, which misrepresents
-the real paintwork. The honest route is to ask the owner for the **original photos** (phone gallery, Google
-Drive, WhatsApp as *Document* so it is not compressed) — modern phones shoot 3000–4000 px, plenty for a
-full-screen lightbox. Until then the previews are labelled and sized so they stay sharp (small tiles, no
-full-bleed use).
+**Image quality (AI-enhanced previews).** The studio's social-media photos are only 360–960 px, so every
+one of them was upscaled 4× with **Real-ESRGAN** (`realesrgan-x4plus`, ncnn-Vulkan v0.2.5.0) to 1440–3840 px,
+which removes compression blocks and gives clean edges (checked side by side against a plain enlargement).
+Be aware of what this is: the extra sharpness is *reconstructed*, not captured — fine detail such as brush
+texture is plausible rather than real. So these are "good-looking previews", not true 4K photographs.
+The unmodified originals are kept in `src/assets/source-previews/`. For the final site, ask the owner for
+the **original photos** (phone gallery, Google Drive, or WhatsApp sent as *Document* so it is not
+compressed); modern phones shoot 3000–4000 px natively. Responsive WebP sizes up to 2560 px are generated
+by `npm run images`, and the browser downloads only the size the screen needs.
 
 **Before/after transitions:** the drag-to-compare slider from the Process section works for any pair of
 images. Give a project a `before` photo (and optional `beforeLabel` / `afterLabel`) in
@@ -325,22 +328,23 @@ aside over the contact section and footer. It opens WhatsApp once
 
 ### Logo
 
-`LogoMark` in `src/components/site/Graphics.tsx` and `public/favicon.svg` are a
-placeholder monogram. Replace both with the real logo (SVG preferred) and
-regenerate `public/apple-touch-icon.png` (180×180).
+The studio's real logo is used: the supplied file is `src/assets/brand/arrow-logo.jpg`; the symbol is cropped
+to `src/assets/brand/arrow-logo-mark.webp` (header, footer, chat panel), `public/favicon.png` and
+`public/apple-touch-icon.png`; `public/og-image.jpg` carries it too. It is a 1002 px JPEG with a starfield
+background — if the owner has a **transparent SVG/PNG** of the symbol, swap those files for a crisper result.
 
 ### Map & address (Location section)
 
-Until a real address is confirmed the Location section shows the dummy address
-and an **illustrated sample map** (no Google request, no real-world pin).
+The address is confirmed, so the Location section shows the **real Google Map immediately** (no click needed;
+the browser lazy-loads it as the section nears the screen). If `mapEmbedUrl` is empty it falls back to an
+illustrated sample map with the dummy address (no Google request).
 
-Once confirmed:
+Fields:
 
 - `address` — shown in the Location and Contact sections; "Get directions" opens Google Maps.
 - `mapUrl` — optional link to your Google Maps business listing (used instead of the address search).
-- `mapEmbedUrl` — Google Maps → Share → **Embed a map** → copy only the `src="…"` value.
-  The map is shown behind a "Load interactive map" button, so Google is only
-  contacted when the visitor asks for it.
+- `mapEmbedUrl` — Google Maps → Share → **Embed a map** → copy only the `src="…"` value
+  (the current value uses the keyless `maps.google.com/maps?q=…&output=embed` form).
 
 ### Before / after slider ("From sketch to wall")
 

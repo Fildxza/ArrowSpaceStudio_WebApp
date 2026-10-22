@@ -47,7 +47,7 @@ function buildHead() {
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" as const },
       { rel: "stylesheet", href: FONTS },
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       ...(canonical ? [{ rel: "canonical", href: canonical }] : []),
     ],

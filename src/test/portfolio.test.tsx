@@ -25,6 +25,14 @@ describe("portfolio data", () => {
     }
   });
 
+  it("keeps the real photos at high resolution (AI-enhanced previews, 1400 px or more)", () => {
+    for (const p of projects.filter((x) => x.status === "social")) {
+      expect(Math.max(p.image.width, p.image.height), p.id).toBeGreaterThanOrEqual(1400);
+      const widest = Math.max(...[...p.image.srcSet.matchAll(/ (\d+)w/g)].map((m) => Number(m[1])));
+      expect(widest, p.id).toBeGreaterThanOrEqual(1400);
+    }
+  });
+
   it("does not invent client type, location or year for the Instagram photos", () => {
     for (const p of projects.filter((x) => x.status === "social")) {
       expect(p.location).toBeUndefined();

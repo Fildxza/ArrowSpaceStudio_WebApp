@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Clock, MapPin, Navigation, Phone } from "lucide-react";
 import { business, demoDetails, detail, detailList, isDemo } from "@/config/business";
 import { useCopy, useL } from "@/i18n";
@@ -131,35 +131,17 @@ function SampleMap({ labelled = true }: { labelled?: boolean }) {
   );
 }
 
-/** Real Google Map behind a click-to-load facade (no third-party request until asked). */
+/** Real Google Map, loaded automatically (the browser lazy-loads it as it nears the viewport). */
 function EmbeddedMap({ src }: { src: string }) {
   const t = useCopy();
-  const [loaded, setLoaded] = useState(false);
-  if (loaded) {
-    return (
-      <iframe
-        title={fmt(t.location.mapTitle, { name: business.name })}
-        src={src}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        className="h-full w-full grayscale-[0.4]"
-      />
-    );
-  }
   return (
-    <button
-      type="button"
-      onClick={() => setLoaded(true)}
-      className="group relative flex h-full w-full items-center justify-center bg-stone"
-    >
-      <SampleMap labelled={false} />
-      {/* wrapper positions the button: .btn sets position:relative, which would override `absolute` */}
-      <span className="absolute inset-0 flex items-end justify-center pb-8 md:pb-12">
-        <span className="btn btn-ink whitespace-nowrap">
-          <MapPin aria-hidden="true" className="size-4" /> {t.location.loadMap}
-        </span>
-      </span>
-    </button>
+    <iframe
+      title={fmt(t.location.mapTitle, { name: business.name })}
+      src={src}
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      className="h-full w-full"
+    />
   );
 }
 

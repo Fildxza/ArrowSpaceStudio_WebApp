@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import logoMark from "@/assets/brand/arrow-logo-mark.webp";
 import { cn } from "@/lib/utils";
 
 /** Hand-painted brushstroke accent. `hero` plays on load; `reveal` waits for a <Reveal variant="draw"> parent. */
@@ -103,20 +104,17 @@ export function Annot({ children, className }: { children: ReactNode; className?
   );
 }
 
-/** Placeholder brand mark: an upward arrow (for "Arrow Space Studio"). Replace with the real logo file when supplied. */
+/** The studio's real logo mark (the arrow symbol on its starfield, cropped from the supplied logo). */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" className={className}>
-      <rect width="32" height="32" fill="currentColor" />
-      <path
-        d="M16 26V8M8.5 15.5 16 8l7.5 7.5M10.5 26h11"
-        fill="none"
-        stroke="var(--accent-soft)"
-        strokeWidth="2.6"
-        strokeLinejoin="miter"
-        strokeLinecap="square"
-      />
-    </svg>
+    <img
+      src={logoMark}
+      alt=""
+      width={256}
+      height={256}
+      decoding="async"
+      className={cn("object-cover", className)}
+    />
   );
 }
 

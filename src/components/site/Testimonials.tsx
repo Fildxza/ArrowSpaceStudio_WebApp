@@ -6,6 +6,7 @@ import { fmt, useCopy, useL } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { Annot } from "./Graphics";
 import { Reveal } from "./Motion";
+import { SampleLogo } from "./SampleLogos";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -34,7 +35,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
             <Reveal>
               <Annot className="text-stone">
                 {t.testimonials.label}
-                {placeholder ? " — " + t.common.placeholder : ""}
+                {placeholder ? " — " + t.common.sample : ""}
               </Annot>
             </Reveal>
             <Reveal
@@ -97,7 +98,6 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                   <blockquote
                     className={cn(
                       "font-display text-[clamp(1.7rem,3.4vw,3.2rem)] font-light leading-[1.15] tracking-[-0.01em]",
-                      placeholder && "text-stone/70 italic",
                     )}
                   >
                     {l(current.quote)}
@@ -171,12 +171,9 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
               : Array.from({ length: data.logoSlots }, (_, i) => (
                   <li
                     key={i}
-                    className="flex aspect-[3/2] flex-col items-center justify-center gap-2 border-b border-r border-ivory/15 text-stone/40"
+                    className="group flex aspect-[3/2] items-center justify-center border-b border-r border-ivory/15 px-3"
                   >
-                    <span className="font-display text-xl italic">{t.testimonials.clientLogo}</span>
-                    <span className="annot text-[0.6rem]">
-                      {fmt(t.testimonials.slot, { n: pad(i + 1) })}
-                    </span>
+                    <SampleLogo index={i} />
                   </li>
                 ))}
           </ul>
