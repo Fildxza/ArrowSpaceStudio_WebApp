@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Clock, Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
-import { business, demoDetails, detail } from "@/config/business";
+import { business, demoDetails, detail, showSampleMarks } from "@/config/business";
 import { buildMailto, buildTelUrl, displayPhone } from "@/lib/contact";
 import { nav } from "@/config/content";
 import { fmt, useCopy, useL } from "@/i18n";
@@ -49,7 +49,7 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
                   <span className="inline-flex min-h-9 items-center gap-2">
                     <Phone aria-hidden="true" className="size-3.5 text-accent-soft" />
                     {phone.value}
-                    {phone.sample && (
+                    {phone.sample && showSampleMarks() && (
                       <span className="annot text-[0.6rem] opacity-70">· {t.nav.sampleTag}</span>
                     )}
                   </span>
@@ -67,7 +67,7 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
                   <span className="inline-flex min-h-9 items-center gap-2">
                     <Mail aria-hidden="true" className="size-3.5 text-accent-soft" />
                     {email.value}
-                    {email.sample && (
+                    {email.sample && showSampleMarks() && (
                       <span className="annot text-[0.6rem] opacity-70">· {t.nav.sampleTag}</span>
                     )}
                   </span>
@@ -78,7 +78,7 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
               <li className="hidden items-center gap-2 xl:inline-flex">
                 <Clock aria-hidden="true" className="size-3.5 text-accent-soft" />
                 {hours.value}
-                {hours.sample && (
+                {hours.sample && showSampleMarks() && (
                   <span className="annot text-[0.6rem] opacity-70">· {t.nav.sampleTag}</span>
                 )}
               </li>

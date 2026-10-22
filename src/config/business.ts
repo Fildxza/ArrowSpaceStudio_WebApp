@@ -24,8 +24,14 @@ export interface SocialLink {
 }
 
 export interface BusinessConfig {
-  /** "demo" shows sample markers and dummy details. "live" hides them. */
+  /** "demo" shows dummy details for anything not supplied yet. "live" hides them. */
   contentStatus: ContentStatus;
+  /**
+   * Draw the "Sample" / "Proposed" / "Preview" markers next to dummy details? Off by default so
+   * the page looks finished to visitors. Set to `true` to show them again (e.g. when handing the
+   * draft to the owner). Has no effect in "live" mode, where dummy details are hidden anyway.
+   */
+  showSampleLabels: boolean;
   /** [OWNER] Company display name. Placeholder until supplied. */
   name: string;
   /** [OWNER] Short tagline used in the footer (English and Bahasa Melayu). */
@@ -84,6 +90,7 @@ export interface SeoConfig {
 
 export const business: BusinessConfig = {
   contentStatus: "demo",
+  showSampleLabels: false,
   name: "Arrow Space Studio", // confirmed company name
   tagline: {
     en: "Bespoke mural art for spaces that deserve to stand out.",
@@ -174,6 +181,9 @@ export const seo: SeoConfig = {
 };
 
 export const isDemo = business.contentStatus === "demo";
+
+/** True when sample markers should be drawn (demo content AND the owner wants them visible). */
+export const showSampleMarks = (): boolean => isDemo && business.showSampleLabels;
 
 /** A displayable detail: the real value, a labelled demo value, or nothing. */
 export interface Detail {

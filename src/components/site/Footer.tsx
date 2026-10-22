@@ -1,6 +1,5 @@
-import { business, demoDetails, detail, isDemo } from "@/config/business";
+import { business, demoDetails, detail, showSampleMarks } from "@/config/business";
 import { nav } from "@/config/content";
-import { hasUnverifiedProjects } from "@/config/portfolio";
 import { fmt, useCopy, useL } from "@/i18n";
 import { LogoMark } from "./Graphics";
 import { Reveal } from "./Motion";
@@ -69,7 +68,7 @@ export function Footer() {
 
         <div className="mt-16 flex flex-col justify-between gap-4 border-t border-ivory/10 pt-6 text-xs text-stone/70 md:flex-row">
           <p>{fmt(t.footer.rights, { year, name: business.name })}</p>
-          {(isDemo || hasUnverifiedProjects) && <p>{t.footer.preview}</p>}
+          {showSampleMarks() && <p>{t.footer.preview}</p>}
           <a href="#top" className="link-line w-fit">
             {t.footer.top}
           </a>

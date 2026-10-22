@@ -18,3 +18,18 @@ export function withoutContactNumbers() {
     business.phoneNumber = saved.phone;
   });
 }
+
+/**
+ * Registers hooks that turn the "Sample" / "Proposed" / "Preview" markers back on
+ * (`business.showSampleLabels`, off by default) for the tests inside the current describe block.
+ */
+export function withSampleLabels() {
+  let saved = false;
+  beforeEach(() => {
+    saved = business.showSampleLabels;
+    business.showSampleLabels = true;
+  });
+  afterEach(() => {
+    business.showSampleLabels = saved;
+  });
+}

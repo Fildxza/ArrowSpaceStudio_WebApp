@@ -23,7 +23,7 @@ const DESIGNS: Design[] = [
     glyph: (
       <rect x="4" y="4" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="3" />
     ),
-    word: "SAMPLE",
+    word: "NORTH",
     className: "font-mono text-lg tracking-[0.3em]",
   },
   {
@@ -55,7 +55,7 @@ const DESIGNS: Design[] = [
   },
 ];
 
-/** Placeholder client logo (index 0-5). Exposed to assistive tech as "Sample client logo N". */
+/** Placeholder client logo (index 0-5). Exposed to assistive tech as "Client logo N". */
 export function SampleLogo({ index }: { index: number }) {
   const t = useCopy();
   const d = DESIGNS[index % DESIGNS.length]!;

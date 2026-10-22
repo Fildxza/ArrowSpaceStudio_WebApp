@@ -1,5 +1,5 @@
 import { comparison, process } from "@/config/content";
-import { isDemo } from "@/config/business";
+import { showSampleMarks } from "@/config/business";
 import { useCopy, useL } from "@/i18n";
 import { BeforeAfter } from "./BeforeAfter";
 import { Annot } from "./Graphics";
@@ -32,7 +32,7 @@ export function Process() {
             <Reveal>
               <Annot>
                 {t.process.label}
-                {isDemo ? " — " + t.common.proposed : ""}
+                {showSampleMarks() ? " — " + t.common.proposed : ""}
               </Annot>
             </Reveal>
             <Reveal

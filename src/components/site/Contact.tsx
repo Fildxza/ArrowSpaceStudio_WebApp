@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { ArrowDown, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
-import { business, demoDetails, detail } from "@/config/business";
+import { business, demoDetails, detail, showSampleMarks } from "@/config/business";
 import { useCopy, useL } from "@/i18n";
 import { buildMailto, buildTelUrl, displayPhone } from "@/lib/contact";
 import { enquiryChecklist } from "@/config/content";
@@ -11,6 +11,7 @@ import { WhatsAppLink } from "./WhatsAppLink";
 
 function Sample() {
   const t = useCopy();
+  if (!showSampleMarks()) return null;
   return (
     <span className="annot ml-2 border border-current px-1.5 py-0.5 align-middle text-[0.6rem] opacity-80">
       {t.common.sample}

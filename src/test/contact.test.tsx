@@ -4,7 +4,7 @@ import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { business } from "@/config/business";
 import { WhatsAppLink } from "@/components/site/WhatsAppLink";
 import { announceEnquiry } from "@/lib/enquiry";
-import { withoutContactNumbers } from "./unconfigured";
+import { withoutContactNumbers, withSampleLabels } from "./unconfigured";
 import { Contact } from "@/components/site/Contact";
 
 afterEach(() => vi.restoreAllMocks());
@@ -24,7 +24,16 @@ describe("contact safety without a configured number", () => {
   it("does not turn sample contact details into links", () => {
     const { container } = render(<Contact />);
     expect(container.querySelector('a[href^="mailto:"]')).toBeNull();
-    expect(screen.getAllByText("Sample").length).toBeGreaterThan(0);
+    // Sample tags are hidden by default so the page looks finished.
+    expect(screen.queryAllByText("Sample")).toHaveLength(0);
+  });
+
+  describe("with sample labels switched on", () => {
+    withSampleLabels();
+    it("tags the sample contact details", () => {
+      render(<Contact />);
+      expect(screen.getAllByText("Sample").length).toBeGreaterThan(0);
+    });
   });
 
   it("renders a plain button, not a link, without a number", () => {

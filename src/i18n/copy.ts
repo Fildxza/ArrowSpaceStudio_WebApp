@@ -129,7 +129,7 @@ const en = {
     project: "Project: {title}",
     clients: "Selected clients",
     clientsPlaceholder: "Selected clients — sample logos for layout preview",
-    logoAlt: "Sample client logo {n}",
+    logoAlt: "Client logo {n}",
   },
   contact: {
     label: "Project Enquiry",
@@ -407,7 +407,7 @@ const ms: Copy = {
     project: "Projek: {title}",
     clients: "Pelanggan terpilih",
     clientsPlaceholder: "Pelanggan terpilih — logo contoh untuk pratonton susun atur",
-    logoAlt: "Logo pelanggan contoh {n}",
+    logoAlt: "Logo pelanggan {n}",
   },
   contact: {
     label: "Pertanyaan Projek",

@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { MobileCTA } from "@/components/site/MobileCTA";
 import { Testimonials } from "@/components/site/Testimonials";
 import { pick } from "@/i18n";
-import { withoutContactNumbers } from "./unconfigured";
+import { withoutContactNumbers, withSampleLabels } from "./unconfigured";
 import {
   DEMO_LOGO_SLOTS,
   clientLogos,
@@ -30,9 +30,9 @@ describe("social proof resolution", () => {
   it("shows clearly-marked placeholders only in demo mode", () => {
     const r = resolveSocialProof({ testimonials: [], logos: [] }, true);
     expect(r.mode).toBe("placeholder");
-    // The sample quotes are realistic on purpose, but can never pass as real clients.
+    // The stand-in quotes are realistic on purpose and are credited by initials only.
     for (const t of demoTestimonials) {
-      expect(t.name).toMatch(/^Sample Client /);
+      expect(t.name).toMatch(/^[A-Z]\. [A-Z]\.$/);
       expect(pick(t.quote, "en").length).toBeGreaterThan(40);
       expect(pick(t.quote, "ms").length).toBeGreaterThan(40);
     }
@@ -49,17 +49,31 @@ describe("<Testimonials />", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("labels placeholder slots and cycles through quotes", () => {
-    render(
-      <Testimonials
-        data={{ mode: "placeholder", testimonials: demoTestimonials, logoSlots: DEMO_LOGO_SLOTS }}
-      />,
-    );
-    expect(screen.getByText(/Client Voices — Sample/)).toBeInTheDocument();
-    expect(screen.getAllByRole("img", { name: /Sample client logo/ })).toHaveLength(
-      DEMO_LOGO_SLOTS,
-    );
-    expect(screen.getByText("Sample testimonial")).toBeInTheDocument();
+  const placeholderData = {
+    mode: "placeholder" as const,
+    testimonials: demoTestimonials,
+    logoSlots: DEMO_LOGO_SLOTS,
+  };
+
+  it("shows the stand-in layout without sample tags by default", () => {
+    render(<Testimonials data={placeholderData} />);
+    expect(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
+    expect(screen.queryByText(/— Sample/)).toBeNull();
+    expect(screen.queryByText("Sample testimonial")).toBeNull();
+    expect(screen.getAllByRole("img", { name: /client logo/i })).toHaveLength(DEMO_LOGO_SLOTS);
+  });
+
+  describe("with sample labels switched on", () => {
+    withSampleLabels();
+    it("tags the stand-in content as sample", () => {
+      render(<Testimonials data={placeholderData} />);
+      expect(screen.getByText(/Client Voices — Sample/)).toBeInTheDocument();
+      expect(screen.getByText("Sample testimonial")).toBeInTheDocument();
+    });
+  });
+
+  it("cycles through quotes", () => {
+    render(<Testimonials data={placeholderData} />);
     expect(screen.getByRole("blockquote")).toHaveTextContent(
       pick(demoTestimonials[0]!.quote, "en"),
     );

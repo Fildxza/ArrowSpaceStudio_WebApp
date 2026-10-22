@@ -167,10 +167,12 @@ studio), `serviceAreas`, `openingHours`, `mapUrl`, `mapEmbedUrl`, `socials`,
 
 - Empty fields are **hidden** in live mode. In demo mode they fall back to the
   obviously fake values in `demoDetails` (e.g. "Jalan Contoh",
-  `hello@muralstudio.example`) and are labelled **Sample** — these are never
-  clickable.
-- When everything is confirmed, set `contentStatus: "live"`. This removes all
-  "Sample / Proposed / Placeholder" markers.
+  `hello@muralstudio.example`) and are never clickable.
+- **Sample markers are switched off** (`showSampleLabels: false`) so the draft looks finished.
+  Set `showSampleLabels: true` to draw the "Sample / Proposed / Preview" tags again next to every
+  stand-in detail, testimonial and client logo (useful when handing the draft to the owner).
+- When everything is confirmed, set `contentStatus: "live"`. This removes all stand-in details
+  (and therefore every marker); the testimonials section hides until real quotes are added.
 - **Mobile service without a studio?** Leave `address` empty and list
   `serviceAreas` — the site will show coverage instead of implying a premises.
 
@@ -296,7 +298,7 @@ and hover zoom automatically.
 5. Optional: `layout` (`"wide" | "tall" | "square"`) and `focal` (e.g. `"50% 30%"`).
 
 The hero, About and service photos are set with the same `getImage()` call (`Hero.tsx`, `About.tsx`,
-`src/config/content.ts`). Only the Process before/after slider still uses AI demo images (labelled "Sample"),
+`src/config/content.ts`). Only the Process before/after slider still uses AI demo images (no label shown),
 kept on purpose until a real before/after pair is available.
 `public/og-image.jpg` (social preview) is composed from the real spaceship-room photo; replace it with a
 high-resolution photo before launch.
@@ -318,8 +320,8 @@ export const testimonials = [
 export const clientLogos = [{ name: "Company", logo: "/clients/company.svg", href: "https://…" }];
 ```
 
-While both lists are empty, demo mode shows a labelled placeholder layout
-(bracketed text, "Client Logo" slots) and live mode hides the section entirely.
+While both lists are empty, demo mode shows stand-in testimonials (initials only) and generic logos
+(tagged "Sample" only when `showSampleLabels` is on) and live mode hides the section entirely.
 Put logo files in `public/clients/` (SVG or transparent PNG — they are shown as
 white silhouettes on the dark background).
 

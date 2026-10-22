@@ -1,4 +1,4 @@
-import { business, isDemo } from "@/config/business";
+import { business, isDemo, showSampleMarks } from "@/config/business";
 import { fmt, useCopy, useL } from "@/i18n";
 import { about } from "@/config/content";
 import { getImage } from "@/config/images";
@@ -16,6 +16,7 @@ const detailImg = getImage("arrow-scaffold-planet", {
 });
 
 function SampleTag({ children }: { children: string }) {
+  if (!showSampleMarks()) return null;
   return (
     <span className="annot ml-2 border border-current px-1.5 py-0.5 align-middle text-[0.6rem] text-accent-deep">
       {children}
@@ -118,7 +119,7 @@ export function About() {
                 {l(p)}
               </Reveal>
             ))}
-            {showPlaceholder && (
+            {showPlaceholder && showSampleMarks() && (
               <p className="annot max-w-xl border-l-2 border-accent pl-3 text-muted-foreground">
                 {t.about.placeholderNote}
               </p>
@@ -135,7 +136,7 @@ export function About() {
             </blockquote>
             <p className="annot mt-3 text-muted-foreground">
               {about.quote.source}
-              {isDemo ? " · " + t.about.quoteNote : ""}
+              {showSampleMarks() ? " · " + t.about.quoteNote : ""}
             </p>
           </Reveal>
 

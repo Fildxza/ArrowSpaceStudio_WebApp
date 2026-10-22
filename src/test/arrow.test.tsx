@@ -5,6 +5,7 @@ import { Lightbox } from "@/components/site/Lightbox";
 import { business, seo } from "@/config/business";
 import { projects } from "@/config/portfolio";
 import { pick, resetLangForTests } from "@/i18n";
+import { withSampleLabels } from "./unconfigured";
 
 beforeEach(() => resetLangForTests("en"));
 afterEach(() => resetLangForTests("en"));
@@ -50,10 +51,18 @@ describe("<About /> artist section", () => {
     for (const a of links) expect(a).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("quotes the studio's own words and flags them for confirmation", () => {
+  it("quotes the studio's own words without any draft note by default", () => {
     render(<About />);
     expect(screen.getByText(/Synergized by four brothers/)).toBeInTheDocument();
-    expect(screen.getByText(/to be confirmed with the owner/i)).toBeInTheDocument();
+    expect(screen.queryByText(/to be confirmed with the owner/i)).toBeNull();
+  });
+
+  describe("with sample labels switched on", () => {
+    withSampleLabels();
+    it("flags the quote for confirmation", () => {
+      render(<About />);
+      expect(screen.getByText(/to be confirmed with the owner/i)).toBeInTheDocument();
+    });
   });
 });
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { isDemo } from "@/config/business";
+import { showSampleMarks } from "@/config/business";
 import { fmt, useCopy, useL } from "@/i18n";
 import { services, servicesConfirmed } from "@/config/content";
 import { cn } from "@/lib/utils";
@@ -27,7 +27,7 @@ export function Services() {
             <Reveal>
               <Annot>
                 {t.services.label}
-                {isDemo && !servicesConfirmed ? " — " + t.common.proposed : ""}
+                {showSampleMarks() && !servicesConfirmed ? " — " + t.common.proposed : ""}
               </Annot>
             </Reveal>
             <Reveal

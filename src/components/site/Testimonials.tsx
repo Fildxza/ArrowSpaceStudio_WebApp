@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { projects } from "@/config/portfolio";
+import { showSampleMarks } from "@/config/business";
 import { socialProof, type SocialProof } from "@/config/social-proof";
 import { fmt, useCopy, useL } from "@/i18n";
 import { cn } from "@/lib/utils";
@@ -17,6 +18,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
   if (data.mode === "hidden") return null;
 
   const placeholder = data.mode === "placeholder";
+  const marks = placeholder && showSampleMarks();
   const items = data.testimonials;
   const current = items[index];
   const project = current?.projectId ? projects.find((p) => p.id === current.projectId) : undefined;
@@ -35,7 +37,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
             <Reveal>
               <Annot className="text-stone">
                 {t.testimonials.label}
-                {placeholder ? " — " + t.common.sample : ""}
+                {marks ? " — " + t.common.sample : ""}
               </Annot>
             </Reveal>
             <Reveal
@@ -110,7 +112,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
                         <span className="annot mt-1 block text-stone">{l(current.role)}</span>
                       )}
                     </span>
-                    {placeholder && (
+                    {marks && (
                       <span className="annot border border-current px-1.5 py-0.5 text-[0.6rem] text-accent-soft">
                         {t.testimonials.sampleSlot}
                       </span>
@@ -133,7 +135,7 @@ export function Testimonials({ data = socialProof }: { data?: SocialProof }) {
         {/* Client logos */}
         <Reveal delay={160} className="mt-24 md:mt-32">
           <p className="annot text-stone/70">
-            {placeholder ? t.testimonials.clientsPlaceholder : t.testimonials.clients}
+            {marks ? t.testimonials.clientsPlaceholder : t.testimonials.clients}
           </p>
           <ul className="mt-6 grid grid-cols-2 border-l border-t border-ivory/15 sm:grid-cols-3 lg:grid-cols-6">
             {data.mode === "real"

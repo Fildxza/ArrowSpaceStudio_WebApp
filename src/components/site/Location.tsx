@@ -1,6 +1,13 @@
 import type { ReactNode } from "react";
 import { Clock, MapPin, Navigation, Phone } from "lucide-react";
-import { business, demoDetails, detail, detailList, isDemo } from "@/config/business";
+import {
+  business,
+  demoDetails,
+  detail,
+  detailList,
+  isDemo,
+  showSampleMarks,
+} from "@/config/business";
 import { useCopy, useL } from "@/i18n";
 import { buildTelUrl, directionsUrl, displayPhone } from "@/lib/contact";
 import { fmt } from "@/i18n";
@@ -9,6 +16,7 @@ import { Reveal } from "./Motion";
 
 function SampleTag() {
   const t = useCopy();
+  if (!showSampleMarks()) return null;
   return (
     <span className="annot ml-2 border border-current px-1.5 py-0.5 align-middle text-[0.6rem] text-accent-deep">
       {t.common.sample}
@@ -169,7 +177,7 @@ export function Location() {
           <Reveal>
             <Annot>
               {t.location.label}
-              {isDemo && address?.sample ? " — " + t.common.sample : ""}
+              {showSampleMarks() && address?.sample ? " — " + t.common.sample : ""}
             </Annot>
           </Reveal>
           <Reveal

@@ -38,7 +38,7 @@ export const clientLogos: ClientLogo[] = [
 
 /**
  * SAMPLE content shown ONLY in demo mode so the owner and the client can see the finished layout.
- * These are NOT real clients or quotes (names are "Sample Client …" and every card is tagged "Sample").
+ * These are NOT real clients or quotes (shown with initials only; set `showSampleLabels: true` in business.ts to tag every card "Sample").
  * Replace by filling `testimonials` / `clientLogos` above; in live mode the section hides until then.
  */
 export const demoTestimonials: Testimonial[] = [
@@ -47,7 +47,7 @@ export const demoTestimonials: Testimonial[] = [
       en: "We wanted our son's room to feel like a spaceship. The result is beyond what we imagined — he asks to show it to every visitor.",
       ms: "Kami mahu bilik anak kami terasa seperti kapal angkasa. Hasilnya melebihi apa yang kami bayangkan — dia sentiasa mahu menunjukkannya kepada setiap tetamu.",
     },
-    name: "Sample Client A",
+    name: "A. R.",
     role: { en: "Homeowner", ms: "Pemilik rumah" },
   },
   {
@@ -55,7 +55,7 @@ export const demoTestimonials: Testimonial[] = [
       en: "Everything was explained clearly, from the first sketch to the final coat. The wall is now the first thing our visitors photograph.",
       ms: "Semuanya dijelaskan dengan jelas, dari lakaran pertama hingga lapisan akhir. Dinding itu kini perkara pertama yang difoto oleh pengunjung kami.",
     },
-    name: "Sample Client B",
+    name: "N. A.",
     role: { en: "Cafe owner", ms: "Pemilik kafe" },
   },
   {
@@ -63,7 +63,7 @@ export const demoTestimonials: Testimonial[] = [
       en: "The glow details look even better when the lights go down. Our friends can't stop talking about the room.",
       ms: "Butiran bercahaya kelihatan lebih cantik bila lampu dimalapkan. Kawan-kawan kami tak habis bercakap tentang bilik itu.",
     },
-    name: "Sample Client C",
+    name: "S. L.",
     role: { en: "Gaming room owner", ms: "Pemilik bilik permainan" },
   },
 ];

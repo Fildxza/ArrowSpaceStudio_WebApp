@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Copy, MessageCircle, Send, X } from "lucide-react";
-import { business, isDemo } from "@/config/business";
+import { business, isDemo, showSampleMarks } from "@/config/business";
 import { fmt, useCopy, useLang } from "@/i18n";
 import { chatReplies, closeChat, composeChatMessage, useChat } from "@/lib/chat";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -130,7 +130,7 @@ export function WhatsAppChat() {
                 className="size-1.5 rounded-full bg-[oklch(0.75_0.17_150)]"
               />
               {t.chat.status}
-              {isDemo ? t.chat.preview : ""}
+              {showSampleMarks() ? t.chat.preview : ""}
             </p>
           </div>
           <button
