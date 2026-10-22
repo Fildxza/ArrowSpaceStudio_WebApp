@@ -184,24 +184,9 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
                 </dl>
               )}
 
-              {project.status !== "verified" && (
+              {project.status === "demo" && (
                 <p className="annot mt-6 border-l-2 border-accent pl-3 text-stone/80">
-                  {project.status === "demo" ? t.lightbox.sampleNote : t.lightbox.socialNote}
-                  {project.credit && (
-                    <>
-                      {" "}
-                      {t.lightbox.source}:{" "}
-                      <a
-                        href={project.credit.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="link-line text-ivory"
-                      >
-                        {project.credit.label}
-                        <span className="sr-only"> {t.common.opensNewTab}</span>
-                      </a>
-                    </>
-                  )}
+                  {t.lightbox.sampleNote}
                 </p>
               )}
 

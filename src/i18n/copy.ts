@@ -60,15 +60,12 @@ const en = {
   work: {
     label: "Selected Work",
     labelSample: "Selected Work — Sample Exhibition",
-    labelPreview: "Selected Work — Preview",
     headingA: "The",
     headingB: "Exhibition",
     sampleNote:
       "The pieces below are demonstration artwork showing how finished projects will be presented. They are not completed client commissions.",
     filterAria: "Filter projects by category",
     all: "All",
-    socialNote:
-      "These photos come from the studio's public Instagram and Facebook pages and are shown as a preview. Original high-resolution files and project details will replace them.",
     categories: {
       Galaxy: "Galaxy",
       Characters: "Characters",
@@ -83,7 +80,6 @@ const en = {
     viewProject: "View project",
     viewAria: "View {title}",
     viewAriaSample: "View {title} (sample)",
-    viewAriaPreview: "View {title} (preview)",
   },
   lightbox: {
     close: "Close project viewer",
@@ -93,9 +89,6 @@ const en = {
     location: "Location",
     year: "Year",
     sampleNote: "Sample artwork for demonstration — not a completed client project.",
-    socialNote:
-      "Photo from the studio's public Instagram or Facebook page, shown as a preview until the original file and project details are added.",
-    source: "Source",
   },
   process: {
     word: "Process",
@@ -350,15 +343,12 @@ const ms: Copy = {
   work: {
     label: "Karya Pilihan",
     labelSample: "Karya Pilihan — Pameran Contoh",
-    labelPreview: "Karya Pilihan — Pratonton",
     headingA: "Pameran",
     headingB: "Karya",
     sampleNote:
       "Karya di bawah ialah contoh demonstrasi bagi menunjukkan cara projek siap dipersembahkan. Ia bukan tempahan pelanggan yang telah disiapkan.",
     filterAria: "Tapis projek mengikut kategori",
     all: "Semua",
-    socialNote:
-      "Foto-foto ini diambil daripada halaman Instagram dan Facebook awam studio dan dipaparkan sebagai pratonton. Fail asal beresolusi tinggi dan butiran projek akan menggantikannya.",
     categories: {
       Galaxy: "Galaksi",
       Characters: "Watak",
@@ -373,7 +363,6 @@ const ms: Copy = {
     viewProject: "Lihat projek",
     viewAria: "Lihat {title}",
     viewAriaSample: "Lihat {title} (contoh)",
-    viewAriaPreview: "Lihat {title} (pratonton)",
   },
   lightbox: {
     close: "Tutup paparan projek",
@@ -383,9 +372,6 @@ const ms: Copy = {
     location: "Lokasi",
     year: "Tahun",
     sampleNote: "Karya contoh untuk demonstrasi — bukan projek pelanggan yang telah disiapkan.",
-    socialNote:
-      "Foto daripada halaman Instagram atau Facebook awam studio, dipaparkan sebagai pratonton sehingga fail asal dan butiran projek ditambah.",
-    source: "Sumber",
   },
   process: {
     word: "Proses",

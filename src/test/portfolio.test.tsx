@@ -87,10 +87,8 @@ describe("<Work /> gallery", () => {
     expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(
       pick(projects[0]!.title, "en"),
     );
-    expect(view.getByText(/public Instagram or Facebook/i)).toBeInTheDocument();
-    const credit = view.getByRole("link", { name: new RegExp(projects[0]!.credit!.label) });
-    expect(credit).toHaveAttribute("href", projects[0]!.credit!.href);
-    expect(credit).toHaveAttribute("rel", "noopener noreferrer");
+    // Real photos are shown as finished work: no platform or source declaration in the viewer.
+    expect(dialog.textContent).not.toMatch(/instagram|facebook/i);
     expect(view.getByRole("button", { name: "Close project viewer" })).toBeInTheDocument();
 
     fireEvent.keyDown(dialog, { key: "ArrowRight" });
@@ -108,6 +106,12 @@ describe("<Work /> gallery", () => {
     settle();
     expect(dialog).not.toHaveAttribute("open");
     expect(document.activeElement).toBe(first);
+  });
+
+  it("shows no Instagram or Facebook badge on real photos", () => {
+    render(<Work />);
+    expect(screen.queryByText(/^(instagram|facebook)$/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/preview/i)).not.toBeInTheDocument();
   });
 
   it("closes from the visible close button", () => {

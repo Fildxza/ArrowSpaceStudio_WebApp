@@ -258,7 +258,7 @@ Every project in `src/config/portfolio.ts` has a `status`:
 | Status | Meaning | Label shown |
 |---|---|---|
 | `demo` | AI-generated sample (never real work) | "Sample" |
-| `social` | Real photo from the studio's public Instagram, shown as a preview until approved | "Instagram" + source link in the lightbox |
+| `social` | Real photo of the studio's work, pending the owner's original file | none (shown like finished work; `credit` is kept in the data for provenance only) |
 | `verified` | Owner-approved original with confirmed details | none |
 
 The 26 current projects are `social`: real work of the studio taken from its public Instagram grid and
