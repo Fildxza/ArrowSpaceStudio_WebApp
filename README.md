@@ -257,7 +257,7 @@ Every project in `src/config/portfolio.ts` has a `status`:
 
 | Status | Meaning | Label shown |
 |---|---|---|
-| `demo` | AI-generated sample (never real work) | "Sample" |
+| `demo` | AI-generated sample (never real work) | none |
 | `social` | Real photo of the studio's work, pending the owner's original file | none (shown like finished work; `credit` is kept in the data for provenance only) |
 | `verified` | Owner-approved original with confirmed details | none |
 
@@ -355,7 +355,7 @@ Fields:
 At the end of the Process section. Configure `comparison` in
 `src/config/content.ts`: add a real _before_ photo and the _finished_ photo of
 the same wall to `src/assets/`, run `npm run images`, point `before` / `after`
-at them with `getImage()`, adjust the labels and set `verified: true`.
+at them with `getImage()` and adjust the labels.
 The current sketch was generated from the demo image.
 
 ### Going public (SEO)

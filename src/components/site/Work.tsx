@@ -1,10 +1,5 @@
 import { useCallback, useRef, useState, type CSSProperties } from "react";
-import {
-  hasDemoProjects,
-  projectCategories,
-  projects,
-  type ProjectLayout,
-} from "@/config/portfolio";
+import { projectCategories, projects, type ProjectLayout } from "@/config/portfolio";
 import { fmt, useCopy, useL } from "@/i18n";
 import { categoriesInUse, filterProjects, type ProjectFilter } from "@/lib/portfolio";
 import { cn } from "@/lib/utils";
@@ -60,9 +55,7 @@ export function Work() {
         <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-end">
           <div>
             <Reveal>
-              <Annot className="text-stone">
-                {hasDemoProjects ? t.work.labelSample : t.work.label}
-              </Annot>
+              <Annot className="text-stone">{t.work.label}</Annot>
             </Reveal>
             <Reveal
               as="h2"
@@ -73,15 +66,6 @@ export function Work() {
                 {t.work.headingA} <em className="italic text-accent-soft">{t.work.headingB}</em>
               </span>
             </Reveal>
-            {hasDemoProjects && (
-              <Reveal
-                as="p"
-                delay={140}
-                className="mt-6 max-w-md text-sm leading-relaxed text-stone/80"
-              >
-                {t.work.sampleNote}
-              </Reveal>
-            )}
           </div>
 
           <Reveal delay={160}>
@@ -147,9 +131,7 @@ export function Work() {
                       setActive(i);
                     }}
                     className="group block w-full text-left"
-                    aria-label={fmt(p.status === "demo" ? t.work.viewAriaSample : t.work.viewAria, {
-                      title: l(p.title),
-                    })}
+                    aria-label={fmt(t.work.viewAria, { title: l(p.title) })}
                   >
                     <div className="crop relative">
                       <div className={cn("mask relative overflow-hidden bg-charcoal", lay.frame)}>
@@ -165,11 +147,6 @@ export function Work() {
                           style={p.focal ? { objectPosition: p.focal } : undefined}
                           className="h-full w-full object-cover transition-transform duration-[1.4s] ease-[var(--ease)] group-hover:scale-[1.05]"
                         />
-                        {p.status === "demo" && (
-                          <span className="annot absolute left-4 top-4 bg-ink/80 px-2.5 py-1.5 text-ivory backdrop-blur-sm">
-                            {t.common.sample}
-                          </span>
-                        )}
                         <span className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-between bg-accent-deep px-5 py-4 text-sm font-semibold transition-transform duration-500 ease-[var(--ease)] group-hover:translate-y-0 group-focus-visible:translate-y-0">
                           {t.work.viewProject} <span aria-hidden="true">↗</span>
                         </span>

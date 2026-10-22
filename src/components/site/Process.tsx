@@ -92,10 +92,7 @@ export function Process() {
         <div className="mt-28 grid grid-cols-12 gap-x-6 gap-y-10 border-t border-charcoal/80 pt-12 md:mt-40">
           <div className="col-span-12 lg:col-span-4">
             <Reveal>
-              <Annot>
-                {t.process.compareLabel}
-                {comparison.verified ? "" : " — " + t.common.sample}
-              </Annot>
+              <Annot>{t.process.compareLabel}</Annot>
             </Reveal>
             <Reveal
               as="h3"
@@ -111,11 +108,6 @@ export function Process() {
             >
               {t.process.compareIntro}
             </Reveal>
-            {!comparison.verified && (
-              <p className="annot mt-6 max-w-sm border-l-2 border-accent pl-3 text-muted-foreground">
-                {t.process.compareNote}
-              </p>
-            )}
           </div>
           <Reveal variant="mask" delay={120} className="col-span-12 lg:col-span-8">
             <div className="crop">

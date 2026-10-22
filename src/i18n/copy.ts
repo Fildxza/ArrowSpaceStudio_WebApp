@@ -59,11 +59,8 @@ const en = {
   },
   work: {
     label: "Selected Work",
-    labelSample: "Selected Work — Sample Exhibition",
     headingA: "The",
     headingB: "Exhibition",
-    sampleNote:
-      "The pieces below are demonstration artwork showing how finished projects will be presented. They are not completed client commissions.",
     filterAria: "Filter projects by category",
     all: "All",
     categories: {
@@ -79,7 +76,6 @@ const en = {
     projectMany: "projects",
     viewProject: "View project",
     viewAria: "View {title}",
-    viewAriaSample: "View {title} (sample)",
   },
   lightbox: {
     close: "Close project viewer",
@@ -88,7 +84,6 @@ const en = {
     next: "Next project",
     location: "Location",
     year: "Year",
-    sampleNote: "Sample artwork for demonstration — not a completed client project.",
   },
   process: {
     word: "Process",
@@ -100,8 +95,6 @@ const en = {
     compareA: "From sketch",
     compareB: "to wall.",
     compareIntro: "Drag across the image to compare the concept stage with the finished mural.",
-    compareNote:
-      "Demonstration — the sketch is generated from sample artwork. Real before/after photos replace it later.",
     compareAria: "Compare the concept sketch with the finished mural",
     before: "Before",
     after: "After",
@@ -342,11 +335,8 @@ const ms: Copy = {
   },
   work: {
     label: "Karya Pilihan",
-    labelSample: "Karya Pilihan — Pameran Contoh",
     headingA: "Pameran",
     headingB: "Karya",
-    sampleNote:
-      "Karya di bawah ialah contoh demonstrasi bagi menunjukkan cara projek siap dipersembahkan. Ia bukan tempahan pelanggan yang telah disiapkan.",
     filterAria: "Tapis projek mengikut kategori",
     all: "Semua",
     categories: {
@@ -362,7 +352,6 @@ const ms: Copy = {
     projectMany: "projek",
     viewProject: "Lihat projek",
     viewAria: "Lihat {title}",
-    viewAriaSample: "Lihat {title} (contoh)",
   },
   lightbox: {
     close: "Tutup paparan projek",
@@ -371,7 +360,6 @@ const ms: Copy = {
     next: "Projek seterusnya",
     location: "Lokasi",
     year: "Tahun",
-    sampleNote: "Karya contoh untuk demonstrasi — bukan projek pelanggan yang telah disiapkan.",
   },
   process: {
     word: "Proses",
@@ -385,8 +373,6 @@ const ms: Copy = {
     compareB: "ke dinding.",
     compareIntro:
       "Seret pada imej untuk membandingkan peringkat konsep dengan mural yang telah siap.",
-    compareNote:
-      "Demonstrasi — lakaran dijana daripada karya contoh. Foto sebelum/selepas sebenar akan menggantikannya kelak.",
     compareAria: "Bandingkan lakaran konsep dengan mural yang telah siap",
     before: "Sebelum",
     after: "Selepas",

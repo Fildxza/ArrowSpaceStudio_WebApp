@@ -259,20 +259,18 @@ export const enquiryChecklist: Localized[] = [
 
 /**
  * Before/after comparison shown at the end of the Process section.
- * DEMO: the "before" is a sketch generated from the demonstration image.
- * Replace with a real before photo + finished photo of the same wall, then set
- * `verified: true`.
+ * The "before" is a concept sketch generated from the "after" image (both AI-generated, shown
+ * without a sample label). Replace with a real before photo + finished photo of the same wall.
  */
 export const comparison = {
-  verified: false,
   beforeLabel: { en: "Concept sketch", ms: "Lakaran konsep" } satisfies Localized,
   afterLabel: { en: "Finished wall", ms: "Dinding siap" } satisfies Localized,
   before: getImage("sketch-hero", {
-    en: "Pencil concept sketch of a botanical mural on a primed wall (demonstration image)",
-    ms: "Lakaran konsep pensel mural botani pada dinding yang telah dicat dasar (imej demonstrasi)",
+    en: "Pencil concept sketch of a botanical mural on a primed wall",
+    ms: "Lakaran konsep pensel mural botani pada dinding yang telah dicat dasar",
   }),
   after: getImage("hero", {
-    en: "The same wall finished as a terracotta and olive botanical mural (demonstration image)",
-    ms: "Dinding yang sama selepas siap sebagai mural botani terakota dan zaitun (imej demonstrasi)",
+    en: "The same wall finished as a terracotta and olive botanical mural",
+    ms: "Dinding yang sama selepas siap sebagai mural botani terakota dan zaitun",
   }),
 };

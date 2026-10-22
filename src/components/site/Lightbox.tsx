@@ -184,12 +184,6 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
                 </dl>
               )}
 
-              {project.status === "demo" && (
-                <p className="annot mt-6 border-l-2 border-accent pl-3 text-stone/80">
-                  {t.lightbox.sampleNote}
-                </p>
-              )}
-
               {items.length > 1 && (
                 <div className="mt-8 flex gap-3">
                   <button
