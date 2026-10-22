@@ -13,7 +13,7 @@ import sharp from "sharp";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const srcDir = path.join(root, "src", "assets");
 const outDir = path.join(srcDir, "web");
-const WIDTHS = [640, 1024, 1600, 2560];
+const WIDTHS = [640, 1024, 1600, 2048];
 const QUALITY = 78;
 
 await mkdir(outDir, { recursive: true });

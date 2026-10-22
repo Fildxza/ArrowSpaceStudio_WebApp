@@ -78,9 +78,9 @@ export const services: ServiceItem[] = [
       en: "Graphic portraits and character artwork painted at wall scale.",
       ms: "Potret grafik dan karya karakter dilukis pada skala dinding.",
     },
-    image: getImage("arrow-helmet", {
-      en: "Painted graphic portrait of a figure wearing a grey battle helmet against a blue sky",
-      ms: "Potret grafik dilukis seorang figura memakai topi keledar tempur kelabu berlatarkan langit biru",
+    image: getImage("arrow-dark-lord", {
+      en: "Painted portrait of a caped armoured sci-fi villain reaching toward a giant space station glowing red against a purple sky",
+      ms: "Potret lukisan penjahat sci-fi berjubah dan berperisai menghulur tangan ke arah stesen angkasa gergasi yang bercahaya merah berlatarkan langit ungu",
     }),
   },
   {

@@ -71,8 +71,9 @@ const en = {
       "These photos come from the studio's public Instagram and Facebook pages and are shown as a preview. Original high-resolution files and project details will replace them.",
     categories: {
       Galaxy: "Galaxy",
-      Neon: "Neon & Gaming",
-      Pastel: "Pastel",
+      Characters: "Characters",
+      Portrait: "Portraits",
+      Colour: "Colour & Street",
       Process: "Behind the Scenes",
     },
     showingAll: "Showing {n} {noun}.",
@@ -360,8 +361,9 @@ const ms: Copy = {
       "Foto-foto ini diambil daripada halaman Instagram dan Facebook awam studio dan dipaparkan sebagai pratonton. Fail asal beresolusi tinggi dan butiran projek akan menggantikannya.",
     categories: {
       Galaxy: "Galaksi",
-      Neon: "Neon & Permainan",
-      Pastel: "Pastel",
+      Characters: "Watak",
+      Portrait: "Potret",
+      Colour: "Warna & Jalanan",
       Process: "Di Sebalik Tabir",
     },
     showingAll: "Memaparkan {n} {noun}.",

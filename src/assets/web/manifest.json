@@ -2,106 +2,284 @@
   "arrow-aerospace-lab": {
     "width": 3840,
     "height": 1424,
-    "variants": [640, 1024, 1600, 2560]
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-asean-skyline": {
+    "width": 3200,
+    "height": 1677,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-astronaut-breakout": {
+    "width": 2564,
+    "height": 1904,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-battle-royale": {
+    "width": 3024,
+    "height": 2264,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-champion": {
+    "width": 1850,
+    "height": 2160,
+    "variants": [
+      640,
+      1024,
+      1600,
+      1850
+    ]
   },
   "arrow-city-at-work": {
     "width": 1440,
     "height": 2560,
-    "variants": [640, 1024, 1440]
+    "variants": [
+      640,
+      1024,
+      1440
+    ]
+  },
+  "arrow-corte-fino": {
+    "width": 1600,
+    "height": 2160,
+    "variants": [
+      640,
+      1024,
+      1600
+    ]
+  },
+  "arrow-dark-lord": {
+    "width": 2160,
+    "height": 2160,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-fairytale-room": {
+    "width": 2560,
+    "height": 3200,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
   "arrow-galaxy-bedroom": {
     "width": 2560,
     "height": 1444,
-    "variants": [640, 1024, 1600, 2560]
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
   "arrow-galaxy-ceiling": {
     "width": 2560,
     "height": 2560,
-    "variants": [640, 1024, 1600, 2560]
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
-  "arrow-helmet": {
-    "width": 3840,
+  "arrow-mandala": {
+    "width": 2160,
     "height": 2160,
-    "variants": [640, 1024, 1600, 2560]
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-monochrome-wip": {
+    "width": 2176,
+    "height": 1440,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
   "arrow-moon": {
     "width": 1440,
     "height": 2560,
-    "variants": [640, 1024, 1440]
+    "variants": [
+      640,
+      1024,
+      1440
+    ]
   },
-  "arrow-nebula-ladder": {
+  "arrow-nebula-ceiling": {
+    "width": 2336,
+    "height": 2400,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-nebula-wip": {
     "width": 2880,
-    "height": 1624,
-    "variants": [640, 1024, 1600, 2560]
+    "height": 1620,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
   "arrow-neon-city": {
     "width": 1440,
     "height": 2560,
-    "variants": [640, 1024, 1440]
+    "variants": [
+      640,
+      1024,
+      1440
+    ]
   },
   "arrow-pastel-clouds": {
     "width": 2560,
     "height": 2560,
-    "variants": [640, 1024, 1600, 2560]
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
   "arrow-pastel-leaves": {
     "width": 2560,
     "height": 2560,
-    "variants": [640, 1024, 1600, 2560]
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
+  },
+  "arrow-respect-barber": {
+    "width": 1840,
+    "height": 2160,
+    "variants": [
+      640,
+      1024,
+      1600,
+      1840
+    ]
   },
   "arrow-scaffold-planet": {
     "width": 1444,
     "height": 2560,
-    "variants": [640, 1024, 1444]
+    "variants": [
+      640,
+      1024,
+      1444
+    ]
   },
-  "arrow-solar-room": {
-    "width": 2360,
-    "height": 2360,
-    "variants": [640, 1024, 1600, 2360]
+  "arrow-scooter-shopfront": {
+    "width": 2160,
+    "height": 2160,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
-  "artist": {
-    "width": 1200,
-    "height": 1504,
-    "variants": [640, 1024, 1200]
+  "arrow-solar-astronauts": {
+    "width": 2160,
+    "height": 2160,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
-  "cafe": {
-    "width": 1200,
-    "height": 1504,
-    "variants": [640, 1024, 1200]
+  "arrow-strength-camo": {
+    "width": 2160,
+    "height": 1092,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
-  "commercial": {
-    "width": 1504,
-    "height": 1008,
-    "variants": [640, 1024, 1504]
+  "arrow-studio-vapor": {
+    "width": 3006,
+    "height": 2304,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
-  "detail": {
-    "width": 1200,
-    "height": 1200,
-    "variants": [640, 1024, 1200]
+  "arrow-wave-landscape": {
+    "width": 2580,
+    "height": 1940,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
-  "exterior": {
-    "width": 1504,
-    "height": 1104,
-    "variants": [640, 1024, 1504]
+  "arrow-wookiee-duo": {
+    "width": 2700,
+    "height": 2700,
+    "variants": [
+      640,
+      1024,
+      1600,
+      2048
+    ]
   },
   "hero": {
     "width": 1600,
     "height": 1104,
-    "variants": [640, 1024, 1600]
-  },
-  "hotel": {
-    "width": 1200,
-    "height": 1504,
-    "variants": [640, 1024, 1200]
-  },
-  "residential": {
-    "width": 1200,
-    "height": 1504,
-    "variants": [640, 1024, 1200]
+    "variants": [
+      640,
+      1024,
+      1600
+    ]
   },
   "sketch-hero": {
     "width": 1600,
     "height": 1104,
-    "variants": [640, 1024, 1600]
+    "variants": [
+      640,
+      1024,
+      1600
+    ]
   }
 }

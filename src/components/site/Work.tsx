@@ -16,9 +16,21 @@ import { Reveal } from "./Motion";
 const filters: ProjectFilter[] = ["All", ...categoriesInUse(projects, projectCategories)];
 
 const layoutCls: Record<ProjectLayout, { col: string; frame: string; sizes: string }> = {
-  wide: { col: "md:col-span-7", frame: "aspect-[4/3]", sizes: "(min-width: 768px) 56vw, 100vw" },
-  tall: { col: "md:col-span-5", frame: "aspect-[4/5]", sizes: "(min-width: 768px) 40vw, 100vw" },
-  square: { col: "md:col-span-5", frame: "aspect-square", sizes: "(min-width: 768px) 40vw, 100vw" },
+  wide: {
+    col: "md:col-span-6 lg:col-span-4",
+    frame: "aspect-[3/2]",
+    sizes: "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
+  },
+  tall: {
+    col: "md:col-span-6 lg:col-span-4",
+    frame: "aspect-[4/5]",
+    sizes: "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
+  },
+  square: {
+    col: "md:col-span-6 lg:col-span-4",
+    frame: "aspect-square",
+    sizes: "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
+  },
 };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -118,17 +130,21 @@ export function Work() {
             : ""}
         </p>
 
-        <ul className="mt-16 grid grid-cols-1 gap-x-8 gap-y-16 md:mt-24 md:grid-cols-12 md:gap-y-24">
+        <ul className="mt-16 grid grid-cols-1 gap-x-6 gap-y-14 md:mt-24 md:grid-cols-12 md:gap-y-16 lg:gap-x-8">
           {list.map((p, i) => {
             const lay = layoutCls[p.layout];
-            const style = { "--d": `${(i % 2) * 120}ms` } as CSSProperties;
+            const style = { "--d": `${(i % 3) * 120}ms` } as CSSProperties;
             return (
               <li
                 key={`${filter}-${p.id}`}
-                className={cn(lay.col, i % 2 === 1 && "md:mt-32", filtered && "tile-in")}
+                className={cn(
+                  lay.col,
+                  "md:[&:nth-child(2n)]:mt-16 lg:[&:nth-child(2n)]:mt-0 lg:[&:nth-child(3n+2)]:mt-20",
+                  filtered && "tile-in",
+                )}
                 style={filtered ? style : undefined}
               >
-                <Reveal variant="mask" delay={(i % 2) * 120}>
+                <Reveal variant="mask" delay={(i % 3) * 120}>
                   <button
                     type="button"
                     onClick={(e) => {

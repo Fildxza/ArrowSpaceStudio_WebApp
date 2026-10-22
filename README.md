@@ -261,19 +261,23 @@ Every project in `src/config/portfolio.ts` has a `status`:
 | `social` | Real photo from the studio's public Instagram, shown as a preview until approved | "Instagram" + source link in the lightbox |
 | `verified` | Owner-approved original with confirmed details | none |
 
-The twelve current projects are `social`: real work of the studio taken from its public Instagram grid
-and Facebook page at 360–960 px (provenance, crops and the one redaction in `src/assets/SOURCES.md`).
-Categories describe what is visible (Galaxy, Neon & Gaming, Pastel, Behind the Scenes) — client type,
-location and year are not known, so none are shown.
+The 26 current projects are `social`: real work of the studio taken from its public Instagram grid and
+Facebook page, plus 18 photos the owner attached from the studio's social pages (provenance, crops and
+redactions in `src/assets/SOURCES.md`). Duplicates were removed (the best version of each wall is kept),
+and decorative frames added by social apps were cropped off. Categories describe what is visible
+(Galaxy, Characters, Portraits, Colour & Street, Behind the Scenes) — client type, location and year are
+not known, so none are shown. The gallery shows three tiles per row on desktop, two on tablets and one
+on phones.
 
-**Image quality (AI-enhanced previews).** The studio's social-media photos are only 360–960 px, so every
-one of them was upscaled 4× with **Real-ESRGAN** (`realesrgan-x4plus`, ncnn-Vulkan v0.2.5.0) to 1440–3840 px,
+**Image quality (AI-enhanced previews).** The studio's social-media photos are only 360–2048 px, so every
+one of them was upscaled with **Real-ESRGAN** (`realesrgan-x4plus`, ncnn-Vulkan v0.2.5.0; 4× for the
+smallest, 2× for the larger ones) to roughly 1440–4100 px,
 which removes compression blocks and gives clean edges (checked side by side against a plain enlargement).
 Be aware of what this is: the extra sharpness is *reconstructed*, not captured — fine detail such as brush
 texture is plausible rather than real. So these are "good-looking previews", not true 4K photographs.
 The unmodified originals are kept in `src/assets/source-previews/`. For the final site, ask the owner for
 the **original photos** (phone gallery, Google Drive, or WhatsApp sent as *Document* so it is not
-compressed); modern phones shoot 3000–4000 px natively. Responsive WebP sizes up to 2560 px are generated
+compressed); modern phones shoot 3000–4000 px natively. Responsive WebP sizes up to 2048 px are generated
 by `npm run images`, and the browser downloads only the size the screen needs.
 
 **Before/after transitions:** the drag-to-compare slider from the Process section works for any pair of
