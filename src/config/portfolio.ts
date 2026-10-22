@@ -3,8 +3,8 @@
  * ---------------------------------------------------------------------------
  * Each project has a `status`:
  *   - "demo"     AI-generated sample artwork (labelled "Sample"); never real work.
- *   - "social"   a real photo taken from the studio's own public Instagram
- *                (@arrowspacestudio). Shown as a labelled preview until the owner
+ *   - "social"   a real photo taken from the studio's own public Instagram/Facebook
+ *                (@arrowspacestudio) or Facebook page (Fathil The Muralist). Shown as a labelled preview until the owner
  *                approves it and supplies the original file and project details.
  *   - "verified" owner-approved photo with confirmed details (no label).
  *
@@ -35,6 +35,7 @@ export type ProjectLayout = "wide" | "tall" | "square";
 export type ProjectStatus = "demo" | "social" | "verified";
 
 export interface ProjectCredit {
+  platform: "instagram" | "facebook";
   label: string;
   href: string;
 }
@@ -55,29 +56,42 @@ export interface PortfolioProject {
   year?: string;
   /** CSS object-position for the gallery crop, e.g. "50% 30%". */
   focal?: string;
+  /**
+   * Optional "before" photo of the same wall. When set, the lightbox shows a drag-to-compare
+   * slider (the same technique as the Process section) instead of a single image.
+   */
+  before?: SiteImage;
+  beforeLabel?: Localized;
+  afterLabel?: Localized;
 }
 
 const instagram: ProjectCredit = {
+  platform: "instagram",
   label: "@arrowspacestudio",
   href: "https://www.instagram.com/arrowspacestudio/",
+};
+const facebook: ProjectCredit = {
+  platform: "facebook",
+  label: "Fathil The Muralist",
+  href: "https://www.facebook.com/FathilTheMuralist",
 };
 
 export const projects: PortfolioProject[] = [
   {
-    id: "galaxy-bedroom-wall",
-    title: { en: "Galaxy Bedroom Wall", ms: "Dinding Bilik Galaksi" },
+    id: "aerospace-lab",
+    title: { en: "The Aerospace Lab", ms: "Makmal Aeroangkasa" },
     category: "Galaxy",
     description: {
-      en: "A deep-space nebula with scattered stars, painted behind a bed.",
-      ms: "Nebula angkasa lepas dengan taburan bintang, dilukis di belakang katil.",
+      en: "A spaceship cockpit with a glowing starfield window, a desk and an easel, painted on every wall.",
+      ms: "Kokpit kapal angkasa dengan tingkap medan bintang bercahaya, meja dan easel, dilukis pada setiap dinding.",
     },
-    image: getImage("arrow-galaxy-bedroom", {
-      en: "Galaxy mural on a bedroom wall, with a large teddy bear lying on the bed in front of it",
-      ms: "Mural galaksi pada dinding bilik tidur, dengan sebuah patung beruang besar di atas katil",
+    image: getImage("arrow-aerospace-lab", {
+      en: "Room painted as a spaceship cockpit, with a starfield window, a desk with a laptop and an easel holding a portrait",
+      ms: "Bilik dilukis sebagai kokpit kapal angkasa, dengan tingkap medan bintang, meja berkomputer riba dan easel yang memegang sebuah potret",
     }),
     layout: "wide",
     status: "social",
-    credit: instagram,
+    credit: facebook,
   },
   {
     id: "galaxy-ceiling-prism",
@@ -94,23 +108,6 @@ export const projects: PortfolioProject[] = [
     layout: "square",
     status: "social",
     credit: instagram,
-  },
-  {
-    id: "moon-mural",
-    title: { en: "Moon Mural", ms: "Mural Bulan" },
-    category: "Galaxy",
-    description: {
-      en: "A cratered full moon in blues and violets on a dark wall.",
-      ms: "Bulan purnama berkawah dalam warna biru dan ungu pada dinding gelap.",
-    },
-    image: getImage("arrow-moon", {
-      en: "Large painted full moon with craters on a deep blue wall",
-      ms: "Bulan purnama berkawah yang dilukis besar pada dinding biru tua",
-    }),
-    layout: "tall",
-    status: "social",
-    credit: instagram,
-    focal: "50% 35%",
   },
   {
     id: "neon-city-room",
@@ -130,6 +127,38 @@ export const projects: PortfolioProject[] = [
     focal: "50% 55%",
   },
   {
+    id: "galaxy-bedroom-wall",
+    title: { en: "Galaxy Bedroom Wall", ms: "Dinding Bilik Galaksi" },
+    category: "Galaxy",
+    description: {
+      en: "A deep-space nebula with scattered stars, painted behind a bed.",
+      ms: "Nebula angkasa lepas dengan taburan bintang, dilukis di belakang katil.",
+    },
+    image: getImage("arrow-galaxy-bedroom", {
+      en: "Galaxy mural on a bedroom wall, with a large teddy bear lying on the bed in front of it",
+      ms: "Mural galaksi pada dinding bilik tidur, dengan sebuah patung beruang besar di atas katil",
+    }),
+    layout: "wide",
+    status: "social",
+    credit: instagram,
+  },
+  {
+    id: "solar-system-room",
+    title: { en: "Solar System Room", ms: "Bilik Sistem Suria" },
+    category: "Galaxy",
+    description: {
+      en: "Planets and astronauts painted on a wall, shown in daylight (top) and under blacklight (bottom).",
+      ms: "Planet dan angkasawan dilukis pada dinding, dipaparkan pada waktu siang (atas) dan di bawah cahaya UV (bawah).",
+    },
+    image: getImage("arrow-solar-room", {
+      en: "Two views of the same solar system mural with astronauts: in daylight above and glowing under blacklight below",
+      ms: "Dua pandangan mural sistem suria yang sama dengan angkasawan: pada waktu siang di atas dan bercahaya di bawah lampu UV di bawah",
+    }),
+    layout: "square",
+    status: "social",
+    credit: facebook,
+  },
+  {
     id: "helmet-portrait",
     title: { en: "Helmet Portrait", ms: "Potret Topi Keledar" },
     category: "Neon",
@@ -143,7 +172,40 @@ export const projects: PortfolioProject[] = [
     }),
     layout: "wide",
     status: "social",
+    credit: facebook,
+  },
+  {
+    id: "moon-mural",
+    title: { en: "Moon Mural", ms: "Mural Bulan" },
+    category: "Galaxy",
+    description: {
+      en: "A cratered full moon in blues and violets on a dark wall.",
+      ms: "Bulan purnama berkawah dalam warna biru dan ungu pada dinding gelap.",
+    },
+    image: getImage("arrow-moon", {
+      en: "Large painted full moon with craters on a deep blue wall",
+      ms: "Bulan purnama berkawah yang dilukis besar pada dinding biru tua",
+    }),
+    layout: "tall",
+    status: "social",
     credit: instagram,
+    focal: "50% 35%",
+  },
+  {
+    id: "nebula-ladder",
+    title: { en: "Painting a Nebula", ms: "Melukis Nebula" },
+    category: "Process",
+    description: {
+      en: "An artist on a ladder blending an orange and blue nebula onto a dark wall.",
+      ms: "Seorang pelukis di atas tangga menyebatikan nebula oren dan biru pada dinding gelap.",
+    },
+    image: getImage("arrow-nebula-ladder", {
+      en: "Artist seen from behind on a ladder painting a glowing orange and blue nebula on a dark wall",
+      ms: "Pelukis dilihat dari belakang di atas tangga melukis nebula oren dan biru bercahaya pada dinding gelap",
+    }),
+    layout: "wide",
+    status: "social",
+    credit: facebook,
   },
   {
     id: "pastel-botanical-wall",

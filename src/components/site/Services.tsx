@@ -72,7 +72,7 @@ export function Services() {
               </div>
               <p className="annot mt-4 text-muted-foreground">
                 {fmt(t.services.fig, { title: active ? l(active.title) : "" })}
-                {isDemo ? " · " + t.common.sampleImage : ""}
+                {" · @arrowspacestudio"}
               </p>
             </Reveal>
           </div>

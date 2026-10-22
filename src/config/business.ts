@@ -50,7 +50,7 @@ export interface BusinessConfig {
   /** [OWNER] Confirmed service areas, e.g. ["Kuala Lumpur", "Selangor"]. */
   serviceAreas: string[];
   /** [OWNER] e.g. "Mon–Sat, 9am–6pm" or "By appointment". Leave empty to hide. */
-  openingHours: string;
+  openingHours: Localized;
   /** [OWNER] Link to the business on Google Maps. */
   mapUrl: string;
   /** [OWNER] Google Maps embed URL (Share > Embed a map > the iframe src). */
@@ -61,6 +61,8 @@ export interface BusinessConfig {
   established: string;
   /** [OWNER] Lead artist / founder name, if the company wants to show it. */
   leadArtist: string;
+  /** The lead artist's own (personal) profiles — credited in the About section only. */
+  leadArtistProfiles: SocialLink[];
 }
 
 export interface SeoConfig {
@@ -91,27 +93,49 @@ export const business: BusinessConfig = {
     "Bespoke hand-painted murals for homes, cafes, hotels, offices and building exteriors.",
   whatsappNumber: "60132512588", // owner-approved: the number in the TikTok bio "WA … utk tempahan"
   phoneNumber: "", // [OWNER] leave empty to reuse the WhatsApp number
-  email: "", // [OWNER]
-  address: "", // [OWNER] only if there is a public studio
-  serviceAreas: [], // [OWNER] confirmed areas only
-  openingHours: "", // [OWNER]
-  mapUrl: "", // [OWNER]
-  mapEmbedUrl: "", // [OWNER]
-  // Real profiles only. Instagram is the studio's own account (listed first, its handle is shown
-  // in the header); TikTok and Facebook belong to the lead artist. Tracking parameters were removed
-  // and the legacy web.facebook.com host was normalised to www.facebook.com.
+  // enquiry@arrowspacebyfathil.com is listed on the Facebook page, but that domain does not exist (no DNS record),
+  // so it cannot receive mail. Left empty on purpose until the owner confirms a working address.
+  email: "",
+  // Published on the studio's Facebook page (About > Contact info). Postcode 55100 is Bukit Bintang, Kuala Lumpur.
+  address: "33-01-49 Menara Keck Seng, 203 Jalan Bukit Bintang, 55100 Bukit Bintang, Kuala Lumpur",
+  // From the studio Instagram display name ("Mural Art 🇲🇾 🇸🇬"). Confirm with the owner.
+  serviceAreas: ["Malaysia", "Singapore"],
+  // The Facebook page lists its hours as "Always open".
+  openingHours: { en: "Always open", ms: "Sentiasa dibuka" },
+  mapUrl:
+    "https://www.google.com/maps/search/?api=1&query=33-01-49%20Menara%20Keck%20Seng%2C%20203%20Jalan%20Bukit%20Bintang%2C%2055100%20Kuala%20Lumpur",
+  mapEmbedUrl:
+    "https://maps.google.com/maps?q=33-01-49%20Menara%20Keck%20Seng%2C%20203%20Jalan%20Bukit%20Bintang%2C%2055100%20Kuala%20Lumpur&output=embed",
+  // Company accounts. Tracking parameters were removed and web.facebook.com was normalised to www.
   socials: [
     {
       platform: "instagram",
       href: "https://www.instagram.com/arrowspacestudio/",
       handle: "@arrowspacestudio",
     },
+    {
+      platform: "facebook",
+      href: "https://www.facebook.com/FathilTheMuralist",
+      handle: "Fathil The Muralist",
+    },
     { platform: "tiktok", href: "https://www.tiktok.com/@fathil_art", handle: "@fathil_art" },
-    { platform: "facebook", href: "https://www.facebook.com/fathil.ahmad/" },
   ],
 
   established: "", // [OWNER]
-  leadArtist: "Fathil Ahmad", // confirmed by the project owner
+  leadArtist: "Fathil Ahmad", // as written by the project owner (the Facebook page says "Ahmad Fathil Zakaria")
+  // Personal accounts of the artist, shown as a credit in the About section only.
+  leadArtistProfiles: [
+    {
+      platform: "instagram",
+      href: "https://www.instagram.com/fathil.ahmad88/",
+      handle: "@fathil.ahmad88",
+    },
+    {
+      platform: "facebook",
+      href: "https://www.facebook.com/fathil.ahmad/",
+      handle: "Ahmad Fathil Zakaria",
+    },
+  ],
 };
 
 /**
@@ -121,7 +145,7 @@ export const business: BusinessConfig = {
  */
 export const demoDetails = {
   phone: "+60 1X-XXX XXXX",
-  email: "hello@muralstudio.example",
+  email: "hello@arrowspacestudio.example",
   address: "No. 00, Jalan Contoh, 00000 Bandar Contoh, Malaysia",
   serviceAreas: ["Kawasan Contoh A", "Kawasan Contoh B", "Lain-lain atas permintaan"],
   socials: ["instagram", "facebook", "tiktok"] as SocialPlatform[],
@@ -145,7 +169,7 @@ export const seo: SeoConfig = {
   },
   siteUrl: "", // [OWNER] set once the domain is known
   ogImagePath: "/og-image.jpg",
-  ogImageAlt: "Hand-painted mural (demonstration image — replace with a real project photo)",
+  ogImageAlt: "Room painted as a spaceship cockpit, with a starfield window, a desk and an easel",
   indexable: false,
 };
 

@@ -1,4 +1,9 @@
 {
+  "arrow-aerospace-lab": {
+    "width": 960,
+    "height": 356,
+    "variants": [640, 960]
+  },
   "arrow-city-at-work": {
     "width": 360,
     "height": 640,
@@ -15,14 +20,19 @@
     "variants": [640]
   },
   "arrow-helmet": {
-    "width": 640,
-    "height": 360,
-    "variants": [640]
+    "width": 960,
+    "height": 540,
+    "variants": [640, 960]
   },
   "arrow-moon": {
     "width": 360,
     "height": 640,
     "variants": [360]
+  },
+  "arrow-nebula-ladder": {
+    "width": 720,
+    "height": 406,
+    "variants": [640, 720]
   },
   "arrow-neon-city": {
     "width": 360,
@@ -43,6 +53,11 @@
     "width": 361,
     "height": 640,
     "variants": [361]
+  },
+  "arrow-solar-room": {
+    "width": 590,
+    "height": 590,
+    "variants": [590]
   },
   "artist": {
     "width": 1200,

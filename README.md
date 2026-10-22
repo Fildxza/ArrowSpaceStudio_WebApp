@@ -24,17 +24,19 @@ Three directions were considered:
 typographic discipline of B, and a controlled dose of C's character, framed by
 the language of a working mural crew:
 
-- **Palette:** ink `#121212` and charcoal `#20201E` for weight, ivory `#F5F1E9` and
-  stone `#D9D2C6` for breathing room, terracotta `#B96345` as the single accent
-  (a deeper variant is used behind ivory text so it passes contrast).
+- **Palette ("Cosmic Violet", chosen for Arrow Space Studio's galaxy and neon work):** deep-space ink
+  `#07081E` and charcoal `#161A34`, ivory `#F5F1E9` and stone `#D7D0C4` as the "gallery wall",
+  nebula violet `#8F63F6` as the accent (`#6231BA` behind ivory text, `#CAACFF` for small text on ink)
+  and star-gold `#F7C243` for tiny details. Every pair passes WCAG AA (lowest 5.0:1). Colours live only
+  in the tokens at the top of `src/styles.css`, so changing the palette never touches layout.
 - **Type:** Fraunces (expressive editorial serif) for display, Manrope for
   reading, IBM Plex Mono for small "technical" annotations (figure numbers,
   labels) — like notes on a site drawing.
 - **Graphic language from the trade:** tape-measure ruler ticks, crop /
   registration marks around artwork, outlined stencil numerals, a hand-painted
   brush stroke, and terracotta paint drips running off the marquee band.
-- **Rhythm:** dark hero → terracotta marquee → ivory reading sections → dark
-  gallery → stone process → ivory profile → terracotta enquiry → dark footer.
+- **Rhythm:** dark hero → violet marquee → ivory reading sections → dark
+  gallery → stone process → ivory profile → violet enquiry → dark footer.
 - **Motion:** short hero entrance (staggered lines, image mask, brush stroke
   drawing in), scroll reveals, gentle parallax, gallery hover/lightbox
   transitions. All of it is skipped with `prefers-reduced-motion`, and content is
@@ -259,10 +261,23 @@ Every project in `src/config/portfolio.ts` has a `status`:
 | `social` | Real photo from the studio's public Instagram, shown as a preview until approved | "Instagram" + source link in the lightbox |
 | `verified` | Owner-approved original with confirmed details | none |
 
-The nine current projects are `social`: real work of @arrowspacestudio taken from the public
-Instagram grid at 360–640 px (provenance in `src/assets/SOURCES.md`). Categories describe what is
-visible (Galaxy, Neon & Gaming, Pastel, Behind the Scenes) — client type, location and year are not
-known, so none are shown.
+The twelve current projects are `social`: real work of the studio taken from its public Instagram grid
+and Facebook page at 360–960 px (provenance, crops and the one redaction in `src/assets/SOURCES.md`).
+Categories describe what is visible (Galaxy, Neon & Gaming, Pastel, Behind the Scenes) — client type,
+location and year are not known, so none are shown.
+
+**Should the photos be "enhanced to 4K"?** No. Upscaling a 600 px preview (with AI or otherwise) cannot
+recover detail that was never captured; it only invents smooth, slightly fake texture, which misrepresents
+the real paintwork. The honest route is to ask the owner for the **original photos** (phone gallery, Google
+Drive, WhatsApp as *Document* so it is not compressed) — modern phones shoot 3000–4000 px, plenty for a
+full-screen lightbox. Until then the previews are labelled and sized so they stay sharp (small tiles, no
+full-bleed use).
+
+**Before/after transitions:** the drag-to-compare slider from the Process section works for any pair of
+images. Give a project a `before` photo (and optional `beforeLabel` / `afterLabel`) in
+`src/config/portfolio.ts` and its lightbox becomes the same slider; the Process section itself is
+configured in `comparison` in `src/config/content.ts`. Every gallery image already gets the mask reveal
+and hover zoom automatically.
 
 **To replace a preview with an approved original:**
 
@@ -273,9 +288,11 @@ known, so none are shown.
 4. Set `status: "verified"` and delete the `credit` line (this removes the label).
 5. Optional: `layout` (`"wide" | "tall" | "square"`) and `focal` (e.g. `"50% 30%"`).
 
-The hero and About photos are set at the top of `Hero.tsx` and `About.tsx` with the same `getImage()`
-call. The services and the before/after slider still use AI demo images (labelled "Sample").
-Replace `public/og-image.jpg` (1200×630) with a real high-resolution project photo before launch.
+The hero, About and service photos are set with the same `getImage()` call (`Hero.tsx`, `About.tsx`,
+`src/config/content.ts`). Only the Process before/after slider still uses AI demo images (labelled "Sample"),
+kept on purpose until a real before/after pair is available.
+`public/og-image.jpg` (social preview) is composed from the real spaceship-room photo; replace it with a
+high-resolution photo before launch.
 
 ### Testimonials & client logos — `src/config/social-proof.ts`
 
@@ -394,12 +411,17 @@ and a real-browser check with Microsoft Edge via Playwright at 320–1920px)
 
 - Logo (a placeholder "F" monogram is used), tagline/description, email, address or
   service areas, opening hours, year established, lead artist, real About copy.
-- **Confirmed so far:** company name `Arrow Space Studio`; lead artist `Fathil Ahmad`; WhatsApp
-  `60132512588` (from the TikTok bio, approved by the project owner); Instagram
-  `@arrowspacestudio` (the studio), TikTok `@fathil_art` and Facebook `fathil.ahmad` (the artist).
-- **Still to confirm:** whether the studio serves Malaysia *and* Singapore (its Instagram name shows
-  both flags), whether "four brothers" should appear on the site (it is quoted from the Instagram bio),
-  the studio logo file, and approval of each Instagram photo.
+- **Confirmed so far:** company name `Arrow Space Studio`; address (33-01-49 Menara Keck Seng, 203 Jalan
+  Bukit Bintang, 55100 Kuala Lumpur) and "Always open" hours from the studio's Facebook page; lead artist
+  `Fathil Ahmad`; WhatsApp `60132512588` (kept as Fathil's number, approved by the project owner); company
+  accounts Instagram `@arrowspacestudio`, Facebook `Fathil The Muralist` and TikTok `@fathil_art`. The artist's
+  personal Instagram/Facebook are credited in the About section only.
+- **Still to confirm:** a **working business email** (the Facebook page lists `enquiry@arrowspacebyfathil.com`,
+  but that domain does not exist, so it was NOT published); whether the studio serves Malaysia *and*
+  Singapore (its Instagram name shows both flags — currently listed as service areas); whether "Always open"
+  is right for the hours; whether to show the artist's full name (the Facebook page writes
+  "Ahmad Fathil Zakaria", the site uses "Fathil Ahmad" as given by the owner); whether "four brothers"
+  should appear (quoted from the bio); the studio logo file; approval of each photo.
 - Confirmation of the service list and process steps.
 - Approved client testimonials and permission to show client logos.
 - Phone number, opening hours, social profile URLs, Google Maps link/embed.

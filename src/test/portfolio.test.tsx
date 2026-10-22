@@ -14,7 +14,10 @@ describe("portfolio data", () => {
       }
       if (p.status === "social") {
         // Real photos from the studio's own Instagram must credit their source.
-        expect(p.credit?.href).toBe("https://www.instagram.com/arrowspacestudio/");
+        expect(["instagram", "facebook"]).toContain(p.credit?.platform);
+        expect(p.credit?.href).toMatch(
+          /^https:\/\/www\.(instagram\.com\/arrowspacestudio\/|facebook\.com\/FathilTheMuralist)$/,
+        );
         expect(pick(p.image.alt, "en")).not.toMatch(/demonstration/i);
       }
       expect(p.image.width).toBeGreaterThan(0);
@@ -76,9 +79,9 @@ describe("<Work /> gallery", () => {
     expect(view.getByRole("heading", { level: 2 })).toHaveTextContent(
       pick(projects[0]!.title, "en"),
     );
-    expect(view.getByText(/public Instagram/i)).toBeInTheDocument();
-    const credit = view.getByRole("link", { name: /@arrowspacestudio/ });
-    expect(credit).toHaveAttribute("href", "https://www.instagram.com/arrowspacestudio/");
+    expect(view.getByText(/public Instagram or Facebook/i)).toBeInTheDocument();
+    const credit = view.getByRole("link", { name: new RegExp(projects[0]!.credit!.label) });
+    expect(credit).toHaveAttribute("href", projects[0]!.credit!.href);
     expect(credit).toHaveAttribute("rel", "noopener noreferrer");
     expect(view.getByRole("button", { name: "Close project viewer" })).toBeInTheDocument();
 

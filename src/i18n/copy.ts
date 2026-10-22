@@ -45,7 +45,8 @@ const en = {
   },
   intro: {
     philosophy: "Philosophy",
-    marqueeSr: "Residential, commercial, hospitality, exterior and custom mural commissions.",
+    marqueeSr:
+      "Space and galaxy murals, neon and UV glow effects, themed rooms, portraits and custom commissions.",
   },
   services: {
     label: "Services",
@@ -67,8 +68,7 @@ const en = {
     filterAria: "Filter projects by category",
     all: "All",
     socialNote:
-      "These photos come from the studio's public Instagram (@arrowspacestudio) and are shown as a preview. Original high-resolution files and project details will replace them.",
-    badgeSocial: "Instagram",
+      "These photos come from the studio's public Instagram and Facebook pages and are shown as a preview. Original high-resolution files and project details will replace them.",
     categories: {
       Galaxy: "Galaxy",
       Neon: "Neon & Gaming",
@@ -86,13 +86,14 @@ const en = {
   },
   lightbox: {
     close: "Close project viewer",
+    compareAria: "Compare before and after: {title}",
     prev: "Previous project",
     next: "Next project",
     location: "Location",
     year: "Year",
     sampleNote: "Sample artwork for demonstration — not a completed client project.",
     socialNote:
-      "Photo from the studio's public Instagram, shown as a preview until the original file and project details are added.",
+      "Photo from the studio's public Instagram or Facebook page, shown as a preview until the original file and project details are added.",
     source: "Source",
   },
   process: {
@@ -118,8 +119,9 @@ const en = {
     headingB: "made for place.",
     fig: "Fig. 02 — On the wall",
     placeholderNote: "Placeholder copy — replace with the studio's real story before launch.",
+    artistProfiles: "The artist's own profiles",
     quoteLabel: "In the studio's own words",
-    quoteNote: "Quoted from Instagram — to be confirmed with the owner.",
+    quoteNote: "To be confirmed with the owner.",
   },
   follow: {
     label: "Follow",
@@ -334,7 +336,8 @@ const ms: Copy = {
   },
   intro: {
     philosophy: "Falsafah",
-    marqueeSr: "Tempahan mural kediaman, komersial, hospitaliti, luaran dan reka bentuk khas.",
+    marqueeSr:
+      "Mural angkasa dan galaksi, kesan neon dan cahaya UV, bilik bertema, potret dan tempahan khas.",
   },
   services: {
     label: "Perkhidmatan",
@@ -356,8 +359,7 @@ const ms: Copy = {
     filterAria: "Tapis projek mengikut kategori",
     all: "Semua",
     socialNote:
-      "Foto-foto ini diambil daripada Instagram awam studio (@arrowspacestudio) dan dipaparkan sebagai pratonton. Fail asal beresolusi tinggi dan butiran projek akan menggantikannya.",
-    badgeSocial: "Instagram",
+      "Foto-foto ini diambil daripada halaman Instagram dan Facebook awam studio dan dipaparkan sebagai pratonton. Fail asal beresolusi tinggi dan butiran projek akan menggantikannya.",
     categories: {
       Galaxy: "Galaksi",
       Neon: "Neon & Permainan",
@@ -375,13 +377,14 @@ const ms: Copy = {
   },
   lightbox: {
     close: "Tutup paparan projek",
+    compareAria: "Bandingkan sebelum dan selepas: {title}",
     prev: "Projek sebelumnya",
     next: "Projek seterusnya",
     location: "Lokasi",
     year: "Tahun",
     sampleNote: "Karya contoh untuk demonstrasi — bukan projek pelanggan yang telah disiapkan.",
     socialNote:
-      "Foto daripada Instagram awam studio, dipaparkan sebagai pratonton sehingga fail asal dan butiran projek ditambah.",
+      "Foto daripada halaman Instagram atau Facebook awam studio, dipaparkan sebagai pratonton sehingga fail asal dan butiran projek ditambah.",
     source: "Sumber",
   },
   process: {
@@ -409,8 +412,9 @@ const ms: Copy = {
     headingB: "dibuat untuk tempatnya.",
     fig: "Rajah 02 — Di atas dinding",
     placeholderNote: "Teks contoh — gantikan dengan kisah sebenar studio sebelum dilancarkan.",
+    artistProfiles: "Profil peribadi pelukis",
     quoteLabel: "Dalam kata-kata studio sendiri",
-    quoteNote: "Dipetik daripada Instagram — perlu disahkan oleh pemilik.",
+    quoteNote: "Perlu disahkan oleh pemilik.",
   },
   follow: {
     label: "Ikuti",

@@ -1,9 +1,10 @@
-import { isDemo } from "@/config/business";
-import { useCopy, useL } from "@/i18n";
+import { business, isDemo } from "@/config/business";
+import { fmt, useCopy, useL } from "@/i18n";
 import { about } from "@/config/content";
 import { getImage } from "@/config/images";
 import { Annot, BrushStroke } from "./Graphics";
 import { Parallax, Reveal } from "./Motion";
+import { SocialGlyph } from "./SocialIcons";
 
 const artist = getImage("arrow-city-at-work", {
   en: "Artist seen from behind painting a glowing city skyline on a wall",
@@ -26,7 +27,7 @@ export function About() {
   const t = useCopy();
   const l = useL();
   const showPlaceholder = isDemo && about.placeholder;
-  const rows = about.profile.filter((r) => r.detail);
+  const rows = about.profile;
 
   return (
     <section
@@ -148,6 +149,31 @@ export function About() {
             ))}
           </Reveal>
 
+          {business.leadArtistProfiles.length > 0 && (
+            <Reveal delay={140} className="mt-10">
+              <p className="annot text-muted-foreground">{t.about.artistProfiles}</p>
+              <ul className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+                {business.leadArtistProfiles.map((p) => (
+                  <li key={p.href}>
+                    <a
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={fmt(t.social.profileLabel, {
+                        platform: t.follow.platforms[p.platform],
+                        handle: p.handle ? " " + p.handle : "",
+                      })}
+                      className="link-line inline-flex min-h-11 items-center gap-2 text-sm"
+                    >
+                      <SocialGlyph platform={p.platform} className="size-4 text-accent-deep" />
+                      {p.handle ?? t.follow.platforms[p.platform]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          )}
+
           {rows.length > 0 && (
             <Reveal as="dl" delay={160} className="mt-12 border-t border-charcoal/80">
               {rows.map((r) => (
@@ -156,9 +182,9 @@ export function About() {
                   className="grid grid-cols-[9rem_1fr] gap-4 border-b border-charcoal/15 py-4 text-sm sm:grid-cols-[12rem_1fr]"
                 >
                   <dt className="annot pt-0.5 text-muted-foreground">{l(r.label)}</dt>
-                  <dd className={r.detail?.sample ? "text-muted-foreground" : ""}>
-                    {r.detail?.value}
-                    {r.detail?.sample && <SampleTag>{t.common.sample}</SampleTag>}
+                  <dd className={r.sample ? "text-muted-foreground" : ""}>
+                    {l(r.value)}
+                    {r.sample && <SampleTag>{t.common.sample}</SampleTag>}
                   </dd>
                 </div>
               ))}

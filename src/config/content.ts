@@ -32,54 +32,55 @@ export interface ServiceItem {
   image: SiteImage;
 }
 
-// Proposed service categories — confirm with the company.
+// Proposed services — based on the work visible on the studio's Instagram and Facebook
+// (Facebook intro: "Mural / Painting / Special Effect"). Confirm with the company.
 export const services: ServiceItem[] = [
   {
-    id: "residential",
-    title: { en: "Residential Murals", ms: "Mural Kediaman" },
+    id: "galaxy",
+    title: { en: "Space & Galaxy Murals", ms: "Mural Angkasa & Galaksi" },
     summary: {
-      en: "Bespoke artwork for homes, feature walls and personal spaces.",
-      ms: "Hasil seni tempahan untuk rumah, dinding hiasan dan ruang peribadi.",
+      en: "Nebulae, planets and starfields painted across walls and ceilings.",
+      ms: "Nebula, planet dan medan bintang dilukis pada dinding dan siling.",
     },
-    image: getImage("residential", {
-      en: "Mountain landscape mural in a living room (demonstration image)",
-      ms: "Mural lanskap gunung di ruang tamu (imej demonstrasi)",
+    image: getImage("arrow-galaxy-ceiling", {
+      en: "Galaxy mural covering a ceiling, with a rainbow prism design, a ceiling fan and track lights",
+      ms: "Mural galaksi menutupi siling, dengan reka bentuk prisma pelangi, kipas siling dan lampu trek",
     }),
   },
   {
-    id: "commercial",
-    title: { en: "Commercial Murals", ms: "Mural Komersial" },
+    id: "glow",
+    title: { en: "Neon & UV Glow Effects", ms: "Kesan Neon & Cahaya UV" },
     summary: {
-      en: "Artistic wall treatments for offices, retail spaces and business environments.",
-      ms: "Rawatan dinding artistik untuk pejabat, ruang runcit dan persekitaran perniagaan.",
+      en: "Artwork that comes alive under neon and blacklight — glowing cityscapes and planets.",
+      ms: "Karya yang hidup di bawah cahaya neon dan UV — bandar dan planet bercahaya.",
     },
-    image: getImage("commercial", {
-      en: "Linework mural in an office reception (demonstration image)",
-      ms: "Mural garisan di ruang penyambut tetamu pejabat (imej demonstrasi)",
+    image: getImage("arrow-neon-city", {
+      en: "Neon cityscape mural with a soldier silhouette painted across two walls of a room",
+      ms: "Mural pemandangan bandar neon dengan siluet askar dilukis pada dua dinding bilik",
     }),
   },
   {
-    id: "hospitality",
-    title: { en: "Cafe & Hospitality", ms: "Kafe & Hospitaliti" },
+    id: "themed",
+    title: { en: "Themed Rooms", ms: "Bilik Bertema" },
     summary: {
-      en: "Distinctive artwork for cafes, restaurants, hotels and hospitality interiors.",
-      ms: "Karya visual yang tersendiri untuk kafe, restoran, hotel dan ruang dalaman hospitaliti.",
+      en: "Bedrooms, play rooms and studios turned into a space station, a night sky or a game world.",
+      ms: "Bilik tidur, bilik permainan dan studio dijadikan stesen angkasa, langit malam atau dunia permainan.",
     },
-    image: getImage("cafe", {
-      en: "Organic-shape mural in a cafe interior (demonstration image)",
-      ms: "Mural bentuk organik di dalam kafe (imej demonstrasi)",
+    image: getImage("arrow-aerospace-lab", {
+      en: "Room painted as a spaceship cockpit, with a starfield window, a desk with a laptop and an easel",
+      ms: "Bilik dilukis sebagai kokpit kapal angkasa, dengan tingkap medan bintang, meja berkomputer riba dan sebuah easel",
     }),
   },
   {
-    id: "exterior",
-    title: { en: "Exterior & Building", ms: "Luaran & Bangunan" },
+    id: "portrait",
+    title: { en: "Portraits & Characters", ms: "Potret & Karakter" },
     summary: {
-      en: "Large-scale artwork for suitable outdoor walls and building surfaces.",
-      ms: "Karya berskala besar untuk dinding luar dan permukaan bangunan yang sesuai.",
+      en: "Graphic portraits and character artwork painted at wall scale.",
+      ms: "Potret grafik dan karya karakter dilukis pada skala dinding.",
     },
-    image: getImage("exterior", {
-      en: "Large portrait mural on a building facade (demonstration image)",
-      ms: "Mural potret besar pada fasad bangunan (imej demonstrasi)",
+    image: getImage("arrow-helmet", {
+      en: "Painted graphic portrait of a figure wearing a grey battle helmet against a blue sky",
+      ms: "Potret grafik dilukis seorang figura memakai topi keledar tempur kelabu berlatarkan langit biru",
     }),
   },
   {
@@ -89,9 +90,9 @@ export const services: ServiceItem[] = [
       en: "Original mural concepts developed around your space, requirements and creative direction.",
       ms: "Konsep mural asli yang dibangunkan mengikut ruang, keperluan dan hala tuju kreatif anda.",
     },
-    image: getImage("detail", {
-      en: "Close-up of thick hand-painted brushwork in terracotta, ochre and green (demonstration image)",
-      ms: "Gambar dekat sapuan berus tebal berwarna terakota, oker dan hijau (imej demonstrasi)",
+    image: getImage("arrow-pastel-clouds", {
+      en: "Mural of layered pink and blue clouds on a wall beside a window",
+      ms: "Mural awan berlapis merah jambu dan biru pada dinding di sebelah tingkap",
     }),
   },
 ];
@@ -159,28 +160,34 @@ export const philosophy = {
 };
 
 export const marquee: Localized[] = [
-  { en: "Residential", ms: "Kediaman" },
-  { en: "Commercial", ms: "Komersial" },
-  { en: "Hospitality", ms: "Hospitaliti" },
-  { en: "Exterior", ms: "Luaran" },
+  { en: "Space & Galaxy", ms: "Angkasa & Galaksi" },
+  { en: "Neon & UV Glow", ms: "Neon & Cahaya UV" },
+  { en: "Themed Rooms", ms: "Bilik Bertema" },
+  { en: "Portraits", ms: "Potret" },
   { en: "Custom Commissions", ms: "Tempahan Khas" },
 ];
 
 export interface ProfileRow {
   label: Localized;
-  detail: Detail | null;
+  value: Localized;
+  /** true = dummy value shown only in demo mode. */
+  sample: boolean;
 }
 
+const fromDetail = (label: Localized, d: Detail | null): ProfileRow | null =>
+  d ? { label, value: d.value, sample: d.sample } : null;
+
 /**
- * About section. While `placeholder` is true the copy is marked as placeholder
- * text in demo mode — replace it with the real story, then set it to false.
+ * About section. The first paragraph only states facts visible on the studio's own pages
+ * (address, Facebook intro "Mural / Painting / Special Effect", the work shown). The second
+ * paragraph is placeholder copy — replace it with the real story, then set `placeholder` to false.
  */
 export const about = {
   placeholder: true,
   paragraphs: [
     {
-      en: `${business.name} is a mural studio creating bespoke, hand-painted artwork for homes, businesses and public-facing walls.`,
-      ms: `${business.name} ialah studio mural yang menghasilkan karya lukisan tangan tempahan untuk rumah, perniagaan dan dinding awam.`,
+      en: `${business.name} is a mural art studio in Kuala Lumpur. Its work spans murals, painting and special effects — from galaxy ceilings and glow-in-the-dark rooms to neon cityscapes.`,
+      ms: `${business.name} ialah studio seni mural di Kuala Lumpur. Karyanya merangkumi mural, lukisan dan kesan khas — daripada siling galaksi dan bilik bercahaya dalam gelap hingga pemandangan bandar neon.`,
     },
     {
       en: "Add the studio's real background, experience and philosophy here — who paints, how you work, and what makes your approach distinct.",
@@ -188,12 +195,12 @@ export const about = {
     },
   ] satisfies Localized[],
   /**
-   * The studio's own words, quoted from its public Instagram bio (@arrowspacestudio).
+   * The studio's own words, quoted from its public Instagram bio and Facebook intro.
    * Shown as a quotation, not as our copy. Confirm with the owner before launch.
    */
   quote: {
     text: "\u2018Aerospace lab\u2019 for creative services. Synergized by four brothers.",
-    source: "Instagram bio · @arrowspacestudio",
+    source: "Instagram bio · Facebook intro",
   },
   /** Proposed working principles — confirm or rewrite with the company. */
   principles: [
@@ -220,22 +227,27 @@ export const about = {
     },
   ] satisfies { title: Localized; text: Localized }[],
   profile: [
+    fromDetail(
+      { en: "Lead artist", ms: "Pelukis utama" },
+      detail(business.leadArtist, demoDetails.leadArtist),
+    ),
     {
-      label: { en: "Lead artist", ms: "Pelukis utama" },
-      detail: detail(business.leadArtist, demoDetails.leadArtist),
+      label: { en: "Specialities", ms: "Kepakaran" },
+      value: { en: "Mural · Painting · Special effects", ms: "Mural · Lukisan · Kesan khas" },
+      sample: false,
     },
-    {
-      label: { en: "Established", ms: "Ditubuhkan" },
-      detail: detail(business.established, demoDetails.established),
-    },
-    {
-      label: { en: "Service areas", ms: "Kawasan perkhidmatan" },
-      detail: (() => {
+    fromDetail(
+      { en: "Established", ms: "Ditubuhkan" },
+      detail(business.established, demoDetails.established),
+    ),
+    fromDetail(
+      { en: "Service areas", ms: "Kawasan perkhidmatan" },
+      (() => {
         const areas = detailList(business.serviceAreas, demoDetails.serviceAreas);
         return areas ? { value: areas.values.join(" · "), sample: areas.sample } : null;
       })(),
-    },
-  ] satisfies ProfileRow[],
+    ),
+  ].filter((r): r is ProfileRow => r !== null),
 };
 
 export const enquiryChecklist: Localized[] = [

@@ -2,10 +2,11 @@
 @source "../src";
 
 /*
- * Design tokens — editorial gallery palette (see README for the reference hex values).
- * Surfaces: ivory (#F5F1E9) / ink (#121212) / charcoal (#20201E) / stone (#D9D2C6).
- * Accent: terracotta (#B96345). `accent-deep` is the same hue darkened so ivory text
- * keeps AA contrast on it; `accent-soft` is lightened for small text on ink.
+ * Design tokens — "Cosmic Violet" palette for Arrow Space Studio (hex values are approximate).
+ * Gallery wall: ivory #F5F1E9 / stone #D7D0C4. Deep space: ink #07081E / charcoal #161A34.
+ * Nebula accent: violet #8F63F6 (`accent-deep` #6231BA darkened so ivory text keeps AA contrast,
+ * `accent-soft` #CAACFF lightened for small text on ink). `nova` #F7C243 is a star-gold detail.
+ * Only these tokens carry colour — layout and components are palette-agnostic.
  */
 @theme inline {
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
@@ -28,19 +29,21 @@
   --color-charcoal: var(--charcoal);
   --color-ivory: var(--ivory);
   --color-stone: var(--stone);
+  --color-nova: var(--nova);
 }
 
 :root {
   --ivory: oklch(0.959 0.012 85);
-  --charcoal: oklch(0.24 0.004 100);
-  --ink: oklch(0.18 0 0);
+  --charcoal: oklch(0.23 0.05 275);
+  --ink: oklch(0.15 0.045 275);
   --stone: oklch(0.86 0.018 80);
-  --muted-fg: oklch(0.44 0.01 80);
-  --accent: oklch(0.58 0.12 40);
-  --accent-deep: oklch(0.47 0.12 38);
-  --accent-soft: oklch(0.74 0.11 48);
-  --line: oklch(0.24 0.004 100 / 16%);
-  --line-strong: oklch(0.24 0.004 100 / 40%);
+  --muted-fg: oklch(0.44 0.02 280);
+  --accent: oklch(0.62 0.21 293);
+  --accent-deep: oklch(0.46 0.2 293);
+  --accent-soft: oklch(0.8 0.12 300);
+  --nova: oklch(0.84 0.15 85);
+  --line: oklch(0.23 0.05 275 / 16%);
+  --line-strong: oklch(0.23 0.05 275 / 40%);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --header-h: 5rem;
 }

@@ -17,7 +17,7 @@ export function Marquee() {
               {row.map((label, i) => (
                 <li key={`${label}-${i}`} className="flex items-center whitespace-nowrap">
                   <span className="px-8">{label}</span>
-                  <span className="text-ink/70">✦</span>
+                  <span className="text-nova">✦</span>
                 </li>
               ))}
             </ul>

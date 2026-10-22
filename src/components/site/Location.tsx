@@ -31,10 +31,16 @@ function Row({ icon, label, children }: { icon: ReactNode; label: string; childr
 }
 
 /** Stylised site-plan map used until a real map is configured. Purely decorative. */
-function SampleMap() {
+function SampleMap({ labelled = true }: { labelled?: boolean }) {
   const t = useCopy();
   return (
-    <svg viewBox="0 0 800 560" role="img" aria-label={t.location.mapAria} className="h-full w-full">
+    <svg
+      viewBox="0 0 800 560"
+      preserveAspectRatio="xMidYMid slice"
+      role="img"
+      aria-label={t.location.mapAria}
+      className="h-full w-full"
+    >
       <rect width="800" height="560" fill="var(--stone)" />
       {/* park + water */}
       <path
@@ -84,7 +90,7 @@ function SampleMap() {
           <circle cy="-44" r="8" fill="var(--ivory)" />
         </g>
       </g>
-      <g transform="translate(473 219)">
+      <g transform="translate(473 219)" display={labelled ? undefined : "none"}>
         <rect width="196" height="54" fill="var(--ink)" />
         <text x="14" y="23" fill="var(--ivory)" fontFamily="var(--font-display)" fontSize="17">
           {business.name}
@@ -102,7 +108,7 @@ function SampleMap() {
       </g>
       {/* compass */}
       <g
-        transform="translate(748 512)"
+        transform="translate(690 500)"
         fill="none"
         stroke="var(--charcoal)"
         strokeWidth="1.2"
@@ -146,9 +152,12 @@ function EmbeddedMap({ src }: { src: string }) {
       onClick={() => setLoaded(true)}
       className="group relative flex h-full w-full items-center justify-center bg-stone"
     >
-      <SampleMap />
-      <span className="btn btn-ink absolute">
-        <MapPin aria-hidden="true" className="size-4" /> {t.location.loadMap}
+      <SampleMap labelled={false} />
+      {/* wrapper positions the button: .btn sets position:relative, which would override `absolute` */}
+      <span className="absolute inset-0 flex items-end justify-center pb-8 md:pb-12">
+        <span className="btn btn-ink whitespace-nowrap">
+          <MapPin aria-hidden="true" className="size-4" /> {t.location.loadMap}
+        </span>
       </span>
     </button>
   );
@@ -158,7 +167,7 @@ export function Location() {
   const t = useCopy();
   const l = useL();
   const address = detail(business.address, demoDetails.address);
-  const hours = detail(business.openingHours, l(demoDetails.openingHours));
+  const hours = detail(l(business.openingHours), l(demoDetails.openingHours));
   const phone = detail(displayPhone(), demoDetails.phone);
   const areas = detailList(business.serviceAreas, demoDetails.serviceAreas);
   const tel = buildTelUrl();

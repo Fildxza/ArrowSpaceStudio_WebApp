@@ -60,7 +60,7 @@ describe("<SocialLinks />", () => {
     const expected: Record<string, string> = {
       TikTok: "https://www.tiktok.com/@fathil_art",
       Instagram: "https://www.instagram.com/arrowspacestudio/",
-      Facebook: "https://www.facebook.com/fathil.ahmad/",
+      Facebook: "https://www.facebook.com/FathilTheMuralist",
     };
     for (const [name, href] of Object.entries(expected)) {
       const link = screen.getByRole("link", { name: new RegExp(`^${name}`) });
@@ -92,13 +92,47 @@ describe("<SocialLinks />", () => {
 });
 
 describe("<Location />", () => {
-  it("shows the sample address and map without contacting Google", () => {
+  it("shows the address published on the studio's Facebook page, without loading Google until asked", () => {
     const { container } = render(<Location />);
+    expect(screen.getByText(/Menara Keck Seng/)).toBeInTheDocument();
+    expect(screen.queryByText("Sample")).toBeNull();
     expect(container.querySelector("iframe")).toBeNull();
-    expect(container.querySelector('a[href*="google.com/maps"]')).toBeNull();
-    expect(screen.getByText(/Jalan Contoh/)).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /sample map/i })).toBeInTheDocument();
-    expect(screen.getByText("Get directions").closest("[aria-disabled]")).not.toBeNull();
+
+    const directions = screen.getByRole("link", { name: /Get directions/ });
+    expect(directions.getAttribute("href")).toMatch(/^https:\/\/www\.google\.com\/maps\/search\//);
+    expect(directions).toHaveAttribute("rel", "noopener noreferrer");
+
+    fireEvent.click(screen.getByRole("button", { name: /Load interactive map/ }));
+    const frame = container.querySelector("iframe")!;
+    expect(frame.getAttribute("src")).toContain("output=embed");
+    expect(frame).toHaveAttribute("title", "Map showing Arrow Space Studio");
+  });
+
+  it("falls back to the illustrated sample map when no address is configured", () => {
+    const saved = {
+      address: business.address,
+      mapUrl: business.mapUrl,
+      embed: business.mapEmbedUrl,
+    };
+    business.address = "";
+    business.mapUrl = "";
+    business.mapEmbedUrl = "";
+    try {
+      const { container } = render(<Location />);
+      expect(container.querySelector("iframe")).toBeNull();
+      expect(container.querySelector('a[href*="google.com/maps"]')).toBeNull();
+      expect(screen.getByText(/Jalan Contoh/)).toBeInTheDocument();
+      expect(screen.getByRole("img", { name: /sample map/i })).toBeInTheDocument();
+      expect(screen.getByText("Get directions").closest("[aria-disabled]")).not.toBeNull();
+    } finally {
+      business.address = saved.address;
+      business.mapUrl = saved.mapUrl;
+      business.mapEmbedUrl = saved.embed;
+    }
+  });
+
+  it("does not publish the dead Facebook email address", () => {
+    expect(business.email).toBe("");
   });
 });
 

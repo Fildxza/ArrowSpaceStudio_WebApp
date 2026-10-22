@@ -24,8 +24,8 @@ function setup(options: { number?: string } = {}) {
   return render(
     <>
       <WhatsAppLink className="open-btn">Chat on WhatsApp</WhatsAppLink>
-      <WhatsAppLink replyId="exterior" className="svc-btn">
-        Enquire exterior
+      <WhatsAppLink replyId="themed" className="svc-btn">
+        Enquire themed
       </WhatsAppLink>
       <WhatsAppChat />
     </>,
@@ -83,13 +83,10 @@ describe("<WhatsAppChat />", () => {
 
   it("preselects the topic when opened from a service link", () => {
     setup();
-    fireEvent.click(screen.getByRole("button", { name: "Enquire exterior" }));
+    fireEvent.click(screen.getByRole("button", { name: "Enquire themed" }));
     const p = within(panel());
-    expect(p.getByRole("button", { name: "Exterior & Building" })).toHaveAttribute(
-      "aria-pressed",
-      "true",
-    );
-    expect(p.getByText(/exterior & building/i, { selector: "p" })).toBeInTheDocument();
+    expect(p.getByRole("button", { name: "Themed Rooms" })).toHaveAttribute("aria-pressed", "true");
+    expect(p.getByText(/themed rooms/i, { selector: "p" })).toBeInTheDocument();
   });
 
   it("disables sending and never opens a window while no number is configured", () => {

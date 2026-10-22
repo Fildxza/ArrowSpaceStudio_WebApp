@@ -8,8 +8,9 @@ import {
 } from "react";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import type { PortfolioProject } from "@/config/portfolio";
-import { useCopy, useL } from "@/i18n";
+import { fmt, useCopy, useL } from "@/i18n";
 import { prefersReducedMotion } from "@/lib/motion";
+import { BeforeAfter } from "./BeforeAfter";
 
 interface LightboxProps {
   items: PortfolioProject[];
@@ -129,16 +130,28 @@ export function Lightbox({ items, index, onIndexChange, onClose }: LightboxProps
 
           <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 overflow-y-auto px-5 pb-6 md:grid-cols-12 md:gap-10 md:px-10 md:pb-10">
             <div className="flex min-h-[45vh] items-center justify-center md:col-span-8 md:h-full md:min-h-0">
-              <img
-                key={project.id}
-                src={project.image.src}
-                srcSet={project.image.srcSet}
-                sizes="(min-width: 768px) 66vw, 100vw"
-                width={project.image.width}
-                height={project.image.height}
-                alt={l(project.image.alt)}
-                className="lb-img max-h-[62vh] w-auto max-w-full object-contain md:max-h-full"
-              />
+              {project.before ? (
+                <div key={project.id} className="lb-img w-full max-w-4xl">
+                  <BeforeAfter
+                    before={project.before}
+                    after={project.image}
+                    {...(project.beforeLabel ? { beforeLabel: l(project.beforeLabel) } : {})}
+                    {...(project.afterLabel ? { afterLabel: l(project.afterLabel) } : {})}
+                    label={fmt(t.lightbox.compareAria, { title: l(project.title) })}
+                  />
+                </div>
+              ) : (
+                <img
+                  key={project.id}
+                  src={project.image.src}
+                  srcSet={project.image.srcSet}
+                  sizes="(min-width: 768px) 66vw, 100vw"
+                  width={project.image.width}
+                  height={project.image.height}
+                  alt={l(project.image.alt)}
+                  className="lb-img max-h-[62vh] w-auto max-w-full object-contain md:max-h-full"
+                />
+              )}
             </div>
 
             <div

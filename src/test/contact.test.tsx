@@ -61,22 +61,22 @@ describe("<EnquiryForm />", () => {
 
   it("pre-selects the service announced by a service link", () => {
     render(<EnquiryForm />);
-    act(() => announceEnquiry("exterior"));
-    expect(screen.getByRole("radio", { name: "Exterior & Building" })).toBeChecked();
+    act(() => announceEnquiry("themed"));
+    expect(screen.getByRole("radio", { name: "Themed Rooms" })).toBeChecked();
   });
 
   it("only reports success when the clipboard write succeeds", async () => {
     const writeText = vi.fn().mockRejectedValue(new Error("denied"));
     Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText } });
     render(<EnquiryForm />);
-    fireEvent.click(screen.getByRole("radio", { name: "Residential Murals" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Space & Galaxy Murals" }));
     await act(async () => fireEvent.click(screen.getByRole("button", { name: "Copy brief" })));
     expect(screen.queryByText(/copied to your clipboard/i)).toBeNull();
     expect(screen.getByText(/blocked copying/i)).toBeInTheDocument();
 
     writeText.mockResolvedValue(undefined);
     await act(async () => fireEvent.click(screen.getByRole("button", { name: "Copy brief" })));
-    expect(writeText).toHaveBeenLastCalledWith(expect.stringContaining("residential murals"));
+    expect(writeText).toHaveBeenLastCalledWith(expect.stringContaining("space & galaxy murals"));
     expect(screen.getByText(/copied to your clipboard/i)).toBeInTheDocument();
   });
 });

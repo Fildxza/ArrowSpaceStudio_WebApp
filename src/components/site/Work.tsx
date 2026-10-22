@@ -161,7 +161,9 @@ export function Work() {
                         />
                         {p.status !== "verified" && (
                           <span className="annot absolute left-4 top-4 bg-ink/80 px-2.5 py-1.5 text-ivory backdrop-blur-sm">
-                            {p.status === "demo" ? t.common.sample : t.work.badgeSocial}
+                            {p.status === "demo"
+                              ? t.common.sample
+                              : t.follow.platforms[p.credit?.platform ?? "instagram"]}
                           </span>
                         )}
                         <span className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-between bg-accent-deep px-5 py-4 text-sm font-semibold transition-transform duration-500 ease-[var(--ease)] group-hover:translate-y-0 group-focus-visible:translate-y-0">

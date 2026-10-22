@@ -147,13 +147,15 @@ describe("language switching", () => {
 
   it("keeps the visitor's form choices when the language changes", () => {
     render(<EnquiryForm />);
-    fireEvent.click(screen.getByRole("radio", { name: "Commercial Murals" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Neon & UV Glow Effects" }));
     fireEvent.change(screen.getByPlaceholderText("City / area"), { target: { value: "Klang" } });
 
     act(() => setLang("ms"));
-    expect(screen.getByRole("radio", { name: "Mural Komersial" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Kesan Neon & Cahaya UV" })).toBeChecked();
     expect(screen.getByPlaceholderText("Bandar / kawasan")).toHaveValue("Klang");
-    expect(screen.getByText(/Hai, saya berminat dengan mural komersial/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Hai, saya berminat dengan kesan neon & cahaya uv/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Lokasi: Klang/)).toBeInTheDocument();
   });
 });
@@ -173,7 +175,7 @@ describe("WhatsApp chat in Bahasa Melayu", () => {
     act(() => setLang("ms"));
     render(
       <>
-        <WhatsAppLink replyId="exterior">Tanya</WhatsAppLink>
+        <WhatsAppLink replyId="themed">Tanya</WhatsAppLink>
         <WhatsAppChat />
       </>,
     );
@@ -181,7 +183,7 @@ describe("WhatsApp chat in Bahasa Melayu", () => {
     const dialog = screen.getByRole("dialog", { hidden: true });
     const p = within(dialog);
     expect(p.getByText(copy.ms.chat.greeting)).toBeInTheDocument();
-    expect(p.getByRole("button", { name: "Luaran & Bangunan" })).toHaveAttribute(
+    expect(p.getByRole("button", { name: "Bilik Bertema" })).toHaveAttribute(
       "aria-pressed",
       "true",
     );
@@ -190,7 +192,7 @@ describe("WhatsApp chat in Bahasa Melayu", () => {
     const url = String(open.mock.calls[0]![0]);
     expect(url).toMatch(/^https:\/\/wa\.me\/60132512588\?text=/);
     expect(new URL(url).searchParams.get("text")).toContain(
-      "Hai, saya berminat dengan luaran & bangunan.",
+      "Hai, saya berminat dengan bilik bertema.",
     );
     vi.restoreAllMocks();
   });

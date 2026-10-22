@@ -16,7 +16,7 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
   const l = useL();
   const phone = detail(displayPhone(), demoDetails.phone);
   const email = detail(business.email, demoDetails.email);
-  const hours = detail(business.openingHours, l(demoDetails.openingHours));
+  const hours = detail(l(business.openingHours), l(demoDetails.openingHours));
   const tel = buildTelUrl();
   const mail = buildMailto(business.email, t.nav.mailSubject);
   const item = "inline-flex min-h-9 items-center gap-2 transition-colors hover:text-ivory";
@@ -67,6 +67,9 @@ function TopBar({ collapsed }: { collapsed: boolean }) {
                   <span className="inline-flex min-h-9 items-center gap-2">
                     <Mail aria-hidden="true" className="size-3.5 text-accent-soft" />
                     {email.value}
+                    {email.sample && (
+                      <span className="annot text-[0.6rem] opacity-70">· {t.nav.sampleTag}</span>
+                    )}
                   </span>
                 )}
               </li>

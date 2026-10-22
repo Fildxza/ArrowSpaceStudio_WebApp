@@ -25,7 +25,7 @@ function buildHead() {
       { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { title: pick(seo.title, "en") },
       { name: "description", content: pick(seo.description, "en") },
-      { name: "theme-color", content: "#121212" },
+      { name: "theme-color", content: "#07081E" },
       ...(seo.indexable ? [] : [{ name: "robots", content: "noindex, nofollow" }]),
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: business.name },

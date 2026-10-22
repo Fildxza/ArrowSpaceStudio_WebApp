@@ -145,7 +145,7 @@ export function WhatsAppChat() {
 
         {/* conversation */}
         <div
-          className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-[oklch(0.21_0.004_100)] px-4 py-5"
+          className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-[oklch(0.2_0.05_275)] px-4 py-5"
           aria-live="polite"
         >
           {step === "typing" ? (
